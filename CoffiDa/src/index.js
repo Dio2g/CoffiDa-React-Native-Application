@@ -1,31 +1,25 @@
-import * as React from 'react';
-import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
-import { Appbar } from 'react-native-paper';
-import { StyleSheet } from 'react-native';
+import 'react-native-gesture-handler';
+import * as React from 'react'
+import { NavigationContainer } from '@react-navigation/native'
+import { createStackNavigator } from '@react-navigation/stack';
+import ScreenOne from './screens/screen1'
+import ScreenTwo from './screens/screen2'
+import ScreenThree from './screens/screen3'
 
+const Stack = createStackNavigator();
 
-const Index = () => (
-  <Appbar style={styles.bottom}>
-   <Appbar.Action
-     icon="archive"
-     onPress={() => console.log('Pressed archive')}
-    />
-    <Appbar.Action icon="mail" onPress={() => console.log('Pressed mail')} />
-    <Appbar.Action icon="label" onPress={() => console.log('Pressed label')} />
-    <Appbar.Action
-      icon="delete"
-      onPress={() => console.log('Pressed delete')}
-    />
-  </Appbar>
-);
+function Index() {
+	return (
+		<NavigationContainer>
+			<Stack.Navigator>
+				<Stack.Screen name="ScreenOne" component={ScreenOne} />
+				<Stack.Screen name="ScreenTwo" component={ScreenTwo} />
+				<Stack.Screen name="ScreenThree" component={ScreenThree} />
+			</Stack.Navigator>
+		</NavigationContainer>
+	
+	);
+		
+}
 
 export default Index;
-
-const styles = StyleSheet.create({
-  bottom: {
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    bottom: 0,
-  },
-});

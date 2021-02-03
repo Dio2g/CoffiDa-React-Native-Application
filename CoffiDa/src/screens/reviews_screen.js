@@ -1,12 +1,12 @@
 import * as React from 'react'
 import { Text, View } from 'react-native'
 
-function homeScreen() {
+function reviewsScreen() {
   return (
     <View>
-      <Text>Home Screen</Text>
+      <Text>Reviews Screen</Text>
     </View>
   )
 }
 
-export default homeScreen
+export default reviewsScreen

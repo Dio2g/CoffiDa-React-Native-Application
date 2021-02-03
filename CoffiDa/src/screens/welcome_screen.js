@@ -1,17 +1,21 @@
-import React, { Component } from 'react'
+import * as React from 'react'
 import { Text, View, Button } from 'react-native'
+import PropTypes from 'prop-types'
 
-class WelcomeScreen extends Component {
-  render () {
-    const nav = this.props.navigation
-    return (
-      <View>
-        <Text>Welcome Screen</Text>
-        <Button onPress={() => nav.navigate('LoginScreen')} title='Login' />
-        <Button onPress={() => nav.navigate('SignupScreen')} title='Sign Up' />
-      </View>
-    )
-  }
+function welcomeScreen(props) {
+  return (
+    <View>
+      <Text>Welcome Screen</Text>
+      <Button onPress={() => props.navigation.navigate('LoginScreen')} title='Login' />
+      <Button onPress={() => props.navigation.navigate('SignupScreen')} title='Sign Up' />
+    </View>
+  )
 }
 
-export default WelcomeScreen
+welcomeScreen.propTypes = {
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func.isRequired,
+  }).isRequired,
+}
+
+export default welcomeScreen

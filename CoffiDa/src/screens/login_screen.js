@@ -1,16 +1,32 @@
-import React, { Component } from 'react'
+import * as React from 'react'
 import { Text, View, Button } from 'react-native'
+import PropTypes from 'prop-types'
 
-class LoginScreen extends Component {
-  render () {
-    const nav = this.props.navigation
-    return (
-      <View>
-        <Text>Login Screen</Text>
-        <Button onPress={() => nav.navigate('HomeScreen')} title='SUBMIT' />
-      </View>
-    )
-  }
+// class LoginScreen extends Component {
+//   render () {
+    
+//     return (
+//       <View>
+//         <Text>Login Screen</Text>
+//         <Button onPress={() => nav.navigate('HomeScreen')} title='SUBMIT' />
+//       </View>
+//     )
+//   }
+// }
+
+function Login(props) {
+  return (
+    <View>
+      <Text>Login Screen</Text>
+      <Button onPress={() => props.navigation.navigate('HomeScreen')} title='SUBMIT' />
+    </View>
+  )
 }
 
-export default LoginScreen
+Login.propTypes = {
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func.isRequired,
+  }).isRequired,
+}
+
+export default Login

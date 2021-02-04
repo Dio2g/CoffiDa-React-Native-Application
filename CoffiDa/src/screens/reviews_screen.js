@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Text, View } from 'react-native'
 
-function reviewsScreen() {
+const reviewsScreen = () => {
   return (
     <View>
       <Text>Reviews Screen</Text>

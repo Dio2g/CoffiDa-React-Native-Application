@@ -8,7 +8,7 @@ import profileScreen from './profile_screen'
 
 const Tab = createMaterialBottomTabNavigator()
 
-function homeNavigator() {
+const homeNavigator = () => {
   return (
     <Tab.Navigator
       initialRouteName='homeScreen'

@@ -2,7 +2,7 @@ import * as React from 'react'
 import { Text, View, Button } from 'react-native'
 import PropTypes from 'prop-types'
 
-function welcomeScreen(props) {
+const welcomeScreen = (props) => {
   return (
     <View>
       <Text>Welcome Screen</Text>

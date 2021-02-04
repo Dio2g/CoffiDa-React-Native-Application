@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Text, View } from 'react-native'
 
-function profileScreen() {
+const profileScreen = () => {
   return (
     <View>
       <Text>Profile Screen</Text>

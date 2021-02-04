@@ -9,7 +9,7 @@ import homeNavigator from './screens/home_navigator'
 
 const Stack = createStackNavigator()
 
-function Index () {
+const Index = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator>

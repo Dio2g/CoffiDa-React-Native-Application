@@ -7,10 +7,10 @@ const signupScreen = (props) => {
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-    
+
   const singup = () => {
     // TODO: Validation
-    
+
     // eslint-disable-next-line no-undef
     return fetch("http://10.0.2.2:3333/api/1.0.0/user", {
       method: 'post',
@@ -52,25 +52,25 @@ const signupScreen = (props) => {
         placeholder="Enter your first name..."
         onChangeText={value => setFirstName(value)}
         value={firstName}
-        style={{padding:5, borderWidth:1, margin:5}}
+        style={{ padding: 5, borderWidth: 1, margin: 5 }}
       />
       <TextInput
         placeholder="Enter your last name..."
         onChangeText={value => setLastName(value)}
         value={lastName}
-        style={{padding:5, borderWidth:1, margin:5}}
+        style={{ padding: 5, borderWidth: 1, margin: 5 }}
       />
       <TextInput
         placeholder="Enter your email..."
         onChangeText={value => setEmail(value)}
         value={email}
-        style={{padding:5, borderWidth:1, margin:5}}
+        style={{ padding: 5, borderWidth: 1, margin: 5 }}
       />
       <TextInput
         placeholder="Enter your password..."
         onChangeText={value => setPassword(value)}
         value={password}
-        style={{padding:5, borderWidth:1, margin:5}}
+        style={{ padding: 5, borderWidth: 1, margin: 5 }}
       />
       <Button
         title="Create an account"

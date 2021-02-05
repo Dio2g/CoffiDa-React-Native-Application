@@ -6,7 +6,7 @@ import nearbyScreen from './nearby_screen'
 import reviewsScreen from './reviews_screen'
 import profileScreen from './profile_screen'
 
-const Tab = createMaterialBottomTabNavigator()
+const Tab = createMaterialBottomTabNavigator();
 
 const homeNavigator = () => {
   return (

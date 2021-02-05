@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { ToastAndroid, Button } from 'react-native'
 import { ScrollView, TextInput } from 'react-native-gesture-handler'
+import PropTypes from 'prop-types'
 
 const SignupScreen = (props) => {
   const [firstName, setFirstName] = useState("");
@@ -78,6 +79,12 @@ const SignupScreen = (props) => {
       />
     </ScrollView>
   )
+}
+
+SignupScreen.propTypes = {
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func.isRequired,
+  }).isRequired,
 }
 
 export default SignupScreen

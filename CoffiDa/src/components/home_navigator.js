@@ -1,4 +1,5 @@
-import React, { useEffect, AsyncStorage} from 'react';
+import React, { useEffect } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs'
 import PropTypes from 'prop-types'
 import homeScreen from './home_screen'
@@ -12,13 +13,18 @@ const Tab = createMaterialBottomTabNavigator();
 const HomeNavigator = (props) => {
 
   const checkLoggedIn = async () => {
-    console.log("value: ")
-    const value = await AsyncStorage.getItem('@session_token');
-    console.log(value)
+    try {
+      console.log("value: ")
+      const value = await AsyncStorage.getItem('@session_token');
+      console.log(value)
 
-    if (value == null) {
-      props.navigation.navigate('welcomeScreen');
+      if (value == null) {
+        props.navigation.navigate('welcomeScreen');
+      }
+    } catch (e) {
+      // handle error
     }
+
   }
 
   useEffect(() => {

@@ -1,14 +1,38 @@
-import React from 'react'
+import React, { useEffect, AsyncStorage} from 'react';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs'
-
+import PropTypes from 'prop-types'
 import homeScreen from './home_screen'
 import nearbyScreen from './nearby_screen'
 import reviewsScreen from './reviews_screen'
 import profileScreen from './profile_screen'
 
+
 const Tab = createMaterialBottomTabNavigator();
 
-const homeNavigator = () => {
+const HomeNavigator = (props) => {
+
+  const checkLoggedIn = async () => {
+    console.log("value: ")
+    const value = await AsyncStorage.getItem('@session_token');
+    console.log(value)
+
+    if (value == null) {
+      props.navigation.navigate('welcomeScreen');
+    }
+  }
+
+  useEffect(() => {
+    const unsubscribe = props.navigation.addListener('focus', () => {
+      // The screen is focused
+      // Call any action
+      checkLoggedIn();
+    });
+
+    // Return the function to unsubscribe from the event so it gets removed on unmount
+    return unsubscribe;
+  });
+
+
   return (
     <Tab.Navigator
       initialRouteName='homeScreen'
@@ -47,4 +71,11 @@ const homeNavigator = () => {
   )
 }
 
-export default homeNavigator
+HomeNavigator.propTypes = {
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func.isRequired,
+    addListener: PropTypes.func.isRequired,
+  }).isRequired,
+}
+
+export default HomeNavigator

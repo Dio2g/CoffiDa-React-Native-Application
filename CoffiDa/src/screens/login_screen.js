@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
-import { ToastAndroid, Button, AsyncStorage} from 'react-native'
+import { ToastAndroid, Button} from 'react-native'
 import { ScrollView, TextInput } from 'react-native-gesture-handler'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import PropTypes from 'prop-types'
 
-const loginScreen = (props) => {
+const LoginScreen = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -11,7 +12,7 @@ const loginScreen = (props) => {
     // TODO: Validation
 
     // eslint-disable-next-line no-undef
-    return fetch("http://10.0.2.2:3333/api/1.0.0/login", {
+    return fetch("http://10.0.2.2:3333/api/1.0.0/user/login", {
       method: 'post',
       headers: {
         'Content-Type': 'application/json'
@@ -66,10 +67,10 @@ const loginScreen = (props) => {
   )
 }
 
-loginScreen.propTypes = {
+LoginScreen.propTypes = {
   navigation: PropTypes.shape({
     navigate: PropTypes.func.isRequired,
   }).isRequired,
 }
 
-export default loginScreen
+export default LoginScreen

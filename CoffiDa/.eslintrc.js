@@ -1,6 +1,8 @@
 module.exports = {
   "extends": [
     "airbnb",
+    "airbnb/hooks",
+    "airbnb/whitespace",
     "prettier",
     "prettier/react"
   ],
@@ -10,6 +12,5 @@ module.exports = {
   },
   "rules": {
     "react/jsx-filename-extension": ["error", { "extensions": [".js", ".jsx"] }],
-    "linebreak-style": ["error", "windows"]
   }
 }

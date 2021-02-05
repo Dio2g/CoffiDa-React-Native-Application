@@ -11,7 +11,7 @@ const theme = {
   }
 }
 
-export default function Main () {
+export default function Main() {
   return (
     <PaperProvider theme={theme}>
       <Index />

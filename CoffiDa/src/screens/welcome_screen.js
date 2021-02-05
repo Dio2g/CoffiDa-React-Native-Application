@@ -1,6 +1,5 @@
 import * as React from 'react'
 import { Text, View, Button } from 'react-native'
-import PropTypes from 'prop-types'
 
 const welcomeScreen = (props) => {
   return (
@@ -8,14 +7,9 @@ const welcomeScreen = (props) => {
       <Text>Welcome Screen</Text>
       <Button onPress={() => props.navigation.navigate('loginScreen')} title='Login' />
       <Button onPress={() => props.navigation.navigate('signupScreen')} title='Sign Up' />
+      <Button onPress={() => props.navigation.navigate('homeNavigator')} title='Home' />
     </View>
   )
-}
-
-welcomeScreen.propTypes = {
-  navigation: PropTypes.shape({
-    navigate: PropTypes.func.isRequired,
-  }).isRequired,
 }
 
 export default welcomeScreen

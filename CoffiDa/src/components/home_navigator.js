@@ -14,9 +14,7 @@ const HomeNavigator = (props) => {
 
   const checkLoggedIn = async () => {
     try {
-      console.log("value: ")
       const value = await AsyncStorage.getItem('@session_token');
-      console.log(value)
 
       if (value == null) {
         props.navigation.navigate('welcomeScreen');
@@ -24,13 +22,11 @@ const HomeNavigator = (props) => {
     } catch (e) {
       // handle error
     }
-
   }
 
   useEffect(() => {
     const unsubscribe = props.navigation.addListener('focus', () => {
       // The screen is focused
-      // Call any action
       checkLoggedIn();
     });
 
@@ -46,28 +42,28 @@ const HomeNavigator = (props) => {
       sceneAnimationEnabled={false}
     >
       <Tab.Screen
-        name='homeScreen'
+        name='Home'
         component={homeScreen}
         options={{
           tabBarIcon: 'home'
         }}
       />
       <Tab.Screen
-        name='nearbyScreen'
+        name='Nearby'
         component={nearbyScreen}
         options={{
           tabBarIcon: 'map-marker'
         }}
       />
       <Tab.Screen
-        name='reviewsScreen'
+        name='Reviews'
         component={reviewsScreen}
         options={{
           tabBarIcon: 'star-outline'
         }}
       />
       <Tab.Screen
-        name='profileScreen'
+        name='Profile'
         component={profileScreen}
         options={{
           tabBarIcon: 'account-box-outline'

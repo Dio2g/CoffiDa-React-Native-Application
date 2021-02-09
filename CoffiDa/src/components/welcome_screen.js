@@ -1,13 +1,13 @@
 import * as React from 'react'
-import { Text, View, Button } from 'react-native'
+import { View } from 'react-native'
+import { Button, Text } from 'react-native-paper';
+import styles from './stylesheet'
 
 const welcomeScreen = (props) => {
   return (
-    <View>
-      <Text>Welcome Screen</Text>
-      <Button onPress={() => props.navigation.navigate('loginScreen')} title='Login' />
-      <Button onPress={() => props.navigation.navigate('signupScreen')} title='Sign Up' />
-      <Button onPress={() => props.navigation.navigate('homeNavigator')} title='Home' />
+    <View style={styles.flexContainer}>
+      <Button contentStyle={styles.buttonContent} style={styles.button} mode="contained" onPress={() => props.navigation.navigate('Login')}> <Text>Login</Text> </Button>
+      <Button contentStyle={styles.buttonContent} style={styles.button} mode="contained" onPress={() => props.navigation.navigate('Signup')}> <Text>Signup</Text> </Button>
     </View>
   )
 }

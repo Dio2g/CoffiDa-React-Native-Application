@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
-import { ToastAndroid, Button } from 'react-native'
-import { ScrollView, TextInput } from 'react-native-gesture-handler'
+import { ToastAndroid, View } from 'react-native'
+import { ScrollView } from 'react-native-gesture-handler'
+import { Button, Text, TextInput } from 'react-native-paper';
 import PropTypes from 'prop-types'
+import styles from './stylesheet'
 
 const SignupScreen = (props) => {
   const [firstName, setFirstName] = useState("");
@@ -48,36 +50,51 @@ const SignupScreen = (props) => {
   }
 
   return (
-    <ScrollView>
-      <TextInput
-        placeholder="Enter your first name..."
-        onChangeText={value => setFirstName(value)}
-        value={firstName}
-        style={{ padding: 5, borderWidth: 1, margin: 5 }}
-      />
-      <TextInput
-        placeholder="Enter your last name..."
-        onChangeText={value => setLastName(value)}
-        value={lastName}
-        style={{ padding: 5, borderWidth: 1, margin: 5 }}
-      />
-      <TextInput
-        placeholder="Enter your email..."
-        onChangeText={value => setEmail(value)}
-        value={email}
-        style={{ padding: 5, borderWidth: 1, margin: 5 }}
-      />
-      <TextInput
-        placeholder="Enter your password..."
-        onChangeText={value => setPassword(value)}
-        value={password}
-        style={{ padding: 5, borderWidth: 1, margin: 5 }}
-      />
-      <Button
-        title="Create an account"
-        onPress={() => singup()}
-      />
-    </ScrollView>
+    <View style={styles.flexContainer}>
+      <ScrollView>
+        <TextInput
+          style={styles.textInputSignupFirst}
+          type='outlined'
+          label="First Name"
+          placeholder="Enter your first name..."
+          onChangeText={value => setFirstName(value)}
+          value={firstName}
+        />
+        <TextInput
+          style={styles.textInputSignup}
+          type='outlined'
+          label="Last Name"
+          placeholder="Enter your last name..."
+          onChangeText={value => setLastName(value)}
+          value={lastName}
+        />
+        <TextInput
+          style={styles.textInputSignup}
+          type='outlined'
+          label="Email"
+          placeholder="Enter your email..."
+          onChangeText={value => setEmail(value)}
+          value={email}
+        />
+        <TextInput
+          style={styles.textInputSignup}
+          type='outlined'
+          label="Password"
+          placeholder="Enter your password..."
+          onChangeText={value => setPassword(value)}
+          value={password}
+        />
+
+        <Button
+          style={styles.signupButton}
+          contentStyle={styles.buttonContent}
+          mode="contained"
+          onPress={() => singup()}>
+          <Text>Create Account</Text>
+        </Button>
+
+      </ScrollView>
+    </View>
   )
 }
 

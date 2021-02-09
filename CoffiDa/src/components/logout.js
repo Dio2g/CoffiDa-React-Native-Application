@@ -1,13 +1,10 @@
-import * as React from 'react'
 import { ToastAndroid } from 'react-native'
 import PropTypes from 'prop-types'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const Logout = async (props) => {
   // TODO: Validation
-  // eslint-disable-next-line no-undef
-  token = await AsyncStorage.getItem('@session_token');
-  console.log(token)
+  const token = await AsyncStorage.getItem('@session_token');
   // eslint-disable-next-line no-undef
   return fetch("http://10.0.2.2:3333/api/1.0.0/user/logout", {
     method: 'post',
@@ -18,10 +15,8 @@ const Logout = async (props) => {
   })
     .then(async (response) => {
       if (response.status === 200) {
-        // GETS TO HERE
-        console.log("here")
         await AsyncStorage.removeItem('@session_token');
-        props.navigation.navigate('welcomeScreen');
+        props.navigation.navigate('Welcome');
         // eslint-disable-next-line no-else-return
       } else if (response.status === 401) {
         // eslint-disable-next-line no-throw-literal
@@ -35,8 +30,7 @@ const Logout = async (props) => {
       }
     })
     .catch((error) => {
-      console.log(error);
-      ToastAndroid.show(error, ToastAndroid.SHORT);
+      ToastAndroid.show(JSON.stringify(error), ToastAndroid.SHORT);
     })
 }
 

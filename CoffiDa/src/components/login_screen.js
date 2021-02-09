@@ -1,14 +1,17 @@
 import React, { useState } from 'react'
-import { ToastAndroid, Button } from 'react-native'
-import { ScrollView, TextInput } from 'react-native-gesture-handler'
+import { ToastAndroid, View } from 'react-native'
+import { Button, Text, TextInput } from 'react-native-paper';
+import { ScrollView } from 'react-native-gesture-handler'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import PropTypes from 'prop-types'
+import styles from './stylesheet'
 
 const LoginScreen = (props) => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  // hard coded login details for quick testing
+  const [email, setEmail] = useState("fake@mail.com");
+  const [password, setPassword] = useState("hello123");
 
-  const singup = () => {
+  const login = () => {
     // TODO: Validation
 
     // eslint-disable-next-line no-undef
@@ -29,6 +32,7 @@ const LoginScreen = (props) => {
         } else if (response.status === 400) {
           // eslint-disable-next-line no-throw-literal
           throw 'Invalid email or password'
+
         } else {
           // eslint-disable-next-line no-throw-literal
           throw 'Something went wrong'
@@ -48,26 +52,33 @@ const LoginScreen = (props) => {
   }
 
   return (
-    <ScrollView>
-      <TextInput
-        text="fake@mail.com"
-        placeholder="Enter your email..."
-        onChangeText={value => setEmail(value)}
-        value={email}
-        style={{ padding: 5, borderWidth: 1, margin: 5 }}
-      />
-      <TextInput
-      text="hello123"
-        placeholder="Enter your password..."
-        onChangeText={value => setPassword(value)}
-        value={password}
-        style={{ padding: 5, borderWidth: 1, margin: 5 }}
-      />
-      <Button
-        title="Login"
-        onPress={() => singup()}
-      />
-    </ScrollView>
+    <View style={styles.flexContainer}>
+      <ScrollView>
+        <TextInput
+          style={styles.textInputLogin}
+          type='outlined'
+          label="Email"
+          placeholder="Enter your email..."
+          onChangeText={value => setEmail(value)}
+          value={email}
+        />
+        <TextInput
+          style={styles.textInputLogin}
+          type='outlined'
+          label="Password"
+          placeholder="Enter your password..."
+          onChangeText={value => setPassword(value)}
+          value={password}
+        />
+        <Button 
+          mode="contained"
+          onPress={() => login()}
+          style={styles.loginButton}
+          contentStyle={styles.buttonContent}>
+          <Text>Login</Text>
+        </Button>
+      </ScrollView>
+    </View>
   )
 }
 

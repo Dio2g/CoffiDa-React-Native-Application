@@ -51,7 +51,7 @@ const SignupScreen = (props) => {
 
   return (
     <View style={styles.flexContainer}>
-      <ScrollView>
+      <ScrollView style={styles.scrollView}>
         <TextInput
           style={styles.textInputSignupFirst}
           type='outlined'

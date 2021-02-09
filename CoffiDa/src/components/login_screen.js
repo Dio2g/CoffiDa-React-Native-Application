@@ -53,9 +53,9 @@ const LoginScreen = (props) => {
 
   return (
     <View style={styles.flexContainer}>
-      <ScrollView>
+      <ScrollView style={styles.scrollView}>
         <TextInput
-          style={styles.textInputLogin}
+          style={styles.textInputLoginFirst}
           type='outlined'
           label="Email"
           placeholder="Enter your email..."

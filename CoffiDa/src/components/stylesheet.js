@@ -2,34 +2,38 @@ import { StyleSheet } from 'react-native'
 
 export default StyleSheet.create({
     flexContainer: {
+        display: 'flex',
         flex: 1,
         justifyContent: 'center',
         flexDirection: 'column',
         alignItems: 'center',
+        margin: '1%',
+    },
+
+    scrollView: {
+        flex: 1,
     },
 
     textInputLogin : {
-        borderRadius: 20,
-        margin: 30,
-        marginTop: 100,
-        width: 300,
-        height: 60,   
+        flex: 1,
+        margin: '7%',
     },
 
     textInputSignup: {
-        borderRadius: 20,
-        margin: 30,
-        marginTop: 30,
-        width: 300,
-        height: 60,   
+        flex: 1,
+        margin: '7%',
+    },
+
+    textInputLoginFirst: {
+        marginTop: '50%',
+        flex: 1,
+        margin: '7%',
     },
 
     textInputSignupFirst: {
-        borderRadius: 20,
-        margin: 30,
-        marginTop: 60,
-        width: 300,
-        height: 60,   
+        flex: 1,
+        margin: '7%',
+        marginTop: '15%',
     },
 
     button : {
@@ -38,15 +42,14 @@ export default StyleSheet.create({
     },
 
     loginButton : {
+        marginTop: '15%',
         borderRadius: 20,
-        margin: 30,
-        marginTop: 150,
+        flex: 0,
     },
 
     signupButton : {
+        marginTop: '5%',
         borderRadius: 20,
-        margin: 30,
-        marginTop: 30,
     },
 
     buttonContent: {

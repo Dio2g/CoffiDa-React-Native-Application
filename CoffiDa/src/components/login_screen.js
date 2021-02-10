@@ -38,6 +38,7 @@ const LoginScreen = (props) => {
       .then(async (responseJson) => {
         // console.log(responseJson);
         await AsyncStorage.setItem('@session_token', responseJson.token);
+        await AsyncStorage.setItem('@user_id', JSON.stringify(responseJson.id));
         // const value = await AsyncStorage.getItem('@session_token');
         props.navigation.navigate('homeNavigator');
       })

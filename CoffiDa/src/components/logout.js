@@ -16,6 +16,7 @@ const Logout = async (props) => {
     .then(async (response) => {
       if (response.status === 200) {
         await AsyncStorage.removeItem('@session_token');
+        await AsyncStorage.removeItem('@user_id');
         props.navigation.navigate('Welcome');
       } 
       if (response.status === 401) {

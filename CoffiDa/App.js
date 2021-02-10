@@ -7,6 +7,7 @@ import welcomeScreen from './src/components/welcome_screen'
 import loginScreen from './src/components/login_screen'
 import signupScreen from './src/components/signup_screen'
 import homeNavigator from './src/components/home_navigator'
+import updateDetailsScreen from './src/components/update_details_screen'
 
 const Stack = createStackNavigator()
 
@@ -38,6 +39,7 @@ export default function Main() {
           <Stack.Screen name='Login' component={loginScreen} />
           <Stack.Screen name='Signup' component={signupScreen} />
           <Stack.Screen name='homeNavigator' options={{ headerShown: false }} component={homeNavigator} />
+          <Stack.Screen name='Update Details' component={updateDetailsScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </PaperProvider>

@@ -69,4 +69,25 @@ export default StyleSheet.create({
         borderRadius: 20,
         height: '100%',
     },
+
+    profileViewOne: {
+        flex: 1,
+        justifyContent: 'flex-end',
+    },
+
+    profileViewTwo: {
+        flex: 1,
+        justifyContent: 'flex-start',
+    },
+
+    profileButton: {
+        borderRadius: 20,
+        height: '30%',
+        margin: '7%'
+    },
+
+    profileButtonContent: {
+        borderRadius: 20,
+        height: '100%',
+    },
 })

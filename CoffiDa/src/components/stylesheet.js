@@ -2,64 +2,71 @@ import { StyleSheet } from 'react-native'
 
 export default StyleSheet.create({
     flexContainer: {
-        display: 'flex',
-        flex: 1,
-        justifyContent: 'center',
-        flexDirection: 'column',
-        alignItems: 'center',
-        margin: '1%',
-    },
-
-    scrollView: {
         flex: 1,
     },
 
-    textInputLogin : {
+    welcomeViewOne: {
         flex: 1,
-        margin: '7%',
+        justifyContent: 'flex-end',
     },
 
-    textInputSignup: {
+    welcomeViewTwo: {
         flex: 1,
-        margin: '7%',
+        justifyContent: 'flex-start',
     },
 
-    textInputLoginFirst: {
-        marginTop: '50%',
-        flex: 1,
-        margin: '7%',
-    },
-
-    textInputSignupFirst: {
-        flex: 1,
-        margin: '7%',
-        marginTop: '15%',
-    },
-
-    button : {
+    welcomeButton: {
         borderRadius: 20,
-        margin: 30,
+        height: '30%',
+        margin: '7%'
     },
 
-    loginButton : {
-        marginTop: '15%',
+    welcomeButtonContent: {
         borderRadius: 20,
-        flex: 0,
+        height: '100%',
     },
 
-    signupButton : {
-        marginTop: '5%',
+    signupViewOne: {
+        flex: 3,
+        justifyContent: 'space-evenly',
+        padding: '5%',
+    },
+
+    signupViewTwo: {
+        flex: 1,
+        justifyContent: 'space-evenly',
+    },
+
+    signupButton: {
         borderRadius: 20,
+        height: '40%',
+        margin: '7%'
     },
 
-    buttonContent: {
-        width: 300,
-        height: 60,   
+    signupButtonContent: {
+        borderRadius: 20,
+        height: '100%',
     },
 
-    box: {
-        borderWidth: 1,
-        height: 400,
-        width: 400,
-    }
+    loginViewOne: {
+        flex: 3,
+        justifyContent: 'space-evenly',
+        padding: '5%',
+    },
+
+    loginViewTwo: {
+        flex: 2,
+        justifyContent: 'space-evenly',
+    },
+
+    loginButton: {
+        borderRadius: 20,
+        height: '30%',
+        margin: '7%'
+    },
+
+    loginButtonContent: {
+        borderRadius: 20,
+        height: '100%',
+    },
 })

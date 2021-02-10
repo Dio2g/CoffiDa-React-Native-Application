@@ -30,30 +30,27 @@ const SignupScreen = (props) => {
       .then((response) => {
         if (response.status === 201) {
           return response.json()
-          // eslint-disable-next-line no-else-return
-        } else if (response.status === 400) {
-          // eslint-disable-next-line no-throw-literal
-          throw 'Failed Validation'
+        }
+        if (response.status === 400) {
+          throw new Error('Failed Validation')
+
         } else {
-          // eslint-disable-next-line no-throw-literal
-          throw 'Something went wrong'
+          throw new Error('Something went wrong')
         }
       })
       .then(async () => {
         // console.log("User created with ID: ", responseJson);
-        props.navigation.navigate('loginScreen');
+        props.navigation.navigate('Login');
       })
       .catch((error) => {
-        // console.log(error);
-        ToastAndroid.show(error, ToastAndroid.SHORT);
+        ToastAndroid.show(error.toString(), ToastAndroid.SHORT);
       })
   }
 
   return (
-    <View style={styles.flexContainer}>
-      <ScrollView style={styles.scrollView}>
+    <ScrollView contentContainerStyle={styles.flexContainer}>
+      <View style={styles.signupViewOne}>
         <TextInput
-          style={styles.textInputSignupFirst}
           type='outlined'
           label="First Name"
           placeholder="Enter your first name..."
@@ -61,7 +58,6 @@ const SignupScreen = (props) => {
           value={firstName}
         />
         <TextInput
-          style={styles.textInputSignup}
           type='outlined'
           label="Last Name"
           placeholder="Enter your last name..."
@@ -69,7 +65,6 @@ const SignupScreen = (props) => {
           value={lastName}
         />
         <TextInput
-          style={styles.textInputSignup}
           type='outlined'
           label="Email"
           placeholder="Enter your email..."
@@ -77,24 +72,23 @@ const SignupScreen = (props) => {
           value={email}
         />
         <TextInput
-          style={styles.textInputSignup}
           type='outlined'
           label="Password"
           placeholder="Enter your password..."
           onChangeText={value => setPassword(value)}
           value={password}
         />
-
+      </View>
+      <View style={styles.signupViewTwo}>
         <Button
           style={styles.signupButton}
-          contentStyle={styles.buttonContent}
+          contentStyle={styles.signupButtonContent}
           mode="contained"
           onPress={() => singup()}>
           <Text>Create Account</Text>
         </Button>
-
-      </ScrollView>
-    </View>
+      </View>
+    </ScrollView>
   )
 }
 

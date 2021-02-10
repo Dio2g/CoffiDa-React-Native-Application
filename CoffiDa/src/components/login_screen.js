@@ -28,32 +28,28 @@ const LoginScreen = (props) => {
       .then((response) => {
         if (response.status === 200) {
           return response.json()
-          // eslint-disable-next-line no-else-return
-        } else if (response.status === 400) {
-          // eslint-disable-next-line no-throw-literal
-          throw 'Invalid email or password'
-
+        } 
+        if (response.status === 400) {
+          throw new Error('Invalid email or password')
         } else {
-          // eslint-disable-next-line no-throw-literal
-          throw 'Something went wrong'
+          throw new Error('Something went wrong')
         }
       })
       .then(async (responseJson) => {
         // console.log(responseJson);
         await AsyncStorage.setItem('@session_token', responseJson.token);
         // const value = await AsyncStorage.getItem('@session_token');
-        // console.log(value)
         props.navigation.navigate('homeNavigator');
       })
       .catch((error) => {
-        // console.log(error);
-        ToastAndroid.show(error, ToastAndroid.SHORT);
+
+        ToastAndroid.show(error.toString(), ToastAndroid.SHORT);
       })
   }
 
   return (
-    <View style={styles.flexContainer}>
-      <ScrollView style={styles.scrollView}>
+    <ScrollView contentContainerStyle={styles.flexContainer}>
+      <View style={styles.loginViewOne}>
         <TextInput
           style={styles.textInputLoginFirst}
           type='outlined'
@@ -70,15 +66,17 @@ const LoginScreen = (props) => {
           onChangeText={value => setPassword(value)}
           value={password}
         />
-        <Button 
+      </View>
+      <View style={styles.loginViewTwo}>
+        <Button
           mode="contained"
           onPress={() => login()}
           style={styles.loginButton}
-          contentStyle={styles.buttonContent}>
+          contentStyle={styles.loginButtonContent}>
           <Text>Login</Text>
         </Button>
-      </ScrollView>
-    </View>
+      </View>
+    </ScrollView>
   )
 }
 

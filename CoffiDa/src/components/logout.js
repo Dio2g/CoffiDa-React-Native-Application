@@ -17,20 +17,17 @@ const Logout = async (props) => {
       if (response.status === 200) {
         await AsyncStorage.removeItem('@session_token');
         props.navigation.navigate('Welcome');
-        // eslint-disable-next-line no-else-return
-      } else if (response.status === 401) {
-        // eslint-disable-next-line no-throw-literal
-        throw 'Not Authorized'
+      } 
+      if (response.status === 401) {
+        throw new Error('Not Authorized') 
       } else if (response.status === 500) {
-        // eslint-disable-next-line no-throw-literal
-        throw 'Server error'
-      } else {
-        // eslint-disable-next-line no-throw-literal
-        throw 'Something went wrong'
+        throw new Error('Server error') 
+      } else if (response.status !== 200) {
+        throw new Error('Something went wrong') 
       }
     })
     .catch((error) => {
-      ToastAndroid.show(JSON.stringify(error), ToastAndroid.SHORT);
+      ToastAndroid.show(error.toString(), ToastAndroid.SHORT);
     })
 }
 

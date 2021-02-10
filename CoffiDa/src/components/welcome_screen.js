@@ -6,8 +6,12 @@ import styles from './stylesheet'
 const welcomeScreen = (props) => {
   return (
     <View style={styles.flexContainer}>
-      <Button contentStyle={styles.buttonContent} style={styles.button} mode="contained" onPress={() => props.navigation.navigate('Login')}> <Text>Login</Text> </Button>
-      <Button contentStyle={styles.buttonContent} style={styles.button} mode="contained" onPress={() => props.navigation.navigate('Signup')}> <Text>Signup</Text> </Button>
+      <View style={styles.welcomeViewOne}>
+        <Button contentStyle={styles.welcomeButtonContent} style={styles.welcomeButton} mode="contained" onPress={() => props.navigation.navigate('Login')}> <Text>Login</Text> </Button>
+      </View>
+      <View style={styles.welcomeViewTwo}>
+        <Button contentStyle={styles.welcomeButtonContent} style={styles.welcomeButton} mode="contained" onPress={() => props.navigation.navigate('Signup')}> <Text>Signup</Text> </Button>
+      </View>
     </View>
   )
 }

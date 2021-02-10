@@ -23,7 +23,8 @@ const DefaultTheme = {
     text: '#FFFFFF',
     surface: '#997542',
     card: '#E0A655',
-    placeholder: '#FFFFFF'
+    placeholder: '#FFFFFF',
+  
   },
 };
 

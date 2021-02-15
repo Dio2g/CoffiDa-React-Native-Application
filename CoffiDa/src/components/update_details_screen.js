@@ -5,13 +5,23 @@ import { Button, Text, TextInput } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import PropTypes from 'prop-types'
 import styles from './stylesheet'
+import UserInfo from './user_information'
 
 
-const UpdateDetails = (props) => {
+const UpdateDetails = async (props) => {
+
+
+  let userData = await UserInfo()
+  console.log(userData)
+
+  // userData = JSON.parse(userData)
+  // console.log(userData)
+  // console.log(userData.first_name)
+
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [password, setPassword] = useState("hello123");
 
   const editDetails = async () => {
     const token = await AsyncStorage.getItem('@session_token');
@@ -103,6 +113,7 @@ const UpdateDetails = (props) => {
 UpdateDetails.propTypes = {
   navigation: PropTypes.shape({
     navigate: PropTypes.func.isRequired,
+    addListener: PropTypes.func.isRequired,
   }).isRequired,
 }
 

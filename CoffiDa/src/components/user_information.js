@@ -1,4 +1,5 @@
-import { ToastAndroid, useState } from 'react-native'
+import { useState } from 'react'
+import { ToastAndroid } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const UserInfo = async () => {
@@ -15,25 +16,30 @@ const UserInfo = async () => {
       'X-Authorization': token
     },
   })
-    .then((response) => {
-      if (response.status === 200) {
-        return response.json()
-      }
-      if (response.status === 401) {
-        throw new Error('Not Authorized')
-      } else if (response.status === 500) {
-        throw new Error('Server error')
-      } else if (response.status !== 200) {
-        throw new Error('Something went wrong')
-      }
-    })
-    .then(async (responseJson) => {
-      setUserData(responseJson)
-    })
-    .catch((error) => {
-      ToastAndroid.show(error.toString(), ToastAndroid.SHORT);
-    })
-    
+  .then((response) => {
+    if (response.status === 200) {
+      return response.json()
+    } 
+    if (response.status === 401) {
+      throw new Error('Unauthorised')
+    } 
+    if (response.status === 404) {
+      throw new Error('Not Found')
+    }
+    if (response.status === 500) {
+      throw new Error('Server Error')
+    }
+    else {
+      throw new Error('Something went wrong')
+    }
+  })
+  .then(async (responseJson) => {
+    setUserData(responseJson)
+  })
+  .catch((error) => {
+    ToastAndroid.show(error.toString(), ToastAndroid.SHORT);
+  })
+
     return userData
 }
 

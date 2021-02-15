@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { ToastAndroid, View } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
 import { Button, Text, TextInput } from 'react-native-paper';
@@ -8,28 +8,46 @@ import styles from './stylesheet'
 import UserInfo from './user_information'
 
 
-const UpdateDetails = async (props) => {
-
-
-  let userData = await UserInfo()
-  console.log(userData)
-
-  // userData = JSON.parse(userData)
-  // console.log(userData)
-  // console.log(userData.first_name)
+const UpdateDetails = (props) => {
 
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("hello123");
+  const [password, setPassword] = useState("*********");
+
+  useEffect(() => {
+    async function getUserData() {
+      const userData = await UserInfo()
+      setFirstName(userData.first_name)
+      setLastName(userData.last_name)
+      setEmail(userData.email)
+    }
+
+    getUserData();
+  }, []);
 
   const editDetails = async () => {
+    // TODO: Validation
     const token = await AsyncStorage.getItem('@session_token');
     const id = await AsyncStorage.getItem('@user_id');
-
-    // console.log(id)
     const address = `http://10.0.2.2:3333/api/1.0.0/user/${id}`
-    // TODO: Validation
+
+    // different content for body depending on if they enter new password or not
+    let bodyContent
+    if (password === "*********" || password === "") {
+      bodyContent = JSON.stringify({
+        first_name: firstName,
+        last_name: lastName,
+        email
+      })
+    } else {
+      bodyContent = JSON.stringify({
+        first_name: firstName,
+        last_name: lastName,
+        email,
+        password
+      })
+    }
 
     // eslint-disable-next-line no-undef
     return fetch(address, {
@@ -38,27 +56,19 @@ const UpdateDetails = async (props) => {
         'Content-Type': 'application/json',
         'X-Authorization': token
       },
-      body: JSON.stringify({
-        // first_name: firstName,
-        // last_name: lastName,
-        email
-        // password
-      })
+      body: bodyContent
     })
       .then((response) => {
         if (response.status === 200) {
-          return response.json()
+          ToastAndroid.show("Details Updated!", ToastAndroid.SHORT);
+          props.navigation.navigate('homeNavigator');
         }
         if (response.status === 400) {
           throw new Error('Failed Validation')
 
-        } else {
+        } else if (response.status !== 200) {
           throw new Error('Something went wrong')
         }
-      })
-      .then(async () => {
-        ToastAndroid.show("Details Updated!", ToastAndroid.SHORT);
-        props.navigation.navigate('homeNavigator');
       })
       .catch((error) => {
         ToastAndroid.show(error.toString(), ToastAndroid.SHORT);
@@ -103,7 +113,7 @@ const UpdateDetails = async (props) => {
           contentStyle={styles.signupButtonContent}
           mode="contained"
           onPress={() => editDetails()}>
-          <Text>Create Account</Text>
+          <Text>Update Details</Text>
         </Button>
       </View>
     </ScrollView>

@@ -1,9 +1,10 @@
 import * as React from 'react'
 import { View } from 'react-native'
 import { Button, Text } from 'react-native-paper';
+import PropTypes from 'prop-types'
 import styles from './stylesheet'
 
-const welcomeScreen = (props) => {
+const WelcomeScreen = (props) => {
   return (
     <View style={styles.flexContainer}>
       <View style={styles.welcomeViewOne}>
@@ -16,4 +17,10 @@ const welcomeScreen = (props) => {
   )
 }
 
-export default welcomeScreen
+WelcomeScreen.propTypes = {
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func.isRequired,
+  }).isRequired,
+}
+
+export default WelcomeScreen

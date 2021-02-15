@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Text, View } from 'react-native'
 
-const nearbyScreen = () => {
+const NearbyScreen = () => {
   return (
     <View>
       <Text>Nearby Screen</Text>
@@ -9,4 +9,4 @@ const nearbyScreen = () => {
   )
 }
 
-export default nearbyScreen
+export default NearbyScreen

@@ -11,7 +11,7 @@ const SignupScreen = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const singup = () => {
+  const singup = async () => {
     // TODO: Validation
 
     // eslint-disable-next-line no-undef
@@ -29,18 +29,15 @@ const SignupScreen = (props) => {
     })
       .then((response) => {
         if (response.status === 201) {
-          return response.json()
+          ToastAndroid.show("Account created, please log in.", ToastAndroid.SHORT);
+          props.navigation.navigate('Login');
         }
         if (response.status === 400) {
           throw new Error('Failed Validation')
 
-        } else {
+        } else if (response.status !== 201) {
           throw new Error('Something went wrong')
         }
-      })
-      .then(async () => {
-        // console.log("User created with ID: ", responseJson);
-        props.navigation.navigate('Login');
       })
       .catch((error) => {
         ToastAndroid.show(error.toString(), ToastAndroid.SHORT);

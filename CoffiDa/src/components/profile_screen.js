@@ -1,10 +1,11 @@
 import * as React from 'react'
 import { View } from 'react-native'
 import { Button, Text } from 'react-native-paper';
+import PropTypes from 'prop-types'
 import Logout from './logout'
 import styles from './stylesheet'
 
-const profileScreen = (props) => {
+const ProfileScreen = (props) => {
   return (
     <View style={styles.flexContainer}>
       <View style={styles.profileViewOne}>
@@ -17,4 +18,10 @@ const profileScreen = (props) => {
   )
 }
 
-export default profileScreen
+ProfileScreen.propTypes = {
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func.isRequired,
+  }).isRequired,
+}
+
+export default ProfileScreen

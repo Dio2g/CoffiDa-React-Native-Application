@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Text, View } from 'react-native'
 
-const reviewsScreen = () => {
+const ReviewsScreen = () => {
   return (
     <View>
       <Text>Reviews Screen</Text>
@@ -9,4 +9,4 @@ const reviewsScreen = () => {
   )
 }
 
-export default reviewsScreen
+export default ReviewsScreen

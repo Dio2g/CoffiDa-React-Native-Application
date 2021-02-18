@@ -2,8 +2,8 @@ import * as React from 'react'
 import { View } from 'react-native'
 import { Button, Text } from 'react-native-paper';
 import PropTypes from 'prop-types'
-import Logout from './logout'
-import styles from './stylesheet'
+import Logout from '../components/logout'
+import styles from '../styles/stylesheet'
 
 const ProfileScreen = (props) => {
   return (

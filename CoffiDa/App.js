@@ -3,11 +3,11 @@ import * as React from 'react'
 import { NavigationContainer, DefaultTheme as NavigationDefaultTheme } from '@react-navigation/native';
 import { DefaultTheme as PaperDefaultTheme, Provider as PaperProvider } from 'react-native-paper';
 import { createStackNavigator } from '@react-navigation/stack'
-import welcomeScreen from './src/components/welcome_screen'
-import loginScreen from './src/components/login_screen'
-import signupScreen from './src/components/signup_screen'
+import welcomeScreen from './src/screens/welcome_screen'
+import loginScreen from './src/screens/login_screen'
+import signupScreen from './src/screens/signup_screen'
 import homeNavigator from './src/components/home_navigator'
-import updateDetailsScreen from './src/components/update_details_screen'
+import updateDetailsScreen from './src/screens/update_details_screen'
 
 const Stack = createStackNavigator()
 

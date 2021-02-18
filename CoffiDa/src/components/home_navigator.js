@@ -2,10 +2,10 @@ import React, { useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs'
 import PropTypes from 'prop-types'
-import HomeScreen from './home_screen'
-import NearbyScreen from './nearby_screen'
-import ReviewsScreen from './reviews_screen'
-import ProfileScreen from './profile_screen'
+import HomeScreen from '../screens/home_screen'
+import NearbyScreen from '../screens/nearby_screen'
+import ReviewsScreen from '../screens/reviews_screen'
+import ProfileScreen from '../screens/profile_screen'
 
 
 const Tab = createMaterialBottomTabNavigator();

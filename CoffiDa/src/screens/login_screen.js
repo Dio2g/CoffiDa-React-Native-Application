@@ -4,7 +4,7 @@ import { Button, Text, TextInput } from 'react-native-paper';
 import { ScrollView } from 'react-native-gesture-handler'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import PropTypes from 'prop-types'
-import styles from './stylesheet'
+import styles from '../styles/stylesheet'
 
 const LoginScreen = (props) => {
   // hard coded login details for quick testing

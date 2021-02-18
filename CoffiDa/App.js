@@ -3,10 +3,8 @@ import * as React from 'react'
 import { NavigationContainer, DefaultTheme as NavigationDefaultTheme } from '@react-navigation/native';
 import { DefaultTheme as PaperDefaultTheme, Provider as PaperProvider } from 'react-native-paper';
 import { createStackNavigator } from '@react-navigation/stack'
-import welcomeScreen from './src/screens/welcome_screen'
-import loginScreen from './src/screens/login_screen'
-import signupScreen from './src/screens/signup_screen'
-import homeNavigator from './src/components/home_navigator'
+import welcomeNavigator from './src/navigators/welcome_navigator'
+import homeNavigator from './src/navigators/home_navigator'
 import updateDetailsScreen from './src/screens/update_details_screen'
 
 const Stack = createStackNavigator()
@@ -35,9 +33,7 @@ export default function Main() {
     <PaperProvider theme={DefaultTheme}>
       <NavigationContainer theme={DefaultTheme}>
         <Stack.Navigator>
-          <Stack.Screen name='Welcome' component={welcomeScreen} />
-          <Stack.Screen name='Login' component={loginScreen} />
-          <Stack.Screen name='Signup' component={signupScreen} />
+          <Stack.Screen name='welcomeNavigator' options={{ headerShown: false }} component={welcomeNavigator} />
           <Stack.Screen name='homeNavigator' options={{ headerShown: false }} component={homeNavigator} />
           <Stack.Screen name='Update Details' component={updateDetailsScreen} />
         </Stack.Navigator>

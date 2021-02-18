@@ -1,53 +1,14 @@
 import React, { useState } from 'react'
-import { ToastAndroid, View } from 'react-native'
+import { View } from 'react-native'
 import { Button, Text, TextInput } from 'react-native-paper';
 import { ScrollView } from 'react-native-gesture-handler'
-import AsyncStorage from '@react-native-async-storage/async-storage'
-import PropTypes from 'prop-types'
+import Login from '../components/login'
 import styles from '../styles/stylesheet'
 
 const LoginScreen = (props) => {
   // hard coded login details for quick testing
   const [email, setEmail] = useState("fake@mail.com");
   const [password, setPassword] = useState("hello123");
-
-  const login = async () => {
-    // TODO: Validation
-
-    // eslint-disable-next-line no-undef
-    return fetch("http://10.0.2.2:3333/api/1.0.0/user/login", {
-      method: 'post',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        email,
-        password
-      })
-    })
-      .then((response) => {
-        if (response.status === 200) {
-          return response.json()
-        }
-        if (response.status === 400) {
-          throw new Error('Invalid email or password')
-        }
-        if (response.status === 500) {
-          throw new Error('Server Error')
-        } else {
-          throw new Error('Something went wrong')
-        }
-      })
-      .then(async (responseJson) => {
-        await AsyncStorage.setItem('@session_token', responseJson.token);
-        await AsyncStorage.setItem('@user_id', JSON.stringify(responseJson.id));
-
-        props.navigation.navigate('homeNavigator');
-      })
-      .catch((error) => {
-        ToastAndroid.show(error.toString(), ToastAndroid.SHORT);
-      })
-  }
 
   return (
     <ScrollView contentContainerStyle={styles.flexContainer}>
@@ -72,7 +33,7 @@ const LoginScreen = (props) => {
       <View style={styles.loginViewTwo}>
         <Button
           mode="contained"
-          onPress={() => login()}
+          onPress={() => Login(props, email, password)}
           style={styles.loginButton}
           contentStyle={styles.loginButtonContent}>
           <Text>Login</Text>
@@ -80,12 +41,6 @@ const LoginScreen = (props) => {
       </View>
     </ScrollView>
   )
-}
-
-LoginScreen.propTypes = {
-  navigation: PropTypes.shape({
-    navigate: PropTypes.func.isRequired,
-  }).isRequired,
 }
 
 export default LoginScreen

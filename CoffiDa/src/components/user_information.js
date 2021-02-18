@@ -2,7 +2,7 @@ import { ToastAndroid } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const UserInfo = async () => {
-  // TODO validation
+  // TODO: validation
   const token = await AsyncStorage.getItem('@session_token');
   const id = await AsyncStorage.getItem('@user_id');
 

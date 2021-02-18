@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { View, TouchableOpacity } from 'react-native'
 import { FlatList } from 'react-native-gesture-handler'
-import { Text, Searchbar, Menu, Divider, Button, Checkbox } from 'react-native-paper'
+import { Text, Searchbar, Menu, Divider, Button, Checkbox, useTheme } from 'react-native-paper'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Slider from '@react-native-community/slider'
 import FindLocations from '../components/find_locations'
@@ -9,10 +9,11 @@ import styles from '../styles/stylesheet'
 
 const HomeScreen = () => {
 
+  const { colors } = useTheme()
 
-  const [listData, setListData] = useState([]);
+  const [listData, setListData] = useState([])
 
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState('')
   const [overallRating, setOverallRating] = useState(0)
   const [priceRating, setPriceRating] = useState(0)
   const [qualityRating, setQualityRating] = useState(0)
@@ -65,29 +66,29 @@ const HomeScreen = () => {
     <View style={styles.flexContainer}>
 
       <View style={styles.homeSearchView}>
-        <View style={styles.searchBarView}>
+        <View style={styles.homeSearchBarView}>
           <Searchbar
-            style={styles.searchBar}
+            style={styles.homeSearchBar}
             placeholder="Search"
             onChangeText={onChangeSearch}
             value={searchQuery}
           />
         </View>
-        <View style={styles.prefMenuView}>
+        <View style={styles.homePrefMenuView}>
           <Menu
-            style={styles.prefMenu}
+            style={styles.homePrefMenu}
             visible={visible}
             onDismiss={closeMenu}
-            anchor={<Button mode="contained" onPress={openMenu} contentStyle={styles.prefMenuButtonContent}><Icon name="cog" size={24} color="#fff" /></Button>} >
+            anchor={<Button mode="contained" onPress={openMenu} contentStyle={styles.homePrefMenuButtonContent}><Icon name="cog" size={24} color="#fff" /></Button>} >
             <Menu.Item onPress={() => { }} title={`Overall Rating: ${overallRating}`} />
             <Slider
               minimumValue={0}
               maximumValue={5}
               step={1}
-              onValueChange={setOverallRating}
+              onSlidingComplete={setOverallRating}
               value={overallRating}
-              minimumTrackTintColor='#E0605E'
-              thumbTintColor='#E0605E'
+              minimumTrackTintColor={colors.background}
+              thumbTintColor={colors.background}
             />
             <Divider />
             <Menu.Item onPress={() => { }} title={`Price Rating: ${priceRating}`} />
@@ -95,10 +96,10 @@ const HomeScreen = () => {
               minimumValue={0}
               maximumValue={5}
               step={1}
-              onValueChange={setPriceRating}
+              onSlidingComplete={setPriceRating}
               value={priceRating}
-              minimumTrackTintColor='#E0605E'
-              thumbTintColor='#E0605E'
+              minimumTrackTintColor={colors.background}
+              thumbTintColor={colors.background}
             />
             <Divider />
             <Menu.Item onPress={() => { }} title={`Quality Rating: ${qualityRating}`} />
@@ -106,10 +107,10 @@ const HomeScreen = () => {
               minimumValue={0}
               maximumValue={5}
               step={1}
-              onValueChange={setQualityRating}
+              onSlidingComplete={setQualityRating}
               value={qualityRating}
-              minimumTrackTintColor='#E0605E'
-              thumbTintColor='#E0605E'
+              minimumTrackTintColor={colors.background}
+              thumbTintColor={colors.background}
             />
             <Divider />
             <Menu.Item onPress={() => { }} title={`Clenliness Rating: ${clenlinessRating}`} />
@@ -117,16 +118,17 @@ const HomeScreen = () => {
               minimumValue={0}
               maximumValue={5}
               step={1}
-              onValueChange={setClenlinessRating}
+              onSlidingComplete={setClenlinessRating}
               value={clenlinessRating}
-              minimumTrackTintColor='#E0605E'
-              thumbTintColor='#E0605E'
+              minimumTrackTintColor={colors.background}
+              thumbTintColor={colors.background}
             />
             <Divider />
-            <View style={styles.checkBoxView}>
+            <View style={styles.homeCheckBoxView}>
               <Menu.Item onPress={() => { }} title="Favourites" />
-              <View style={styles.checkBox}>
+              <View style={styles.homeCheckBox}>
                 <Checkbox
+                  color={colors.background}
                   status={checked ? 'checked' : 'unchecked'}
                   onPress={() => {
                     onCheck();
@@ -140,13 +142,13 @@ const HomeScreen = () => {
         </View>
       </View>
 
-      <View style={styles.flatListView}>
+      <View style={styles.homeFlatListView}>
         <FlatList
           data={listData}
           renderItem={({ item }) => (
             <View>
               <TouchableOpacity
-                style={styles.button}
+                style={[{ backgroundColor: colors.primary, borderColor: colors.accent }, styles.homeTouchableOpacity]}
               >
                 <Text>{item.location_name}</Text>
                 <Text>{item.avg_overall_rating}</Text>

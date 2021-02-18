@@ -4,7 +4,7 @@ export default StyleSheet.create({
     flexContainer: {
         flex: 1,
     },
-    
+
     welcomeViewOne: {
         flex: 1,
         justifyContent: 'flex-end',
@@ -96,38 +96,39 @@ export default StyleSheet.create({
         flexDirection: 'row',
     },
 
-    flatListView: {
+    homeFlatListView: {
         flex: 11,
         margin: '3%',
     },
 
-    searchBarView: {
+    homeSearchBarView: {
         flex: 4,
     },
 
-    prefMenuView: {
+    homePrefMenuView: {
         flex: 1,
     },
 
-    searchBar: {
+    homeSearchBar: {
         height: '100%',
     },
 
-    prefMenu: {
-
-    },
-
-    prefMenuButtonContent: {
+    homePrefMenuButtonContent: {
         height: '100%',
     },
 
-    checkBoxView: {
+    homeCheckBoxView: {
         flex: 1,
         flexDirection: 'row',
     },
 
-    checkBox: {
+    homeCheckBox: {
         marginTop: '4%',
+    },
+
+    homeTouchableOpacity: {
+        padding: '5%',
+        borderWidth: 1,
     },
 
 })

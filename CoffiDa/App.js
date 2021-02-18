@@ -1,7 +1,7 @@
 import 'react-native-gesture-handler'
 import * as React from 'react'
-import { NavigationContainer, DefaultTheme as NavigationDefaultTheme } from '@react-navigation/native';
-import { DefaultTheme as PaperDefaultTheme, Provider as PaperProvider } from 'react-native-paper';
+import { NavigationContainer, DefaultTheme as NavigationDefaultTheme } from '@react-navigation/native'
+import { DefaultTheme as PaperDefaultTheme, Provider as PaperProvider } from 'react-native-paper'
 import { createStackNavigator } from '@react-navigation/stack'
 import welcomeNavigator from './src/navigators/welcome_navigator'
 import homeNavigator from './src/navigators/home_navigator'
@@ -20,7 +20,7 @@ const DefaultTheme = {
     accent: '#997542',
     background: '#E0605E',
     text: '#FFFFFF',
-    surface: '#997542',
+    surface: '#E0A655',
     card: '#E0A655',
     placeholder: '#FFFFFF',
   

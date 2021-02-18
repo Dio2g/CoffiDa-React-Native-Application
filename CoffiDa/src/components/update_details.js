@@ -11,7 +11,7 @@ const UpdateDetails = async (props, firstName, lastName, email, password) => {
 
   // different content for body depending on if they enter new password or not
   let bodyContent
-  if (password === "*********" || password === "") {
+  if (password === "" || password === null) {
     bodyContent = JSON.stringify({
       first_name: firstName,
       last_name: lastName,

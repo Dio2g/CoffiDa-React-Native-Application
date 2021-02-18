@@ -13,14 +13,10 @@ const Tab = createMaterialBottomTabNavigator();
 const HomeNavigator = (props) => {
 
   const checkLoggedIn = async () => {
-    try {
-      const value = await AsyncStorage.getItem('@session_token');
+    const value = await AsyncStorage.getItem('@session_token');
 
-      if (value == null) {
-        props.navigation.navigate('welcomeScreen');
-      }
-    } catch (e) {
-      // handle error
+    if (value == null) {
+      props.navigation.navigate('Welcome');
     }
   }
 

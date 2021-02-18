@@ -20,7 +20,7 @@ const Logout = async (props) => {
         props.navigation.navigate('Welcome');
       } 
       if (response.status === 401) {
-        throw new Error('Not Authorized') 
+        throw new Error('Unauthorised') 
       } else if (response.status === 500) {
         throw new Error('Server error') 
       } else if (response.status !== 200) {

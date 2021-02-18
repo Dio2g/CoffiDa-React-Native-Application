@@ -10,6 +10,7 @@ import UserInfo from '../components/user_information'
 
 const UpdateDetails = (props) => {
 
+  // const [isLoading, setIsLoading] = useState(true);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -65,7 +66,18 @@ const UpdateDetails = (props) => {
         }
         if (response.status === 400) {
           throw new Error('Failed Validation')
-
+        }
+        if (response.status === 401) {
+          throw new Error('Unauthorised')
+        }
+        if (response.status === 403) {
+          throw new Error('Forbidden')
+        }
+        if (response.status === 404) {
+          throw new Error('Not Found')
+        }
+        if (response.status === 500) {
+          throw new Error('Server Error')
         } else if (response.status !== 200) {
           throw new Error('Something went wrong')
         }
@@ -75,6 +87,7 @@ const UpdateDetails = (props) => {
       })
   }
 
+  // uses same style as signup screen as it is the same inputs etc..
   return (
     <ScrollView contentContainerStyle={styles.flexContainer}>
       <View style={styles.signupViewOne}>

@@ -28,9 +28,12 @@ const LoginScreen = (props) => {
       .then((response) => {
         if (response.status === 200) {
           return response.json()
-        } 
+        }
         if (response.status === 400) {
           throw new Error('Invalid email or password')
+        }
+        if (response.status === 500) {
+          throw new Error('Server Error')
         } else {
           throw new Error('Something went wrong')
         }

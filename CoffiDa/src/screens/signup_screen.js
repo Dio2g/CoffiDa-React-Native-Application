@@ -34,7 +34,9 @@ const SignupScreen = (props) => {
         }
         if (response.status === 400) {
           throw new Error('Failed Validation')
-
+        }
+        if (response.status === 500) {
+          throw new Error('Server Error')
         } else if (response.status !== 201) {
           throw new Error('Something went wrong')
         }

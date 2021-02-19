@@ -4,10 +4,11 @@ import { FlatList } from 'react-native-gesture-handler'
 import { Text, Searchbar, Menu, Divider, Button, Checkbox, useTheme } from 'react-native-paper'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Slider from '@react-native-community/slider'
+import PropTypes from 'prop-types'
 import FindLocations from '../components/find_locations'
 import styles from '../styles/stylesheet'
 
-const HomeScreen = () => {
+const HomeScreen = (props) => {
 
   const { colors } = useTheme()
 
@@ -149,6 +150,7 @@ const HomeScreen = () => {
             <View>
               <TouchableOpacity
                 style={[{ backgroundColor: colors.primary, borderColor: colors.accent }, styles.homeTouchableOpacity]}
+                onPress={() => props.navigation.navigate('Location Info', {id: item.location_id})}
               >
                 <Text>{item.location_name}</Text>
                 <Text>{item.avg_overall_rating}</Text>
@@ -160,6 +162,12 @@ const HomeScreen = () => {
       </View>
     </View>
   )
+}
+
+HomeScreen.propTypes = {
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func.isRequired,
+  }).isRequired,
 }
 
 export default HomeScreen

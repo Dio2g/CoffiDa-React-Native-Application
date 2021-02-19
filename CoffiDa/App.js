@@ -6,6 +6,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 import welcomeNavigator from './src/navigators/welcome_navigator'
 import homeNavigator from './src/navigators/home_navigator'
 import updateDetailsScreen from './src/screens/update_details_screen'
+import locationInfoScreen from './src/screens/location_info_screen'
 
 const Stack = createStackNavigator()
 
@@ -36,6 +37,7 @@ export default function Main() {
           <Stack.Screen name='welcomeNavigator' options={{ headerShown: false }} component={welcomeNavigator} />
           <Stack.Screen name='homeNavigator' options={{ headerShown: false }} component={homeNavigator} />
           <Stack.Screen name='Update Details' component={updateDetailsScreen} />
+          <Stack.Screen name='Location Info' component={locationInfoScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </PaperProvider>

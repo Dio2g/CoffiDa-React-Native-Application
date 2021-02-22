@@ -1,11 +1,11 @@
-import { ToastAndroid } from 'react-native'
-import PropTypes from 'prop-types'
+import { ToastAndroid } from 'react-native';
+import PropTypes from 'prop-types';
 
 const Signup = (props, firstName, lastName, email, password) => {
   // TODO: Validation
   // eslint-disable-next-line no-undef
   return fetch("http://10.0.2.2:3333/api/1.0.0/user", {
-    method: 'post',
+    method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
@@ -22,23 +22,23 @@ const Signup = (props, firstName, lastName, email, password) => {
         props.navigation.navigate('Welcome');
       }
       if (response.status === 400) {
-        throw new Error('Failed Validation')
+        throw new Error('Failed Validation');
       }
       if (response.status === 500) {
-        throw new Error('Server Error')
+        throw new Error('Server Error');
       } else if (response.status !== 201) {
-        throw new Error('Something went wrong')
+        throw new Error('Something went wrong');
       }
     })
     .catch((error) => {
       ToastAndroid.show(error.toString(), ToastAndroid.SHORT);
-    })
-}
+    });
+};
 
 Signup.propTypes = {
   navigation: PropTypes.shape({
     navigate: PropTypes.func.isRequired,
   }).isRequired,
-}
+};
 
-export default Signup
+export default Signup;

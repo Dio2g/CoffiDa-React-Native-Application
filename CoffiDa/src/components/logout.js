@@ -7,7 +7,7 @@ const Logout = async (props) => {
   const token = await AsyncStorage.getItem('@session_token');
   // eslint-disable-next-line no-undef
   return fetch("http://10.0.2.2:3333/api/1.0.0/user/logout", {
-    method: 'post',
+    method: 'POST',
     headers: {
       'Content-Type': 'application/json',
       'X-Authorization': token

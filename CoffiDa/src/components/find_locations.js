@@ -6,7 +6,7 @@ const FindLocations = async (query, overallRating, priceRating, qualityRating, c
 
   // eslint-disable-next-line no-undef
   return fetch(`http://10.0.2.2:3333/api/1.0.0/find?q=${query}&overall_rating=${overallRating}&price_rating=${priceRating}&quality_rating=${qualityRating}&clenliness_rating=${clenlinessRating}&search_in=${searchIn}`, {
-    method: 'get',
+    method: 'GET',
     headers: {
       'Content-Type': 'application/json',
       'X-Authorization': token

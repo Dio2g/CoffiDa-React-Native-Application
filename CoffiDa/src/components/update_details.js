@@ -28,7 +28,7 @@ const UpdateDetails = async (props, firstName, lastName, email, password) => {
 
   // eslint-disable-next-line no-undef
   return fetch(address, {
-    method: 'patch',
+    method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',
       'X-Authorization': token

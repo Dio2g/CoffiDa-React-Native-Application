@@ -84,7 +84,7 @@ const HomeScreen = (props) => {
             style={styles.homePrefMenu}
             visible={visible}
             onDismiss={closeMenu}
-            anchor={<Button mode="contained" onPress={openMenu} contentStyle={styles.homePrefMenuButtonContent}><Icon name="cog" size={24} color="#fff" /></Button>} >
+            anchor={<Button mode="contained" onPress={openMenu} contentStyle={styles.homePrefMenuButtonContent}><Icon name="cog" size={24} color={colors.text} /></Button>} >
             <Menu.Item onPress={() => { }} title={`Overall Rating: ${overallRating}`} />
             <Slider
               minimumValue={0}

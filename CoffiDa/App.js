@@ -1,14 +1,14 @@
-import 'react-native-gesture-handler'
-import * as React from 'react'
-import { NavigationContainer, DefaultTheme as NavigationDefaultTheme } from '@react-navigation/native'
-import { DefaultTheme as PaperDefaultTheme, Provider as PaperProvider } from 'react-native-paper'
-import { createStackNavigator } from '@react-navigation/stack'
-import welcomeNavigator from './src/navigators/welcome_navigator'
-import homeNavigator from './src/navigators/home_navigator'
-import updateDetailsScreen from './src/screens/update_details_screen'
-import locationInfoScreen from './src/screens/location_info_screen'
+import 'react-native-gesture-handler';
+import * as React from 'react';
+import { NavigationContainer, DefaultTheme as NavigationDefaultTheme } from '@react-navigation/native';
+import { DefaultTheme as PaperDefaultTheme, Provider as PaperProvider } from 'react-native-paper';
+import { createStackNavigator } from '@react-navigation/stack';
+import welcomeNavigator from './src/navigators/welcome_navigator';
+import homeNavigator from './src/navigators/home_navigator';
+import updateDetailsScreen from './src/screens/update_details_screen';
+import locationInfoScreen from './src/screens/location_info_screen';
 
-const Stack = createStackNavigator()
+const Stack = createStackNavigator();
 
 const DefaultTheme = {
   ...NavigationDefaultTheme,
@@ -41,5 +41,5 @@ export default function Main() {
         </Stack.Navigator>
       </NavigationContainer>
     </PaperProvider>
-  )
+  );
 }

@@ -32,7 +32,7 @@ const LocationInfoScreen = (props) => {
         mode="contained"
         style={styles.loginButton}
         contentStyle={styles.loginButtonContent}
-        onPress={() => FavouriteLocation(id, "POST")}>
+        onPress={() => FavouriteLocation(id, "DELETE")}>
         <Text>Favourite</Text>
       </Button>
       <Button

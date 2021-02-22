@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Dimensions } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-import { Button, Text, TextInput } from 'react-native-paper';
+import { Button, Text, TextInput, ActivityIndicator } from 'react-native-paper';
 import { useHeaderHeight } from '@react-navigation/stack';
 import styles from '../styles/stylesheet';
 import UpdateDetails from '../components/update_details';
@@ -11,7 +11,7 @@ const UpdateDetailsScreen = (props) => {
 
   const windowHeight = (Dimensions.get('window').height - useHeaderHeight());
 
-  // const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -20,6 +20,7 @@ const UpdateDetailsScreen = (props) => {
   useEffect(() => {
     async function getUserData() {
       const userData = await UserInfo();
+      setIsLoading(false);
       setFirstName(userData.first_name);
       setLastName(userData.last_name);
       setEmail(userData.email);
@@ -29,6 +30,9 @@ const UpdateDetailsScreen = (props) => {
   }, []);
 
   // uses same style as signup screen as it is the same inputs etc..
+  if (isLoading === true) {
+    return (<View style={styles.flexContainer}><ActivityIndicator style={styles.activityIndicator} animating /></View>);
+  }
   return (
     <ScrollView style={styles.flexContainer} contentContainerStyle={styles.scrollView}>
       <View style={{ width: '100%', height: windowHeight }}>

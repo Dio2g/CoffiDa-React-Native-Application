@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, TouchableOpacity, Dimensions } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
-import { Text, Searchbar, Menu, Divider, Button, Checkbox, useTheme } from 'react-native-paper';
+import { Text, Searchbar, Menu, Divider, Button, Checkbox, useTheme, ActivityIndicator } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Slider from '@react-native-community/slider';
 import PropTypes from 'prop-types';
@@ -12,11 +12,15 @@ const HomeScreen = (props) => {
 
   const windowHeight = (Dimensions.get('window').height);
 
+  // so paper theme colors can be used with with non paper components
   const { colors } = useTheme();
+
+  const [isLoading, setIsLoading] = useState(true);
 
   const [listData, setListData] = useState([]);
 
   const [searchQuery, setSearchQuery] = useState('');
+
   const [overallRating, setOverallRating] = useState(0);
   const [priceRating, setPriceRating] = useState(0);
   const [qualityRating, setQualityRating] = useState(0);
@@ -28,19 +32,14 @@ const HomeScreen = (props) => {
   const [visible, setVisible] = useState(false);
   const openMenu = () => setVisible(true);
   const closeMenu = () => setVisible(false);
-
-
-  // check box
-  const [checked, setChecked] = useState(false);
-
-
-
-  const onChangeSearch = async (query) => {
-    setSearchQuery(query);
-    const data = await FindLocations(query, overallRating, priceRating, qualityRating, clenlinessRating, searchIn);
+  const submitPreferences = async () => {
+    const data = await FindLocations(searchQuery, overallRating, priceRating, qualityRating, clenlinessRating, searchIn);
     setListData(data);
+    closeMenu();
   };
 
+  // for check box
+  const [checked, setChecked] = useState(false);
   const onCheck = () => {
     if (searchIn === '') {
       setSearchIn('favourite');
@@ -50,21 +49,25 @@ const HomeScreen = (props) => {
     setChecked(!checked);
   };
 
-  const submitPreferences = async () => {
-    const data = await FindLocations(searchQuery, overallRating, priceRating, qualityRating, clenlinessRating, searchIn);
+  // for search bar
+  const onChangeSearch = async (query) => {
+    setSearchQuery(query);
+    const data = await FindLocations(query, overallRating, priceRating, qualityRating, clenlinessRating, searchIn);
     setListData(data);
-    closeMenu();
   };
-
 
   useEffect(() => {
     async function getLocations() {
       const data = await FindLocations('');
+      setIsLoading(false);
       setListData(data);
     }
     getLocations();
   }, []);
 
+  if (isLoading === true) {
+    return (<View style={styles.flexContainer}><ActivityIndicator style={styles.activityIndicator} animating /></View>);
+  }
   return (
     <View style={{ width: '100%', height: windowHeight }}>
       <View style={styles.homeSearchView}>
@@ -151,25 +154,9 @@ const HomeScreen = (props) => {
             <View>
               <TouchableOpacity
                 style={[{ backgroundColor: colors.primary, borderColor: colors.accent }, styles.homeTouchableOpacity]}
-                onPress={() => props.navigation.navigate('Location Info', {id: item.location_id})}
-              >
+                onPress={() => props.navigation.navigate('Location Info', { id: item.location_id })} >
                 <Text>{item.location_name}</Text>
                 <Text>{item.avg_overall_rating}</Text>
-                <Text>{item.avg_overall_rating}</Text>
-                <Text>{item.avg_overall_rating}</Text>
-                <Text>{item.avg_overall_rating}</Text>
-                <Text>{item.avg_overall_rating}</Text>
-                <Text>{item.avg_overall_rating}</Text>
-                <Text>{item.avg_overall_rating}</Text>
-                <Text>{item.avg_overall_rating}</Text>
-                <Text>{item.avg_overall_rating}</Text>
-                <Text>{item.avg_overall_rating}</Text>
-                <Text>{item.avg_overall_rating}</Text>
-                <Text>{item.avg_overall_rating}</Text>
-                <Text>{item.avg_overall_rating}</Text>
-                <Text>{item.avg_overall_rating}</Text>
-                <Text>{item.avg_overall_rating}</Text>
-
               </TouchableOpacity>
             </View>
           )}

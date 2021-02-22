@@ -10,6 +10,12 @@ export default StyleSheet.create({
         flexGrow: 1,
     },
 
+    activityIndicator: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+
     welcomeViewOne: {
         flex: 1,
         justifyContent: 'flex-end',

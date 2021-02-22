@@ -6,8 +6,7 @@ const LocationInfo = async (id) => {
   return fetch(`http://10.0.2.2:3333/api/1.0.0/location/${id}`, {
     method: 'GET',
     headers: {
-      'Content-Type': 'application/json',
-      
+      'Content-Type': 'application/json'
     },
   })
     .then((response) => {

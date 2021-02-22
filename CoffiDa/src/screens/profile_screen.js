@@ -1,9 +1,9 @@
-import * as React from 'react'
-import { View } from 'react-native'
+import * as React from 'react';
+import { View } from 'react-native';
 import { Button, Text } from 'react-native-paper';
-import PropTypes from 'prop-types'
-import Logout from '../components/logout'
-import styles from '../styles/stylesheet'
+import PropTypes from 'prop-types';
+import Logout from '../components/logout';
+import styles from '../styles/stylesheet';
 
 const ProfileScreen = (props) => {
   return (
@@ -15,13 +15,13 @@ const ProfileScreen = (props) => {
         <Button contentStyle={styles.profileButtonContent} style={styles.profileButton} mode="contained" onPress={() => Logout(props)}> <Text>Logout</Text> </Button>
       </View>
     </View>
-  )
-}
+  );
+};
 
 ProfileScreen.propTypes = {
   navigation: PropTypes.shape({
     navigate: PropTypes.func.isRequired,
   }).isRequired,
-}
+};
 
-export default ProfileScreen
+export default ProfileScreen;

@@ -11,6 +11,7 @@ module.exports = {
     "classes": true
   },
   "rules": {
+    "semi" : "error",
     "react/jsx-filename-extension": ["error", { "extensions": [".js", ".jsx"] }],
   }
-}
+};

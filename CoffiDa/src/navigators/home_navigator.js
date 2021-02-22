@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage'
-import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs'
-import PropTypes from 'prop-types'
-import HomeScreen from '../screens/home_screen'
-import NearbyScreen from '../screens/nearby_screen'
-import ReviewsScreen from '../screens/reviews_screen'
-import ProfileScreen from '../screens/profile_screen'
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
+import PropTypes from 'prop-types';
+import HomeScreen from '../screens/home_screen';
+import NearbyScreen from '../screens/nearby_screen';
+import ReviewsScreen from '../screens/reviews_screen';
+import ProfileScreen from '../screens/profile_screen';
 
 
 const Tab = createMaterialBottomTabNavigator();
@@ -18,7 +18,7 @@ const HomeNavigator = (props) => {
     if (value == null) {
       props.navigation.navigate('Welcome');
     }
-  }
+  };
 
   useEffect(() => {
     const unsubscribe = props.navigation.addListener('focus', () => {
@@ -66,14 +66,14 @@ const HomeNavigator = (props) => {
         }}
       />
     </Tab.Navigator>
-  )
-}
+  );
+};
 
 HomeNavigator.propTypes = {
   navigation: PropTypes.shape({
     navigate: PropTypes.func.isRequired,
     addListener: PropTypes.func.isRequired,
   }).isRequired,
-}
+};
 
-export default HomeNavigator
+export default HomeNavigator;

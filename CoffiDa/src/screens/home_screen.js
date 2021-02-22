@@ -1,25 +1,27 @@
-import React, { useState, useEffect } from 'react'
-import { View, TouchableOpacity } from 'react-native'
-import { FlatList } from 'react-native-gesture-handler'
-import { Text, Searchbar, Menu, Divider, Button, Checkbox, useTheme } from 'react-native-paper'
+import React, { useState, useEffect } from 'react';
+import { View, TouchableOpacity, Dimensions } from 'react-native';
+import { FlatList } from 'react-native-gesture-handler';
+import { Text, Searchbar, Menu, Divider, Button, Checkbox, useTheme } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import Slider from '@react-native-community/slider'
-import PropTypes from 'prop-types'
-import FindLocations from '../components/find_locations'
-import styles from '../styles/stylesheet'
+import Slider from '@react-native-community/slider';
+import PropTypes from 'prop-types';
+import FindLocations from '../components/find_locations';
+import styles from '../styles/stylesheet';
 
 const HomeScreen = (props) => {
 
-  const { colors } = useTheme()
+  const windowHeight = (Dimensions.get('window').height);
 
-  const [listData, setListData] = useState([])
+  const { colors } = useTheme();
 
-  const [searchQuery, setSearchQuery] = useState('')
-  const [overallRating, setOverallRating] = useState(0)
-  const [priceRating, setPriceRating] = useState(0)
-  const [qualityRating, setQualityRating] = useState(0)
-  const [clenlinessRating, setClenlinessRating] = useState(0)
-  const [searchIn, setSearchIn] = useState('')
+  const [listData, setListData] = useState([]);
+
+  const [searchQuery, setSearchQuery] = useState('');
+  const [overallRating, setOverallRating] = useState(0);
+  const [priceRating, setPriceRating] = useState(0);
+  const [qualityRating, setQualityRating] = useState(0);
+  const [clenlinessRating, setClenlinessRating] = useState(0);
+  const [searchIn, setSearchIn] = useState('');
 
 
   // for the preference menu
@@ -34,38 +36,37 @@ const HomeScreen = (props) => {
 
 
   const onChangeSearch = async (query) => {
-    setSearchQuery(query)
-    const data = await FindLocations(query, overallRating, priceRating, qualityRating, clenlinessRating, searchIn)
-    setListData(data)
+    setSearchQuery(query);
+    const data = await FindLocations(query, overallRating, priceRating, qualityRating, clenlinessRating, searchIn);
+    setListData(data);
   };
 
   const onCheck = () => {
     if (searchIn === '') {
-      setSearchIn('favourite')
+      setSearchIn('favourite');
     } else {
-      setSearchIn('')
+      setSearchIn('');
     }
-    setChecked(!checked)
-  }
+    setChecked(!checked);
+  };
 
   const submitPreferences = async () => {
-    const data = await FindLocations(searchQuery, overallRating, priceRating, qualityRating, clenlinessRating, searchIn)
-    setListData(data)
-    closeMenu()
-  }
+    const data = await FindLocations(searchQuery, overallRating, priceRating, qualityRating, clenlinessRating, searchIn);
+    setListData(data);
+    closeMenu();
+  };
 
 
   useEffect(() => {
     async function getLocations() {
-      const data = await FindLocations('')
-      setListData(data)
+      const data = await FindLocations('');
+      setListData(data);
     }
     getLocations();
   }, []);
 
   return (
-    <View style={styles.flexContainer}>
-
+    <View style={{ width: '100%', height: windowHeight }}>
       <View style={styles.homeSearchView}>
         <View style={styles.homeSearchBarView}>
           <Searchbar
@@ -154,6 +155,21 @@ const HomeScreen = (props) => {
               >
                 <Text>{item.location_name}</Text>
                 <Text>{item.avg_overall_rating}</Text>
+                <Text>{item.avg_overall_rating}</Text>
+                <Text>{item.avg_overall_rating}</Text>
+                <Text>{item.avg_overall_rating}</Text>
+                <Text>{item.avg_overall_rating}</Text>
+                <Text>{item.avg_overall_rating}</Text>
+                <Text>{item.avg_overall_rating}</Text>
+                <Text>{item.avg_overall_rating}</Text>
+                <Text>{item.avg_overall_rating}</Text>
+                <Text>{item.avg_overall_rating}</Text>
+                <Text>{item.avg_overall_rating}</Text>
+                <Text>{item.avg_overall_rating}</Text>
+                <Text>{item.avg_overall_rating}</Text>
+                <Text>{item.avg_overall_rating}</Text>
+                <Text>{item.avg_overall_rating}</Text>
+
               </TouchableOpacity>
             </View>
           )}
@@ -161,13 +177,13 @@ const HomeScreen = (props) => {
         />
       </View>
     </View>
-  )
-}
+  );
+};
 
 HomeScreen.propTypes = {
   navigation: PropTypes.shape({
     navigate: PropTypes.func.isRequired,
   }).isRequired,
-}
+};
 
-export default HomeScreen
+export default HomeScreen;

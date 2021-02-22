@@ -1,8 +1,13 @@
-import { StyleSheet } from 'react-native'
+import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
+
     flexContainer: {
         flex: 1,
+    },
+
+    scrollView: {
+        flexGrow: 1,
     },
 
     welcomeViewOne: {
@@ -28,8 +33,8 @@ export default StyleSheet.create({
 
     signupViewOne: {
         flex: 3,
-        justifyContent: 'space-evenly',
         padding: '5%',
+        justifyContent: 'space-evenly',
     },
 
     signupViewTwo: {
@@ -131,4 +136,4 @@ export default StyleSheet.create({
         borderWidth: 1,
     },
 
-})
+});

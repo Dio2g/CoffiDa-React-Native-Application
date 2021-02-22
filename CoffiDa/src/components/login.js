@@ -1,6 +1,6 @@
-import { ToastAndroid } from 'react-native'
-import AsyncStorage from '@react-native-async-storage/async-storage'
-import PropTypes from 'prop-types'
+import { ToastAndroid } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import PropTypes from 'prop-types';
 
 const Login = (props, email, password) => {
   // TODO: Validation
@@ -17,15 +17,15 @@ const Login = (props, email, password) => {
   })
     .then((response) => {
       if (response.status === 200) {
-        return response.json()
+        return response.json();
       }
       if (response.status === 400) {
-        throw new Error('Invalid email or password')
+        throw new Error('Invalid email or password');
       }
       if (response.status === 500) {
-        throw new Error('Server Error')
+        throw new Error('Server Error');
       } else {
-        throw new Error('Something went wrong')
+        throw new Error('Something went wrong');
       }
     })
     .then(async (responseJson) => {
@@ -36,14 +36,14 @@ const Login = (props, email, password) => {
     })
     .catch((error) => {
       ToastAndroid.show(error.toString(), ToastAndroid.SHORT);
-    })
-}
+    });
+};
 
 
 Login.propTypes = {
   navigation: PropTypes.shape({
     navigate: PropTypes.func.isRequired,
   }).isRequired,
-}
+};
 
-export default Login
+export default Login;

@@ -1,12 +1,15 @@
-import React, { useState, useEffect } from 'react'
-import { View } from 'react-native'
-import { ScrollView } from 'react-native-gesture-handler'
+import React, { useState, useEffect } from 'react';
+import { View, Dimensions } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
 import { Button, Text, TextInput } from 'react-native-paper';
-import styles from '../styles/stylesheet'
-import UpdateDetails from '../components/update_details'
-import UserInfo from '../components/user_information'
+import { useHeaderHeight } from '@react-navigation/stack';
+import styles from '../styles/stylesheet';
+import UpdateDetails from '../components/update_details';
+import UserInfo from '../components/user_information';
 
 const UpdateDetailsScreen = (props) => {
+
+  const windowHeight = (Dimensions.get('window').height - useHeaderHeight());
 
   // const [isLoading, setIsLoading] = useState(true);
   const [firstName, setFirstName] = useState("");
@@ -16,10 +19,10 @@ const UpdateDetailsScreen = (props) => {
 
   useEffect(() => {
     async function getUserData() {
-      const userData = await UserInfo()
-      setFirstName(userData.first_name)
-      setLastName(userData.last_name)
-      setEmail(userData.email)
+      const userData = await UserInfo();
+      setFirstName(userData.first_name);
+      setLastName(userData.last_name);
+      setEmail(userData.email);
     }
 
     getUserData();
@@ -27,7 +30,8 @@ const UpdateDetailsScreen = (props) => {
 
   // uses same style as signup screen as it is the same inputs etc..
   return (
-      <ScrollView contentContainerStyle={styles.flexContainer}>
+    <ScrollView style={styles.flexContainer} contentContainerStyle={styles.scrollView}>
+      <View style={{ width: '100%', height: windowHeight }}>
         <View style={styles.signupViewOne}>
           <TextInput
             type='outlined'
@@ -51,6 +55,7 @@ const UpdateDetailsScreen = (props) => {
             value={email}
           />
           <TextInput
+            secureTextEntry
             type='outlined'
             label="Password"
             placeholder="Enter new password..."
@@ -68,8 +73,9 @@ const UpdateDetailsScreen = (props) => {
             <Text>Update Details</Text>
           </Button>
         </View>
-      </ScrollView>
-  )
-}
+      </View>
+    </ScrollView>
+  );
+};
 
-export default UpdateDetailsScreen
+export default UpdateDetailsScreen;

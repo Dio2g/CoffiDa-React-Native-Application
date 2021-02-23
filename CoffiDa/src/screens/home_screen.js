@@ -259,7 +259,7 @@ const styles = StyleSheet.create({
     elevation: 0,
   },
 
-  hrefMenuButton: {
+  prefMenuButton: {
     borderRadius: 0,
     shadowRadius: 0,
     elevation: 0,

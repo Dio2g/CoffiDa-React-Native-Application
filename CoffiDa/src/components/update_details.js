@@ -38,7 +38,7 @@ const UpdateDetails = async (props, firstName, lastName, email, password) => {
     .then((response) => {
       if (response.status === 200) {
         ToastAndroid.show("Details Updated!", ToastAndroid.SHORT);
-        props.navigation.navigate('homeNavigator');
+        props.navigation.navigate('homeTabNavigator');
       }
       if (response.status === 400) {
         throw new Error('Failed Validation');

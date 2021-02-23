@@ -7,7 +7,7 @@ import styles from '../styles/stylesheet';
 
 
 const SignupScreen = (props) => {
-  
+
   const windowHeight = (Dimensions.get('window').height - useHeaderHeight());
 
   const [firstName, setFirstName] = useState("");
@@ -18,7 +18,7 @@ const SignupScreen = (props) => {
   return (
     <ScrollView style={styles.flexContainer} contentContainerStyle={styles.scrollView}>
       <View style={{ width: '100%', height: windowHeight }}>
-        <View style={styles.signupViewOne}>
+        <View style={styles.formViewOne}>
           <TextInput
             type='outlined'
             label="First Name"
@@ -41,6 +41,7 @@ const SignupScreen = (props) => {
             value={email}
           />
           <TextInput
+            secureTextEntry
             type='outlined'
             label="Password"
             placeholder="Enter your password..."
@@ -48,10 +49,10 @@ const SignupScreen = (props) => {
             value={password}
           />
         </View>
-        <View style={styles.signupViewTwo}>
+        <View style={styles.formViewTwo}>
           <Button
-            style={styles.signupButton}
-            contentStyle={styles.signupButtonContent}
+            style={styles.formButton}
+            contentStyle={styles.formButtonContent}
             mode="contained"
             onPress={() => Signup(props, firstName, lastName, email, password)}>
             <Text>Create Account</Text>

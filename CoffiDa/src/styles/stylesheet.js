@@ -16,6 +16,28 @@ export default StyleSheet.create({
         justifyContent: 'center',
     },
 
+    formViewOne: {
+        flex: 3,
+        padding: '5%',
+        justifyContent: 'space-evenly',
+    },
+
+    formViewTwo: {
+        flex: 1,
+        justifyContent: 'space-evenly',
+    },
+
+    formButton: {
+        borderRadius: 20,
+        height: '40%',
+        margin: '7%'
+    },
+
+    formButtonContent: {
+        borderRadius: 20,
+        height: '100%',
+    },
+
     welcomeViewOne: {
         flex: 1,
         justifyContent: 'flex-end',
@@ -33,28 +55,6 @@ export default StyleSheet.create({
     },
 
     welcomeButtonContent: {
-        borderRadius: 20,
-        height: '100%',
-    },
-
-    signupViewOne: {
-        flex: 3,
-        padding: '5%',
-        justifyContent: 'space-evenly',
-    },
-
-    signupViewTwo: {
-        flex: 1,
-        justifyContent: 'space-evenly',
-    },
-
-    signupButton: {
-        borderRadius: 20,
-        height: '40%',
-        margin: '7%'
-    },
-
-    signupButtonContent: {
         borderRadius: 20,
         height: '100%',
     },
@@ -109,7 +109,7 @@ export default StyleSheet.create({
 
     homeFlatListView: {
         flex: 11,
-        margin: '3%',
+        marginTop: '4%',
     },
 
     homeSearchBarView: {
@@ -122,6 +122,15 @@ export default StyleSheet.create({
 
     homeSearchBar: {
         height: '100%',
+        borderRadius: 0,
+        shadowRadius: 0,
+        elevation: 0,
+    },
+
+    homePrefMenuButton: {
+        borderRadius: 0,
+        shadowRadius: 0,
+        elevation: 0,
     },
 
     homePrefMenuButtonContent: {
@@ -139,7 +148,8 @@ export default StyleSheet.create({
 
     homeTouchableOpacity: {
         padding: '5%',
-        borderWidth: 1,
+        marginVertical: 8,
+        marginHorizontal: 16,
     },
 
 });

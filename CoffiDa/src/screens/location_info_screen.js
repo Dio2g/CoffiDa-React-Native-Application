@@ -24,7 +24,7 @@ const LocationInfoScreen = (props) => {
     getUserData();
   }, [id]);
 
-  // console.log(locationData)
+   // console.log(locationData);
 
   return (
     <View>

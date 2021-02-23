@@ -84,7 +84,7 @@ const HomeScreen = (props) => {
             style={styles.homePrefMenu}
             visible={visible}
             onDismiss={closeMenu}
-            anchor={<Button mode="contained" onPress={openMenu} contentStyle={styles.homePrefMenuButtonContent}><Icon name="cog" size={24} color={colors.text} /></Button>} >
+            anchor={<Button mode="contained" onPress={openMenu} style={styles.homePrefMenuButton} contentStyle={styles.homePrefMenuButtonContent}><Icon name="cog" size={24} color={colors.text} /></Button>} >
             <Menu.Item onPress={() => { }} title={`Overall Rating: ${overallRating}`} />
             <Slider
               minimumValue={0}
@@ -154,8 +154,19 @@ const HomeScreen = (props) => {
             <View>
               <TouchableOpacity
                 style={[{ backgroundColor: colors.primary, borderColor: colors.accent }, styles.homeTouchableOpacity]}
-                onPress={() => props.navigation.navigate('Location Info', { id: item.location_id })} >
+                onPress={() => props.navigation.navigate('homeStackNavigator', { screen: 'Location Info', params: { id: item.location_id } })} >
                 <Text>{item.location_name}</Text>
+                <Text>{item.avg_overall_rating}</Text>
+                <Text>{item.avg_overall_rating}</Text>
+                <Text>{item.avg_overall_rating}</Text>
+                <Text>{item.avg_overall_rating}</Text>
+                <Text>{item.avg_overall_rating}</Text>
+                <Text>{item.avg_overall_rating}</Text>
+                <Text>{item.avg_overall_rating}</Text>
+                <Text>{item.avg_overall_rating}</Text>
+                <Text>{item.avg_overall_rating}</Text>
+                <Text>{item.avg_overall_rating}</Text>
+                <Text>{item.avg_overall_rating}</Text>
                 <Text>{item.avg_overall_rating}</Text>
               </TouchableOpacity>
             </View>

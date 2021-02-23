@@ -32,7 +32,7 @@ const Login = (props, email, password) => {
       await AsyncStorage.setItem('@session_token', responseJson.token);
       await AsyncStorage.setItem('@user_id', JSON.stringify(responseJson.id));
 
-      props.navigation.navigate('homeNavigator');
+      props.navigation.navigate('homeTabNavigator');
     })
     .catch((error) => {
       ToastAndroid.show(error.toString(), ToastAndroid.SHORT);

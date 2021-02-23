@@ -4,7 +4,7 @@ import {Text, Button} from 'react-native-paper';
 import PropTypes from 'prop-types';
 import LocationInfo from '../components/location_information';
 import FavouriteLocation from '../components/favourite_location';
-import styles from '../styles/stylesheet';
+import globalStyles from '../styles/global_stylesheet';
 
 const LocationInfoScreen = (props) => {
   const {route} = props;
@@ -29,15 +29,15 @@ const LocationInfoScreen = (props) => {
     <View>
       <Button
         mode="contained"
-        style={styles.loginButton}
-        contentStyle={styles.loginButtonContent}
+        style={globalStyles.button}
+        contentStyle={globalStyles.buttonContent}
         onPress={() => FavouriteLocation(id, 'DELETE')}>
         <Text>Favourite</Text>
       </Button>
       <Button
         mode="contained"
-        style={styles.loginButton}
-        contentStyle={styles.loginButtonContent}>
+        style={globalStyles.button}
+        contentStyle={globalStyles.buttonContent}>
         <Text>Add Review</Text>
       </Button>
     </View>

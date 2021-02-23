@@ -3,7 +3,7 @@ import {View, Dimensions} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import {Button, Text, TextInput, ActivityIndicator} from 'react-native-paper';
 import {useHeaderHeight} from '@react-navigation/stack';
-import styles from '../styles/stylesheet';
+import globalStyles from '../styles/global_stylesheet';
 import UpdateDetails from '../components/update_details';
 import UserInfo from '../components/user_information';
 
@@ -30,17 +30,17 @@ const UpdateDetailsScreen = (props) => {
 
   if (isLoading === true) {
     return (
-      <View style={styles.flexContainer}>
-        <ActivityIndicator style={styles.activityIndicator} animating />
+      <View style={globalStyles.flexContainer}>
+        <ActivityIndicator style={globalStyles.activityIndicator} animating />
       </View>
     );
   }
   return (
     <ScrollView
-      style={styles.flexContainer}
-      contentContainerStyle={styles.scrollView}>
+      style={globalStyles.flexContainer}
+      contentContainerStyle={globalStyles.scrollView}>
       <View style={{width: '100%', height: windowHeight}}>
-        <View style={styles.formViewOne}>
+        <View style={globalStyles.viewOne}>
           <TextInput
             type="outlined"
             label="First Name"
@@ -72,10 +72,10 @@ const UpdateDetailsScreen = (props) => {
           />
         </View>
 
-        <View style={styles.formViewTwo}>
+        <View style={globalStyles.viewTwo}>
           <Button
-            style={styles.formButton}
-            contentStyle={styles.formButtonContent}
+            style={globalStyles.button}
+            contentStyle={globalStyles.buttonContent}
             mode="contained"
             onPress={() =>
               UpdateDetails(props, firstName, lastName, email, password)

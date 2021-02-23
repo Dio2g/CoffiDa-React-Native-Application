@@ -1,26 +1,25 @@
 import * as React from 'react';
 import {View, StyleSheet} from 'react-native';
 import {Button, Text} from 'react-native-paper';
-
 import PropTypes from 'prop-types';
-import globalStyles from '../styles/stylesheet';
+import globalStyles from '../styles/global_stylesheet';
 
 const WelcomeScreen = (props) => (
-  <View style={styles.flexContainer}>
-    <View style={styles.welcomeViewOne}>
+  <View style={globalStyles.flexContainer}>
+    <View style={styles.viewOne}>
       <Button
-        contentStyle={styles.welcomeButtonContent}
-        style={styles.welcomeButton}
+        contentStyle={styles.buttonContent}
+        style={styles.button}
         mode="contained"
         onPress={() => props.navigation.navigate('Login')}>
         {' '}
         <Text>Login</Text>{' '}
       </Button>
     </View>
-    <View style={styles.welcomeViewTwo}>
+    <View style={styles.viewTwo}>
       <Button
-        contentStyle={styles.welcomeButtonContent}
-        style={styles.welcomeButton}
+        contentStyle={styles.buttonContent}
+        style={styles.button}
         mode="contained"
         onPress={() => props.navigation.navigate('Signup')}>
         {' '}
@@ -37,37 +36,23 @@ WelcomeScreen.propTypes = {
 };
 
 const styles = StyleSheet.create({
-  flexContainer: {
-    flex: 1,
-  },
-
-  scrollView: {
-    flexGrow: 1,
-  },
-
-  activityIndicator: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-
-  welcomeViewOne: {
+  viewOne: {
     flex: 1,
     justifyContent: 'flex-end',
   },
 
-  welcomeViewTwo: {
+  viewTwo: {
     flex: 1,
     justifyContent: 'flex-start',
   },
 
-  welcomeButton: {
+  button: {
     borderRadius: 20,
     height: '30%',
     margin: '7%',
   },
 
-  welcomeButtonContent: {
+  buttonContent: {
     borderRadius: 20,
     height: '100%',
   },

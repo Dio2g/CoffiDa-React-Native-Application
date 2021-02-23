@@ -1,10 +1,10 @@
 import React, {useState} from 'react';
-import {View, Dimensions} from 'react-native';
+import {View, Dimensions, StyleSheet} from 'react-native';
 import {Button, Text, TextInput} from 'react-native-paper';
 import {ScrollView} from 'react-native-gesture-handler';
 import {useHeaderHeight} from '@react-navigation/stack';
 import Login from '../components/login';
-import styles from '../styles/stylesheet';
+import globalStyles from '../styles/global_stylesheet';
 
 const LoginScreen = (props) => {
   const windowHeight = Dimensions.get('window').height - useHeaderHeight();
@@ -15,12 +15,11 @@ const LoginScreen = (props) => {
 
   return (
     <ScrollView
-      style={styles.flexContainer}
-      contentContainerStyle={styles.scrollView}>
+      style={globalStyles.flexContainer}
+      contentContainerStyle={globalStyles.scrollView}>
       <View style={{width: '100%', height: windowHeight}}>
-        <View style={styles.loginViewOne}>
+        <View style={styles.viewOne}>
           <TextInput
-            style={styles.textInputLoginFirst}
             type="outlined"
             label="Email"
             placeholder="Enter your email..."
@@ -29,7 +28,6 @@ const LoginScreen = (props) => {
           />
           <TextInput
             secureTextEntry
-            style={styles.textInputLogin}
             type="outlined"
             label="Password"
             placeholder="Enter your password..."
@@ -37,12 +35,12 @@ const LoginScreen = (props) => {
             value={password}
           />
         </View>
-        <View style={styles.loginViewTwo}>
+        <View style={styles.viewTwo}>
           <Button
             mode="contained"
             onPress={() => Login(props, email, password)}
-            style={styles.loginButton}
-            contentStyle={styles.loginButtonContent}>
+            style={styles.button}
+            contentStyle={styles.buttonContent}>
             <Text>Login</Text>
           </Button>
         </View>
@@ -50,5 +48,29 @@ const LoginScreen = (props) => {
     </ScrollView>
   );
 };
+
+const styles = StyleSheet.create({
+  viewOne: {
+    flex: 3,
+    justifyContent: 'space-evenly',
+    padding: '5%',
+  },
+
+  viewTwo: {
+    flex: 2,
+    justifyContent: 'space-evenly',
+  },
+
+  button: {
+    borderRadius: 20,
+    height: '30%',
+    margin: '7%',
+  },
+
+  buttonContent: {
+    borderRadius: 20,
+    height: '100%',
+  },
+});
 
 export default LoginScreen;

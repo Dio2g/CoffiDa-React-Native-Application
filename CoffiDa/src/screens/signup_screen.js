@@ -3,7 +3,7 @@ import {View, ScrollView, Dimensions} from 'react-native';
 import {Button, Text, TextInput} from 'react-native-paper';
 import {useHeaderHeight} from '@react-navigation/stack';
 import Signup from '../components/signup';
-import styles from '../styles/stylesheet';
+import globalStyles from '../styles/global_stylesheet';
 
 const SignupScreen = (props) => {
   const windowHeight = Dimensions.get('window').height - useHeaderHeight();
@@ -15,10 +15,10 @@ const SignupScreen = (props) => {
 
   return (
     <ScrollView
-      style={styles.flexContainer}
-      contentContainerStyle={styles.scrollView}>
+      style={globalStyles.flexContainer}
+      contentContainerStyle={globalStyles.scrollView}>
       <View style={{width: '100%', height: windowHeight}}>
-        <View style={styles.formViewOne}>
+        <View style={globalStyles.viewOne}>
           <TextInput
             type="outlined"
             label="First Name"
@@ -49,10 +49,10 @@ const SignupScreen = (props) => {
             value={password}
           />
         </View>
-        <View style={styles.formViewTwo}>
+        <View style={globalStyles.viewTwo}>
           <Button
-            style={styles.formButton}
-            contentStyle={styles.formButtonContent}
+            style={globalStyles.button}
+            contentStyle={globalStyles.buttonContent}
             mode="contained"
             onPress={() => Signup(props, firstName, lastName, email, password)}>
             <Text>Create Account</Text>

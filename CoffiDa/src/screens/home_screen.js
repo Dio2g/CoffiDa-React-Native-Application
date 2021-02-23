@@ -1,6 +1,3 @@
-import React, {useState, useEffect} from 'react';
-import {View, TouchableOpacity, Dimensions} from 'react-native';
-import {FlatList} from 'react-native-gesture-handler';
 import {
   Text,
   Searchbar,
@@ -11,12 +8,15 @@ import {
   useTheme,
   ActivityIndicator,
 } from 'react-native-paper';
+import React, {useState, useEffect} from 'react';
+import {View, TouchableOpacity, Dimensions, StyleSheet} from 'react-native';
+import {FlatList} from 'react-native-gesture-handler';
 import {Rating} from 'react-native-ratings';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Slider from '@react-native-community/slider';
 import PropTypes from 'prop-types';
 import FindLocations from '../components/find_locations';
-import styles from '../styles/stylesheet';
+import globalStyles from '../styles/global_stylesheet';
 
 const HomeScreen = (props) => {
   const windowHeight = Dimensions.get('window').height;
@@ -30,11 +30,12 @@ const HomeScreen = (props) => {
 
   const [searchQuery, setSearchQuery] = useState('');
 
+  const [searchIn, setSearchIn] = useState('');
+
   const [overallRating, setOverallRating] = useState(0);
   const [priceRating, setPriceRating] = useState(0);
   const [qualityRating, setQualityRating] = useState(0);
   const [clenlinessRating, setClenlinessRating] = useState(0);
-  const [searchIn, setSearchIn] = useState('');
 
   // for the preference menu
   const [visible, setVisible] = useState(false);
@@ -89,33 +90,33 @@ const HomeScreen = (props) => {
 
   if (isLoading === true) {
     return (
-      <View style={styles.flexContainer}>
-        <ActivityIndicator style={styles.activityIndicator} animating />
+      <View style={globalStyles.flexContainer}>
+        <ActivityIndicator style={globalStyles.activityIndicator} animating />
       </View>
     );
   }
   return (
     <View style={{width: '100%', height: windowHeight}}>
-      <View style={styles.homeSearchView}>
-        <View style={styles.homeSearchBarView}>
+      <View style={styles.searchView}>
+        <View style={styles.searchBarView}>
           <Searchbar
-            style={styles.homeSearchBar}
+            style={styles.searchBar}
             placeholder="Search"
             onChangeText={onChangeSearch}
             value={searchQuery}
           />
         </View>
-        <View style={styles.homePrefMenuView}>
+        <View style={styles.prefMenuView}>
           <Menu
-            style={styles.homePrefMenu}
+            style={styles.prefMenu}
             visible={visible}
             onDismiss={closeMenu}
             anchor={
               <Button
                 mode="contained"
                 onPress={openMenu}
-                style={styles.homePrefMenuButton}
-                contentStyle={styles.homePrefMenuButtonContent}>
+                style={styles.prefMenuButton}
+                contentStyle={styles.prefMenuButtonContent}>
                 <Icon name="cog" size={24} color={colors.text} />
               </Button>
             }>
@@ -175,9 +176,9 @@ const HomeScreen = (props) => {
               thumbTintColor={colors.background}
             />
             <Divider />
-            <View style={styles.homeCheckBoxView}>
+            <View style={styles.checkBoxView}>
               <Menu.Item onPress={() => {}} title="Favourites" />
-              <View style={styles.homeCheckBox}>
+              <View style={styles.checkBox}>
                 <Checkbox
                   color={colors.background}
                   status={checked ? 'checked' : 'unchecked'}
@@ -195,7 +196,7 @@ const HomeScreen = (props) => {
         </View>
       </View>
 
-      <View style={styles.homeFlatListView}>
+      <View style={styles.flatListView}>
         <FlatList
           data={listData}
           renderItem={({item}) => (
@@ -203,7 +204,7 @@ const HomeScreen = (props) => {
               <TouchableOpacity
                 style={[
                   {backgroundColor: colors.primary, borderColor: colors.accent},
-                  styles.homeTouchableOpacity,
+                  styles.touchableOpacity,
                 ]}
                 onPress={() =>
                   props.navigation.navigate('homeStackNavigator', {
@@ -211,7 +212,7 @@ const HomeScreen = (props) => {
                     params: {id: item.location_id},
                   })
                 }>
-                <Text>{item.location_name}</Text>
+                <Text style={styles.nameText}>{item.location_name}</Text>
                 <Text>{item.avg_overall_rating}</Text>
                 <Rating
                   fractions={2}
@@ -234,5 +235,62 @@ HomeScreen.propTypes = {
     navigate: PropTypes.func.isRequired,
   }).isRequired,
 };
+
+const styles = StyleSheet.create({
+  searchView: {
+    flex: 1,
+    flexDirection: 'row',
+  },
+
+  flatListView: {
+    flex: 11,
+    marginTop: '4%',
+    marginBottom: '16%',
+  },
+
+  searchBarView: {
+    flex: 4,
+  },
+
+  prefMenuView: {
+    flex: 1,
+  },
+
+  searchBar: {
+    height: '100%',
+    borderRadius: 0,
+    shadowRadius: 0,
+    elevation: 0,
+  },
+
+  hrefMenuButton: {
+    borderRadius: 0,
+    shadowRadius: 0,
+    elevation: 0,
+  },
+
+  prefMenuButtonContent: {
+    height: '100%',
+  },
+
+  checkBoxView: {
+    flex: 1,
+    flexDirection: 'row',
+  },
+
+  checkBox: {
+    marginTop: '4%',
+  },
+
+  touchableOpacity: {
+    padding: '5%',
+    marginVertical: 8,
+    marginHorizontal: 16,
+  },
+
+  nameText: {
+    fontSize: 17,
+  },
+});
 
 export default HomeScreen;

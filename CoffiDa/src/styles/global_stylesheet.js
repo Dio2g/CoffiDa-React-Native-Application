@@ -32,8 +32,24 @@ export default StyleSheet.create({
     margin: '7%',
   },
 
+  alternativeButton: {
+    borderRadius: 20,
+    height: '30%',
+    margin: '7%',
+  },
+
   buttonContent: {
     borderRadius: 20,
     height: '100%',
+  },
+
+  twoButtonViewOne: {
+    flex: 1,
+    justifyContent: 'flex-end',
+  },
+
+  twoButtonViewTwo: {
+    flex: 1,
+    justifyContent: 'flex-start',
   },
 });

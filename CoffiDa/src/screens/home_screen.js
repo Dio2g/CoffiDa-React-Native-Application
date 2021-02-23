@@ -106,7 +106,7 @@ const HomeScreen = (props) => {
             value={searchQuery}
           />
         </View>
-        <View style={styles.prefMenuView}>
+        <View style={globalStyles.flexContainer}>
           <Menu
             style={styles.prefMenu}
             visible={visible}
@@ -250,10 +250,6 @@ const styles = StyleSheet.create({
 
   searchBarView: {
     flex: 4,
-  },
-
-  prefMenuView: {
-    flex: 1,
   },
 
   searchBar: {

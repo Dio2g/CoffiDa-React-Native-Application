@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View} from 'react-native';
 import {Button, Text} from 'react-native-paper';
 import PropTypes from 'prop-types';
 import Logout from '../components/logout';
@@ -7,10 +7,10 @@ import globalStyles from '../styles/global_stylesheet';
 
 const ProfileScreen = (props) => (
   <View style={globalStyles.flexContainer}>
-    <View style={styles.viewOne}>
+    <View style={globalStyles.twoButtonViewOne}>
       <Button
-        contentStyle={styles.buttonContent}
-        style={styles.button}
+        contentStyle={globalStyles.buttonContent}
+        style={globalStyles.alternativeButton}
         mode="contained"
         onPress={() =>
           props.navigation.navigate('homeStackNavigator', {
@@ -21,10 +21,10 @@ const ProfileScreen = (props) => (
         <Text>Update Details</Text>{' '}
       </Button>
     </View>
-    <View style={styles.viewTwo}>
+    <View style={globalStyles.twoButtonViewTwo}>
       <Button
-        contentStyle={styles.buttonContent}
-        style={styles.button}
+        contentStyle={globalStyles.buttonContent}
+        style={globalStyles.alternativeButton}
         mode="contained"
         onPress={() => Logout(props)}>
         {' '}
@@ -39,28 +39,5 @@ ProfileScreen.propTypes = {
     navigate: PropTypes.func.isRequired,
   }).isRequired,
 };
-
-const styles = StyleSheet.create({
-  viewOne: {
-    flex: 1,
-    justifyContent: 'flex-end',
-  },
-
-  viewTwo: {
-    flex: 1,
-    justifyContent: 'flex-start',
-  },
-
-  button: {
-    borderRadius: 20,
-    height: '30%',
-    margin: '7%',
-  },
-
-  buttonContent: {
-    borderRadius: 20,
-    height: '100%',
-  },
-});
 
 export default ProfileScreen;

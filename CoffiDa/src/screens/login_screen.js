@@ -18,7 +18,7 @@ const LoginScreen = (props) => {
       style={globalStyles.flexContainer}
       contentContainerStyle={globalStyles.scrollView}>
       <View style={{width: '100%', height: windowHeight}}>
-        <View style={styles.viewOne}>
+        <View style={globalStyles.viewOne}>
           <TextInput
             type="outlined"
             label="Email"
@@ -39,8 +39,8 @@ const LoginScreen = (props) => {
           <Button
             mode="contained"
             onPress={() => Login(props, email, password)}
-            style={styles.button}
-            contentStyle={styles.buttonContent}>
+            style={globalStyles.alternativeButton}
+            contentStyle={globalStyles.buttonContent}>
             <Text>Login</Text>
           </Button>
         </View>
@@ -50,26 +50,9 @@ const LoginScreen = (props) => {
 };
 
 const styles = StyleSheet.create({
-  viewOne: {
-    flex: 3,
-    justifyContent: 'space-evenly',
-    padding: '5%',
-  },
-
   viewTwo: {
     flex: 2,
     justifyContent: 'space-evenly',
-  },
-
-  button: {
-    borderRadius: 20,
-    height: '30%',
-    margin: '7%',
-  },
-
-  buttonContent: {
-    borderRadius: 20,
-    height: '100%',
   },
 });
 

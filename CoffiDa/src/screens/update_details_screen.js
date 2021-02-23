@@ -1,21 +1,20 @@
-import React, { useState, useEffect } from 'react';
-import { View, Dimensions } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
-import { Button, Text, TextInput, ActivityIndicator } from 'react-native-paper';
-import { useHeaderHeight } from '@react-navigation/stack';
+import React, {useState, useEffect} from 'react';
+import {View, Dimensions} from 'react-native';
+import {ScrollView} from 'react-native-gesture-handler';
+import {Button, Text, TextInput, ActivityIndicator} from 'react-native-paper';
+import {useHeaderHeight} from '@react-navigation/stack';
 import styles from '../styles/stylesheet';
 import UpdateDetails from '../components/update_details';
 import UserInfo from '../components/user_information';
 
 const UpdateDetailsScreen = (props) => {
-
-  const windowHeight = (Dimensions.get('window').height - useHeaderHeight());
+  const windowHeight = Dimensions.get('window').height - useHeaderHeight();
 
   const [isLoading, setIsLoading] = useState(true);
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   useEffect(() => {
     async function getUserData() {
@@ -29,41 +28,46 @@ const UpdateDetailsScreen = (props) => {
     getUserData();
   }, []);
 
-
   if (isLoading === true) {
-    return (<View style={styles.flexContainer}><ActivityIndicator style={styles.activityIndicator} animating /></View>);
+    return (
+      <View style={styles.flexContainer}>
+        <ActivityIndicator style={styles.activityIndicator} animating />
+      </View>
+    );
   }
   return (
-    <ScrollView style={styles.flexContainer} contentContainerStyle={styles.scrollView}>
-      <View style={{ width: '100%', height: windowHeight }}>
+    <ScrollView
+      style={styles.flexContainer}
+      contentContainerStyle={styles.scrollView}>
+      <View style={{width: '100%', height: windowHeight}}>
         <View style={styles.formViewOne}>
           <TextInput
-            type='outlined'
+            type="outlined"
             label="First Name"
             placeholder="Enter new first name..."
-            onChangeText={value => setFirstName(value)}
+            onChangeText={(value) => setFirstName(value)}
             value={firstName}
           />
           <TextInput
-            type='outlined'
+            type="outlined"
             label="Last Name"
             placeholder="Enter new last name..."
-            onChangeText={value => setLastName(value)}
+            onChangeText={(value) => setLastName(value)}
             value={lastName}
           />
           <TextInput
-            type='outlined'
+            type="outlined"
             label="Email"
             placeholder="Enter new email..."
-            onChangeText={value => setEmail(value)}
+            onChangeText={(value) => setEmail(value)}
             value={email}
           />
           <TextInput
             secureTextEntry
-            type='outlined'
+            type="outlined"
             label="Password"
             placeholder="Enter new password..."
-            onChangeText={value => setPassword(value)}
+            onChangeText={(value) => setPassword(value)}
             value={password}
           />
         </View>
@@ -73,7 +77,9 @@ const UpdateDetailsScreen = (props) => {
             style={styles.formButton}
             contentStyle={styles.formButtonContent}
             mode="contained"
-            onPress={() => UpdateDetails(props, firstName, lastName, email, password)}>
+            onPress={() =>
+              UpdateDetails(props, firstName, lastName, email, password)
+            }>
             <Text>Update Details</Text>
           </Button>
         </View>

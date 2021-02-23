@@ -1,7 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import { View, TouchableOpacity, Dimensions } from 'react-native';
-import { FlatList } from 'react-native-gesture-handler';
-import { Text, Searchbar, Menu, Divider, Button, Checkbox, useTheme, ActivityIndicator } from 'react-native-paper';
+import React, {useState, useEffect} from 'react';
+import {View, TouchableOpacity, Dimensions} from 'react-native';
+import {FlatList} from 'react-native-gesture-handler';
+import {
+  Text,
+  Searchbar,
+  Menu,
+  Divider,
+  Button,
+  Checkbox,
+  useTheme,
+  ActivityIndicator,
+} from 'react-native-paper';
+import {Rating} from 'react-native-ratings';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Slider from '@react-native-community/slider';
 import PropTypes from 'prop-types';
@@ -9,11 +19,10 @@ import FindLocations from '../components/find_locations';
 import styles from '../styles/stylesheet';
 
 const HomeScreen = (props) => {
-
-  const windowHeight = (Dimensions.get('window').height);
+  const windowHeight = Dimensions.get('window').height;
 
   // so paper theme colors can be used with with non paper components
-  const { colors } = useTheme();
+  const {colors} = useTheme();
 
   const [isLoading, setIsLoading] = useState(true);
 
@@ -27,13 +36,19 @@ const HomeScreen = (props) => {
   const [clenlinessRating, setClenlinessRating] = useState(0);
   const [searchIn, setSearchIn] = useState('');
 
-
   // for the preference menu
   const [visible, setVisible] = useState(false);
   const openMenu = () => setVisible(true);
   const closeMenu = () => setVisible(false);
   const submitPreferences = async () => {
-    const data = await FindLocations(searchQuery, overallRating, priceRating, qualityRating, clenlinessRating, searchIn);
+    const data = await FindLocations(
+      searchQuery,
+      overallRating,
+      priceRating,
+      qualityRating,
+      clenlinessRating,
+      searchIn,
+    );
     setListData(data);
     closeMenu();
   };
@@ -52,7 +67,14 @@ const HomeScreen = (props) => {
   // for search bar
   const onChangeSearch = async (query) => {
     setSearchQuery(query);
-    const data = await FindLocations(query, overallRating, priceRating, qualityRating, clenlinessRating, searchIn);
+    const data = await FindLocations(
+      query,
+      overallRating,
+      priceRating,
+      qualityRating,
+      clenlinessRating,
+      searchIn,
+    );
     setListData(data);
   };
 
@@ -66,10 +88,14 @@ const HomeScreen = (props) => {
   }, []);
 
   if (isLoading === true) {
-    return (<View style={styles.flexContainer}><ActivityIndicator style={styles.activityIndicator} animating /></View>);
+    return (
+      <View style={styles.flexContainer}>
+        <ActivityIndicator style={styles.activityIndicator} animating />
+      </View>
+    );
   }
   return (
-    <View style={{ width: '100%', height: windowHeight }}>
+    <View style={{width: '100%', height: windowHeight}}>
       <View style={styles.homeSearchView}>
         <View style={styles.homeSearchBarView}>
           <Searchbar
@@ -84,8 +110,19 @@ const HomeScreen = (props) => {
             style={styles.homePrefMenu}
             visible={visible}
             onDismiss={closeMenu}
-            anchor={<Button mode="contained" onPress={openMenu} style={styles.homePrefMenuButton} contentStyle={styles.homePrefMenuButtonContent}><Icon name="cog" size={24} color={colors.text} /></Button>} >
-            <Menu.Item onPress={() => { }} title={`Overall Rating: ${overallRating}`} />
+            anchor={
+              <Button
+                mode="contained"
+                onPress={openMenu}
+                style={styles.homePrefMenuButton}
+                contentStyle={styles.homePrefMenuButtonContent}>
+                <Icon name="cog" size={24} color={colors.text} />
+              </Button>
+            }>
+            <Menu.Item
+              onPress={() => {}}
+              title={`Overall Rating: ${overallRating}`}
+            />
             <Slider
               minimumValue={0}
               maximumValue={5}
@@ -96,7 +133,10 @@ const HomeScreen = (props) => {
               thumbTintColor={colors.background}
             />
             <Divider />
-            <Menu.Item onPress={() => { }} title={`Price Rating: ${priceRating}`} />
+            <Menu.Item
+              onPress={() => {}}
+              title={`Price Rating: ${priceRating}`}
+            />
             <Slider
               minimumValue={0}
               maximumValue={5}
@@ -107,7 +147,10 @@ const HomeScreen = (props) => {
               thumbTintColor={colors.background}
             />
             <Divider />
-            <Menu.Item onPress={() => { }} title={`Quality Rating: ${qualityRating}`} />
+            <Menu.Item
+              onPress={() => {}}
+              title={`Quality Rating: ${qualityRating}`}
+            />
             <Slider
               minimumValue={0}
               maximumValue={5}
@@ -118,7 +161,10 @@ const HomeScreen = (props) => {
               thumbTintColor={colors.background}
             />
             <Divider />
-            <Menu.Item onPress={() => { }} title={`Clenliness Rating: ${clenlinessRating}`} />
+            <Menu.Item
+              onPress={() => {}}
+              title={`Clenliness Rating: ${clenlinessRating}`}
+            />
             <Slider
               minimumValue={0}
               maximumValue={5}
@@ -130,7 +176,7 @@ const HomeScreen = (props) => {
             />
             <Divider />
             <View style={styles.homeCheckBoxView}>
-              <Menu.Item onPress={() => { }} title="Favourites" />
+              <Menu.Item onPress={() => {}} title="Favourites" />
               <View style={styles.homeCheckBox}>
                 <Checkbox
                   color={colors.background}
@@ -142,7 +188,9 @@ const HomeScreen = (props) => {
               </View>
             </View>
             <Divider />
-            <Button mode="contained" onPress={submitPreferences}><Text>Save</Text></Button>
+            <Button mode="contained" onPress={submitPreferences}>
+              <Text>Save</Text>
+            </Button>
           </Menu>
         </View>
       </View>
@@ -150,24 +198,27 @@ const HomeScreen = (props) => {
       <View style={styles.homeFlatListView}>
         <FlatList
           data={listData}
-          renderItem={({ item }) => (
+          renderItem={({item}) => (
             <View>
               <TouchableOpacity
-                style={[{ backgroundColor: colors.primary, borderColor: colors.accent }, styles.homeTouchableOpacity]}
-                onPress={() => props.navigation.navigate('homeStackNavigator', { screen: 'Location Info', params: { id: item.location_id } })} >
+                style={[
+                  {backgroundColor: colors.primary, borderColor: colors.accent},
+                  styles.homeTouchableOpacity,
+                ]}
+                onPress={() =>
+                  props.navigation.navigate('homeStackNavigator', {
+                    screen: 'Location Info',
+                    params: {id: item.location_id},
+                  })
+                }>
                 <Text>{item.location_name}</Text>
                 <Text>{item.avg_overall_rating}</Text>
-                <Text>{item.avg_overall_rating}</Text>
-                <Text>{item.avg_overall_rating}</Text>
-                <Text>{item.avg_overall_rating}</Text>
-                <Text>{item.avg_overall_rating}</Text>
-                <Text>{item.avg_overall_rating}</Text>
-                <Text>{item.avg_overall_rating}</Text>
-                <Text>{item.avg_overall_rating}</Text>
-                <Text>{item.avg_overall_rating}</Text>
-                <Text>{item.avg_overall_rating}</Text>
-                <Text>{item.avg_overall_rating}</Text>
-                <Text>{item.avg_overall_rating}</Text>
+                <Rating
+                  fractions
+                  readonly
+                  startingValue={item.avg_overall_rating}
+                  tintColor={colors.primary}
+                />
               </TouchableOpacity>
             </View>
           )}

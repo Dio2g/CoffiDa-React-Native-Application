@@ -1,12 +1,11 @@
-import { ToastAndroid } from 'react-native';
+import {ToastAndroid} from 'react-native';
 
 const LocationInfo = async (id) => {
-  
   // eslint-disable-next-line no-undef
   return fetch(`http://10.0.2.2:3333/api/1.0.0/location/${id}`, {
     method: 'GET',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     },
   })
     .then((response) => {
@@ -15,7 +14,8 @@ const LocationInfo = async (id) => {
       }
       if (response.status === 401) {
         throw new Error('Unauthorised');
-      }      if (response.status === 404) {
+      }
+      if (response.status === 404) {
         throw new Error('Not Found');
       }
       if (response.status === 500) {
@@ -27,7 +27,6 @@ const LocationInfo = async (id) => {
     .catch((error) => {
       ToastAndroid.show(error.toString(), ToastAndroid.SHORT);
     });
-
 };
 
 export default LocationInfo;

@@ -1,4 +1,4 @@
-import { ToastAndroid } from 'react-native';
+import {ToastAndroid} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const UserInfo = async () => {
@@ -11,7 +11,7 @@ const UserInfo = async () => {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
-      'X-Authorization': token
+      'X-Authorization': token,
     },
   })
     .then((response) => {
@@ -26,15 +26,13 @@ const UserInfo = async () => {
       }
       if (response.status === 500) {
         throw new Error('Server Error');
-      }
-      else {
+      } else {
         throw new Error('Something went wrong');
       }
     })
     .catch((error) => {
       ToastAndroid.show(error.toString(), ToastAndroid.SHORT);
     });
-
 };
 
 export default UserInfo;

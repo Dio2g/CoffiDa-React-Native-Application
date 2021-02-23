@@ -1,24 +1,27 @@
-import { ToastAndroid } from 'react-native';
+import {ToastAndroid} from 'react-native';
 import PropTypes from 'prop-types';
 
 const Signup = (props, firstName, lastName, email, password) => {
   // TODO: Validation
   // eslint-disable-next-line no-undef
-  return fetch("http://10.0.2.2:3333/api/1.0.0/user", {
+  return fetch('http://10.0.2.2:3333/api/1.0.0/user', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     },
     body: JSON.stringify({
       first_name: firstName,
       last_name: lastName,
       email,
-      password
-    })
+      password,
+    }),
   })
     .then((response) => {
       if (response.status === 201) {
-        ToastAndroid.show("Account created, please log in.", ToastAndroid.SHORT);
+        ToastAndroid.show(
+          'Account created, please log in.',
+          ToastAndroid.SHORT,
+        );
         props.navigation.navigate('Welcome');
       }
       if (response.status === 400) {

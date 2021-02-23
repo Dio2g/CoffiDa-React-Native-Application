@@ -1,4 +1,4 @@
-import { ToastAndroid } from 'react-native';
+import {ToastAndroid} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const FavouriteLocation = async (id, method) => {
@@ -9,19 +9,23 @@ const FavouriteLocation = async (id, method) => {
     method,
     headers: {
       'Content-Type': 'application/json',
-      'X-Authorization': token
+      'X-Authorization': token,
     },
   })
     .then((response) => {
       if (response.status === 200) {
-        ToastAndroid.show("OK!", ToastAndroid.SHORT);
-      } if (response.status === 400) {
+        ToastAndroid.show('OK!', ToastAndroid.SHORT);
+      }
+      if (response.status === 400) {
         throw new Error('Bad request');
-      } if (response.status === 401) {
+      }
+      if (response.status === 401) {
         throw new Error('Not Unauthorised');
-      } if (response.status === 404) {
+      }
+      if (response.status === 404) {
         throw new Error('Not Found');
-      } if (response.status === 500) {
+      }
+      if (response.status === 500) {
         throw new Error('Server Error');
       } else if (response.status !== 200) {
         throw new Error('Something went wrong');
@@ -30,7 +34,6 @@ const FavouriteLocation = async (id, method) => {
     .catch((error) => {
       ToastAndroid.show(error.toString(), ToastAndroid.SHORT);
     });
-
 };
 
 export default FavouriteLocation;

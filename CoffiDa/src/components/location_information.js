@@ -1,8 +1,8 @@
 import {ToastAndroid} from 'react-native';
 
-const LocationInfo = async (id) => {
+const LocationInfo = async (id) =>
   // eslint-disable-next-line no-undef
-  return fetch(`http://10.0.2.2:3333/api/1.0.0/location/${id}`, {
+  fetch(`http://10.0.2.2:3333/api/1.0.0/location/${id}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -27,6 +27,4 @@ const LocationInfo = async (id) => {
     .catch((error) => {
       ToastAndroid.show(error.toString(), ToastAndroid.SHORT);
     });
-};
-
 export default LocationInfo;

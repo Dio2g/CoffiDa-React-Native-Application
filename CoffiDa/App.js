@@ -1,8 +1,16 @@
 import 'react-native-gesture-handler';
 import * as React from 'react';
-import { NavigationContainer, DefaultTheme as NavigationDefaultTheme, DarkTheme as NavigationDarkTheme } from '@react-navigation/native';
-import { DefaultTheme as PaperDefaultTheme, DarkTheme as PaperDarkTheme, Provider as PaperProvider } from 'react-native-paper';
-import { createStackNavigator } from '@react-navigation/stack';
+import {
+  NavigationContainer,
+  DefaultTheme as NavigationDefaultTheme,
+  DarkTheme as NavigationDarkTheme,
+} from '@react-navigation/native';
+import {
+  DefaultTheme as PaperDefaultTheme,
+  DarkTheme as PaperDarkTheme,
+  Provider as PaperProvider,
+} from 'react-native-paper';
+import {createStackNavigator} from '@react-navigation/stack';
 import welcomeStackNavigator from './src/navigators/welcome_stack_navigator';
 import homeTabNavigator from './src/navigators/home_tab_navigator';
 import homeStackNavigator from './src/navigators/home_stack_navigator';
@@ -39,14 +47,26 @@ const DarkTheme = {
 
 export default function Main() {
   return (
-      <PaperProvider theme={DefaultTheme}>
-        <NavigationContainer theme={DefaultTheme}>
-          <Stack.Navigator>
-            <Stack.Screen name='welcomeStackNavigator' options={{ headerShown: false }} component={welcomeStackNavigator} />
-            <Stack.Screen name='homeTabNavigator' options={{ headerShown: false }} component={homeTabNavigator} />
-            <Stack.Screen name='homeStackNavigator' options={{ headerShown: false }} component={homeStackNavigator} />
-          </Stack.Navigator>
-        </NavigationContainer>
-      </PaperProvider>
+    <PaperProvider theme={DefaultTheme}>
+      <NavigationContainer theme={DefaultTheme}>
+        <Stack.Navigator>
+          <Stack.Screen
+            name="welcomeStackNavigator"
+            options={{headerShown: false}}
+            component={welcomeStackNavigator}
+          />
+          <Stack.Screen
+            name="homeTabNavigator"
+            options={{headerShown: false}}
+            component={homeTabNavigator}
+          />
+          <Stack.Screen
+            name="homeStackNavigator"
+            options={{headerShown: false}}
+            component={homeStackNavigator}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </PaperProvider>
   );
 }

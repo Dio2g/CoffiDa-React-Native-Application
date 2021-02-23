@@ -2,10 +2,10 @@ import {ToastAndroid} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import PropTypes from 'prop-types';
 
-const Login = (props, email, password) => {
+const Login = (props, email, password) =>
   // TODO: Validation
   // eslint-disable-next-line no-undef
-  return fetch('http://10.0.2.2:3333/api/1.0.0/user/login', {
+  fetch('http://10.0.2.2:3333/api/1.0.0/user/login', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -37,8 +37,6 @@ const Login = (props, email, password) => {
     .catch((error) => {
       ToastAndroid.show(error.toString(), ToastAndroid.SHORT);
     });
-};
-
 Login.propTypes = {
   navigation: PropTypes.shape({
     navigate: PropTypes.func.isRequired,

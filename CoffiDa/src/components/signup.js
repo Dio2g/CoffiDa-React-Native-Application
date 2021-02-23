@@ -1,10 +1,10 @@
 import {ToastAndroid} from 'react-native';
 import PropTypes from 'prop-types';
 
-const Signup = (props, firstName, lastName, email, password) => {
+const Signup = (props, firstName, lastName, email, password) =>
   // TODO: Validation
   // eslint-disable-next-line no-undef
-  return fetch('http://10.0.2.2:3333/api/1.0.0/user', {
+  fetch('http://10.0.2.2:3333/api/1.0.0/user', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -36,8 +36,6 @@ const Signup = (props, firstName, lastName, email, password) => {
     .catch((error) => {
       ToastAndroid.show(error.toString(), ToastAndroid.SHORT);
     });
-};
-
 Signup.propTypes = {
   navigation: PropTypes.shape({
     navigate: PropTypes.func.isRequired,

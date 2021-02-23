@@ -214,7 +214,7 @@ const HomeScreen = (props) => {
                 <Text>{item.location_name}</Text>
                 <Text>{item.avg_overall_rating}</Text>
                 <Rating
-                  fractions
+                  fractions={2}
                   readonly
                   startingValue={item.avg_overall_rating}
                   tintColor={colors.primary}

@@ -26,6 +26,16 @@ export default StyleSheet.create({
     justifyContent: 'space-evenly',
   },
 
+  twoButtonViewOne: {
+    flex: 1,
+    justifyContent: 'flex-end',
+  },
+
+  twoButtonViewTwo: {
+    flex: 1,
+    justifyContent: 'flex-start',
+  },
+
   button: {
     borderRadius: 20,
     height: '40%',
@@ -41,15 +51,5 @@ export default StyleSheet.create({
   buttonContent: {
     borderRadius: 20,
     height: '100%',
-  },
-
-  twoButtonViewOne: {
-    flex: 1,
-    justifyContent: 'flex-end',
-  },
-
-  twoButtonViewTwo: {
-    flex: 1,
-    justifyContent: 'flex-start',
   },
 });

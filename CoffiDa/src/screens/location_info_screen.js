@@ -15,6 +15,11 @@ const LocationInfoScreen = (props) => {
 
   const [locationData, setLocationData] = useState([]);
 
+  let isFavourite = async (id) => {
+    const data = await FindLocations('', '', '', '', '', 'favourite');
+    const arr = data.map((i) => i.location_id);
+  };
+
   useEffect(() => {
     async function getUserData() {
       const data = await LocationInfo(id);
@@ -31,7 +36,7 @@ const LocationInfoScreen = (props) => {
         mode="contained"
         style={globalStyles.button}
         contentStyle={globalStyles.buttonContent}
-        onPress={() => FavouriteLocation(id, 'DELETE')}>
+        onPress={() => FavouriteLocation(id, 'POST')}>
         <Text>Favourite</Text>
       </Button>
       <Button

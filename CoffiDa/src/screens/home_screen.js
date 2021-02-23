@@ -11,7 +11,7 @@ import {
 import React, {useState, useEffect} from 'react';
 import {View, TouchableOpacity, Dimensions, StyleSheet} from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
-import {Rating} from 'react-native-ratings';
+import {Rating, AirbnbRating} from 'react-native-ratings';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Slider from '@react-native-community/slider';
 import PropTypes from 'prop-types';
@@ -26,16 +26,30 @@ const HomeScreen = (props) => {
 
   const [isLoading, setIsLoading] = useState(true);
 
+  // for locations list
   const [listData, setListData] = useState([]);
 
+  // search parameters
   const [searchQuery, setSearchQuery] = useState('');
-
-  const [searchIn, setSearchIn] = useState('');
-
   const [overallRating, setOverallRating] = useState(0);
   const [priceRating, setPriceRating] = useState(0);
   const [qualityRating, setQualityRating] = useState(0);
   const [clenlinessRating, setClenlinessRating] = useState(0);
+  const [searchIn, setSearchIn] = useState('');
+
+  // for search bar
+  const onChangeSearch = async (query) => {
+    setSearchQuery(query);
+    const data = await FindLocations(
+      query,
+      overallRating,
+      priceRating,
+      qualityRating,
+      clenlinessRating,
+      searchIn,
+    );
+    setListData(data);
+  };
 
   // for the preference menu
   const [visible, setVisible] = useState(false);
@@ -65,20 +79,7 @@ const HomeScreen = (props) => {
     setChecked(!checked);
   };
 
-  // for search bar
-  const onChangeSearch = async (query) => {
-    setSearchQuery(query);
-    const data = await FindLocations(
-      query,
-      overallRating,
-      priceRating,
-      qualityRating,
-      clenlinessRating,
-      searchIn,
-    );
-    setListData(data);
-  };
-
+  // on component load
   useEffect(() => {
     async function getLocations() {
       const data = await FindLocations('');
@@ -124,14 +125,12 @@ const HomeScreen = (props) => {
               onPress={() => {}}
               title={`Overall Rating: ${overallRating}`}
             />
-            <Slider
-              minimumValue={0}
-              maximumValue={5}
-              step={1}
-              onSlidingComplete={setOverallRating}
-              value={overallRating}
-              minimumTrackTintColor={colors.background}
-              thumbTintColor={colors.background}
+            <AirbnbRating
+              showRating={false}
+              count={5}
+              defaultRating={overallRating}
+              size={25}
+              onFinishRating={setOverallRating}
             />
             <Divider />
             <Menu.Item
@@ -213,8 +212,9 @@ const HomeScreen = (props) => {
                   })
                 }>
                 <Text style={styles.nameText}>{item.location_name}</Text>
-                <Text>{item.avg_overall_rating}</Text>
+                <Text style={styles.locationText}>{item.location_town}</Text>
                 <Rating
+                  style={styles.rating}
                   fractions={2}
                   readonly
                   startingValue={item.avg_overall_rating}
@@ -244,8 +244,8 @@ const styles = StyleSheet.create({
 
   flatListView: {
     flex: 11,
-    marginTop: '4%',
-    marginBottom: '16%',
+    marginTop: '5%',
+    marginBottom: '18%',
   },
 
   searchBarView: {
@@ -285,7 +285,18 @@ const styles = StyleSheet.create({
   },
 
   nameText: {
+    fontSize: 20,
+    paddingLeft: '1%',
+  },
+
+  locationText: {
     fontSize: 17,
+    paddingLeft: '1%',
+  },
+
+  rating: {
+    alignItems: 'flex-start',
+    paddingTop: '2%',
   },
 });
 

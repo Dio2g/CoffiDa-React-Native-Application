@@ -7,6 +7,7 @@ import {
   Checkbox,
   useTheme,
   ActivityIndicator,
+  Avatar,
 } from 'react-native-paper';
 import React, {useState, useEffect} from 'react';
 import {View, TouchableOpacity, Dimensions, StyleSheet} from 'react-native';
@@ -52,7 +53,15 @@ const HomeScreen = (props) => {
 
   // for the preference menu
   const [visible, setVisible] = useState(false);
-  const openMenu = () => setVisible(true);
+  const openMenu = () => {
+    setOverallRating(0);
+    setPriceRating(0);
+    setQualityRating(0);
+    setClenlinessRating(0);
+    setSearchIn('');
+    setChecked(false);
+    setVisible(true);
+  };
   const closeMenu = () => setVisible(false);
   const submitPreferences = async () => {
     const data = await FindLocations(
@@ -120,51 +129,39 @@ const HomeScreen = (props) => {
                 <Icon name="cog" size={24} color={colors.text} />
               </Button>
             }>
-            <Menu.Item
-              onPress={() => {}}
-              title={`Overall Rating: ${overallRating}`}
-            />
+            <Menu.Item onPress={() => {}} title="Overall Rating" />
             <AirbnbRating
               showRating={false}
               count={5}
               defaultRating={overallRating}
-              size={25}
+              size={32}
               onFinishRating={setOverallRating}
             />
             <Divider />
-            <Menu.Item
-              onPress={() => {}}
-              title={`Price Rating: ${priceRating}`}
-            />
+            <Menu.Item onPress={() => {}} title="Price Rating" />
             <AirbnbRating
               showRating={false}
               count={5}
               defaultRating={priceRating}
-              size={25}
+              size={32}
               onFinishRating={setPriceRating}
             />
             <Divider />
-            <Menu.Item
-              onPress={() => {}}
-              title={`Quality Rating: ${qualityRating}`}
-            />
+            <Menu.Item onPress={() => {}} title="Quality Rating" />
             <AirbnbRating
               showRating={false}
               count={5}
               defaultRating={qualityRating}
-              size={25}
+              size={32}
               onFinishRating={setQualityRating}
             />
             <Divider />
-            <Menu.Item
-              onPress={() => {}}
-              title={`Clenliness Rating: ${clenlinessRating}`}
-            />
+            <Menu.Item onPress={() => {}} title="Clenliness Rating" />
             <AirbnbRating
               showRating={false}
               count={5}
               defaultRating={clenlinessRating}
-              size={25}
+              size={32}
               onFinishRating={setClenlinessRating}
             />
             <Divider />
@@ -181,8 +178,16 @@ const HomeScreen = (props) => {
               </View>
             </View>
             <Divider />
-            <Button mode="contained" onPress={submitPreferences}>
-              <Text>Save</Text>
+            <Button
+              mode="contained"
+              onPress={submitPreferences}
+              style={{
+                backgroundColor: colors.background,
+                borderColor: colors.primary,
+                borderRightWidth: 7,
+                borderLeftWidth: 7,
+              }}>
+              <Text>Go</Text>
             </Button>
           </Menu>
         </View>
@@ -204,15 +209,33 @@ const HomeScreen = (props) => {
                     params: {id: item.location_id},
                   })
                 }>
-                <Text style={styles.nameText}>{item.location_name}</Text>
-                <Text style={styles.locationText}>{item.location_town}</Text>
-                <Rating
-                  style={styles.rating}
-                  fractions={2}
-                  readonly
-                  startingValue={item.avg_overall_rating}
-                  tintColor={colors.primary}
-                />
+                <View style={styles.flexContainer}>
+                  <View style={styles.infoView}>
+                    <Text style={styles.nameText}>{item.location_name}</Text>
+                    <Text style={styles.locationText}>
+                      {item.location_town}
+                    </Text>
+                    <Rating
+                      style={styles.rating}
+                      fractions={2}
+                      readonly
+                      startingValue={item.avg_overall_rating}
+                      tintColor={colors.primary}
+                      imageSize={30}
+                    />
+                  </View>
+                  <Avatar.Image
+                    style={[
+                      styles.imgView,
+                      {
+                        borderColor: colors.text,
+                        backgroundColor: colors.accent,
+                      },
+                    ]}
+                    size={100}
+                    source={{uri: item.photo_path}}
+                  />
+                </View>
               </TouchableOpacity>
             </View>
           )}
@@ -237,8 +260,8 @@ const styles = StyleSheet.create({
 
   flatListView: {
     flex: 11,
-    marginTop: '5%',
-    marginBottom: '18%',
+    marginTop: '4%',
+    marginBottom: '17%',
   },
 
   searchBarView: {
@@ -250,6 +273,10 @@ const styles = StyleSheet.create({
     borderRadius: 0,
     shadowRadius: 0,
     elevation: 0,
+  },
+
+  prefMenu: {
+    alignItems: 'center',
   },
 
   prefMenuButton: {
@@ -269,6 +296,7 @@ const styles = StyleSheet.create({
 
   checkBox: {
     marginTop: '4%',
+    paddingLeft: '20%',
   },
 
   touchableOpacity: {
@@ -278,18 +306,39 @@ const styles = StyleSheet.create({
   },
 
   nameText: {
-    fontSize: 20,
+    fontSize: 21,
     paddingLeft: '1%',
   },
 
   locationText: {
-    fontSize: 17,
+    fontSize: 18,
     paddingLeft: '1%',
+  },
+
+  ratingText: {
+    fontSize: 14,
+    paddingLeft: '1%',
+    marginTop: '4%',
   },
 
   rating: {
     alignItems: 'flex-start',
     paddingTop: '2%',
+  },
+
+  flexContainer: {
+    flex: 1,
+    flexDirection: 'row',
+  },
+
+  infoView: {
+    flex: 1,
+    alignItems: 'flex-start',
+  },
+
+  imgView: {
+    overflow: 'hidden',
+    borderWidth: 3,
   },
 });
 

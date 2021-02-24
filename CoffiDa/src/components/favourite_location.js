@@ -14,7 +14,11 @@ const FavouriteLocation = async (id, method) => {
   })
     .then((response) => {
       if (response.status === 200) {
-        ToastAndroid.show('OK!', ToastAndroid.SHORT);
+        if (method === 'POST') {
+          ToastAndroid.show('Favourited Location', ToastAndroid.SHORT);
+        } else {
+          ToastAndroid.show('Un-Favourited Location', ToastAndroid.SHORT);
+        }
       }
       if (response.status === 400) {
         throw new Error('Bad request');

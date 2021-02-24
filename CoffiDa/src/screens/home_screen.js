@@ -13,7 +13,6 @@ import {View, TouchableOpacity, Dimensions, StyleSheet} from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
 import {Rating, AirbnbRating} from 'react-native-ratings';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import Slider from '@react-native-community/slider';
 import PropTypes from 'prop-types';
 import FindLocations from '../components/find_locations';
 import globalStyles from '../styles/global_stylesheet';
@@ -137,42 +136,36 @@ const HomeScreen = (props) => {
               onPress={() => {}}
               title={`Price Rating: ${priceRating}`}
             />
-            <Slider
-              minimumValue={0}
-              maximumValue={5}
-              step={1}
-              onSlidingComplete={setPriceRating}
-              value={priceRating}
-              minimumTrackTintColor={colors.background}
-              thumbTintColor={colors.background}
+            <AirbnbRating
+              showRating={false}
+              count={5}
+              defaultRating={priceRating}
+              size={25}
+              onFinishRating={setPriceRating}
             />
             <Divider />
             <Menu.Item
               onPress={() => {}}
               title={`Quality Rating: ${qualityRating}`}
             />
-            <Slider
-              minimumValue={0}
-              maximumValue={5}
-              step={1}
-              onSlidingComplete={setQualityRating}
-              value={qualityRating}
-              minimumTrackTintColor={colors.background}
-              thumbTintColor={colors.background}
+            <AirbnbRating
+              showRating={false}
+              count={5}
+              defaultRating={qualityRating}
+              size={25}
+              onFinishRating={setQualityRating}
             />
             <Divider />
             <Menu.Item
               onPress={() => {}}
               title={`Clenliness Rating: ${clenlinessRating}`}
             />
-            <Slider
-              minimumValue={0}
-              maximumValue={5}
-              step={1}
-              onSlidingComplete={setClenlinessRating}
-              value={clenlinessRating}
-              minimumTrackTintColor={colors.background}
-              thumbTintColor={colors.background}
+            <AirbnbRating
+              showRating={false}
+              count={5}
+              defaultRating={clenlinessRating}
+              size={25}
+              onFinishRating={setClenlinessRating}
             />
             <Divider />
             <View style={styles.checkBoxView}>

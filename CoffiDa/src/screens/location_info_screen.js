@@ -12,8 +12,8 @@ import globalStyles from '../styles/global_stylesheet';
 const LocationInfoScreen = (props) => {
   const {route} = props;
 
+  const {navigation} = props;
   const {params} = route;
-
   const {id} = params;
 
   const [locationData, setLocationData] = useState([]);
@@ -51,9 +51,6 @@ const LocationInfoScreen = (props) => {
     isFavourited();
   }, [id, isFavourited]);
 
-  // eslint-disable-next-line no-console
-  console.log(locationData.location_reviews);
-
   return (
     <View>
       <Button mode="contained" onPress={onFavouriteClick}>
@@ -65,6 +62,12 @@ const LocationInfoScreen = (props) => {
       </Button>
       <Button
         mode="contained"
+        onPress={() =>
+          navigation.navigate('homeStackNavigator', {
+            screen: 'Add Review',
+            params: {id},
+          })
+        }
         style={{height: '20%'}}
         contentStyle={globalStyles.buttonContent}>
         <Text>Add Review</Text>
@@ -85,6 +88,9 @@ LocationInfoScreen.propTypes = {
     params: PropTypes.shape({
       id: PropTypes.number,
     }).isRequired,
+  }).isRequired,
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func.isRequired,
   }).isRequired,
 };
 

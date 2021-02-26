@@ -1,6 +1,7 @@
 import React, {useEffect, useState, useCallback} from 'react';
 import {View} from 'react-native';
-import {Text, Button} from 'react-native-paper';
+import {Text, Button, List} from 'react-native-paper';
+import {FlatList} from 'react-native-gesture-handler';
 import PropTypes from 'prop-types';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import LocationInfo from '../components/location_information';
@@ -51,7 +52,7 @@ const LocationInfoScreen = (props) => {
   }, [id, isFavourited]);
 
   // eslint-disable-next-line no-console
-  console.log(locationData);
+  console.log(locationData.location_reviews);
 
   return (
     <View>
@@ -64,10 +65,17 @@ const LocationInfoScreen = (props) => {
       </Button>
       <Button
         mode="contained"
-        style={globalStyles.button}
+        style={{height: '20%'}}
         contentStyle={globalStyles.buttonContent}>
         <Text>Add Review</Text>
       </Button>
+      <List.Accordion title="Reviews">
+        <FlatList
+          data={locationData.location_reviews}
+          renderItem={({item}) => <Text>{item.review_body}</Text>}
+          keyExtractor={(item) => item.review_id.toString()}
+        />
+      </List.Accordion>
     </View>
   );
 };

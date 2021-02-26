@@ -97,6 +97,8 @@ const HomeScreen = (props) => {
     getLocations();
   }, []);
 
+  console.log(listData);
+
   if (isLoading === true) {
     return (
       <View style={globalStyles.flexContainer}>

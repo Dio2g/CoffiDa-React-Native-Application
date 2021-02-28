@@ -10,7 +10,7 @@ const LoginScreen = (props) => {
   const windowHeight = Dimensions.get('window').height - useHeaderHeight();
 
   // hard coded login details for quick testing
-  const [email, setEmail] = useState('fake@mail.com');
+  const [email, setEmail] = useState('fake@mail.ac.uk');
   const [password, setPassword] = useState('hello123');
 
   return (

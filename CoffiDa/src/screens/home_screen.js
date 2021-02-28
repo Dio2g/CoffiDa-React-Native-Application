@@ -59,7 +59,8 @@ const HomeScreen = (props) => {
     setQualityRating(0);
     setClenlinessRating(0);
     setSearchIn('');
-    setChecked(false);
+    setFavChecked(false);
+    setRevChecked(false);
     setVisible(true);
   };
   const closeMenu = () => setVisible(false);
@@ -76,23 +77,37 @@ const HomeScreen = (props) => {
     closeMenu();
   };
 
-  // for check box
-  const [checked, setChecked] = useState(false);
-  const onCheck = () => {
-    if (searchIn === '') {
+  // for fav check box
+  const [favChecked, setFavChecked] = useState(false);
+  const onFavCheck = () => {
+    setRevChecked(false);
+    if (searchIn === '' || searchIn === 'reviewed') {
       setSearchIn('favourite');
     } else {
       setSearchIn('');
     }
-    setChecked(!checked);
+    setFavChecked(!favChecked);
+  };
+
+  // for rev check box
+  const [revChecked, setRevChecked] = useState(false);
+  const onRevCheck = () => {
+    setFavChecked(false);
+    if (searchIn === '' || searchIn === 'favourite') {
+      setSearchIn('reviewed');
+    } else {
+      setSearchIn('');
+    }
+    setRevChecked(!revChecked);
   };
 
   // on component load
   useEffect(() => {
     async function getLocations() {
       const data = await FindLocations('');
-      setIsLoading(false);
+
       setListData(data);
+      setIsLoading(false);
     }
     getLocations();
   }, []);
@@ -170,9 +185,22 @@ const HomeScreen = (props) => {
               <View style={styles.checkBox}>
                 <Checkbox
                   color={colors.background}
-                  status={checked ? 'checked' : 'unchecked'}
+                  status={favChecked ? 'checked' : 'unchecked'}
                   onPress={() => {
-                    onCheck();
+                    onFavCheck();
+                  }}
+                />
+              </View>
+            </View>
+            <Divider />
+            <View style={styles.checkBoxView}>
+              <Menu.Item onPress={() => {}} title="Reviewed" />
+              <View style={styles.checkBox}>
+                <Checkbox
+                  color={colors.background}
+                  status={revChecked ? 'checked' : 'unchecked'}
+                  onPress={() => {
+                    onRevCheck();
                   }}
                 />
               </View>

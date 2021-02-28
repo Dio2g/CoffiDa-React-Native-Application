@@ -39,7 +39,16 @@ const AddReviewScreen = (props) => {
     setDialogVisible(true);
   };
 
-  const getReviewId = async () => {
+  const noPhoto = () => {
+    setDialogVisible(false);
+    props.navigation.navigate('homeStackNavigator', {
+      screen: 'Location Info',
+      params: {id},
+    });
+  };
+
+  const addPhoto = async () => {
+    setDialogVisible(false);
     const userData = await UserInfo();
     // console.log(userData.reviews);
     const locationIDs = userData.reviews.map((i) => i.location.location_id);
@@ -54,6 +63,10 @@ const AddReviewScreen = (props) => {
     }
 
     const reviewId = reviewIDs[index];
+    navigation.navigate('homeStackNavigator', {
+      screen: 'Camera',
+      params: {id, reviewId},
+    });
     // console.log(reviewId);
   };
 
@@ -106,24 +119,15 @@ const AddReviewScreen = (props) => {
             <Paragraph>Would you like to add a photo to your review?</Paragraph>
           </Dialog.Content>
           <Dialog.Actions>
-            <Button onPress={() => setDialogVisible(false)}>
+            <Button onPress={() => noPhoto()}>
               <Text>No</Text>
             </Button>
-            <Button
-              onPress={() =>
-                navigation.navigate('homeStackNavigator', {
-                  screen: 'Camera',
-                })
-              }>
+            <Button onPress={() => addPhoto()}>
               <Text>Yes</Text>
             </Button>
           </Dialog.Actions>
         </Dialog>
       </Portal>
-
-      <Button mode="contained" onPress={() => getReviewId()}>
-        <Text>Test Photo</Text>
-      </Button>
     </View>
   );
 };

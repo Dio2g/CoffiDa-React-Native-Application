@@ -3,13 +3,18 @@ import {ActivityIndicator} from 'react-native-paper';
 import {Alert, View} from 'react-native';
 import Geolocation from '@react-native-community/geolocation';
 import MapView, {PROVIDER_GOOGLE, Marker} from 'react-native-maps';
+import PropTypes from 'prop-types';
 import globalStyles from '../styles/global_stylesheet';
+import FindLocations from '../components/find_locations';
 
-const NearbyScreen = () => {
+const NearbyScreen = (props) => {
   const [currentLocation, setCurrentLocation] = useState({
-    longitude: 0,
     latitude: 0,
+    longitude: 0,
   });
+
+  const [listData, setListData] = useState([]);
+
   const [isLoading, setIsLoading] = useState(true);
 
   // on component load
@@ -19,10 +24,9 @@ const NearbyScreen = () => {
         (position) => {
           const location = position;
           setCurrentLocation({
-            longitude: location.coords.longitude,
             latitude: location.coords.latitude,
+            longitude: location.coords.longitude,
           });
-          setIsLoading(false);
         },
         (error) => {
           Alert.alert(error.message);
@@ -30,7 +34,16 @@ const NearbyScreen = () => {
         {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
       );
     };
+
+    const getLocations = async () => {
+      const data = await FindLocations('');
+
+      setListData(data);
+      setIsLoading(false);
+    };
+
     findCoordinates();
+    getLocations();
   }, []);
 
   if (isLoading === true) {
@@ -56,9 +69,31 @@ const NearbyScreen = () => {
           title="My Location"
           description="Here I am"
         />
+        {listData.map((marker) => (
+          <Marker
+            key={marker.location_id} // Need to be unique
+            title={marker.location_name}
+            coordinate={{
+              latitude: marker.latitude,
+              longitude: marker.longitude,
+            }}
+            onPress={() => {
+              props.navigation.navigate('homeStackNavigator', {
+                screen: 'Location Info',
+                params: {id: marker.location_id},
+              });
+            }}
+          />
+        ))}
       </MapView>
     </View>
   );
+};
+
+NearbyScreen.propTypes = {
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func.isRequired,
+  }).isRequired,
 };
 
 export default NearbyScreen;

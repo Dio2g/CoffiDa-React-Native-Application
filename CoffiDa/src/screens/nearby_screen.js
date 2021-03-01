@@ -1,8 +1,9 @@
 import React, {useState, useEffect} from 'react';
-import {ActivityIndicator} from 'react-native-paper';
+import {ActivityIndicator, Text} from 'react-native-paper';
 import {Alert, View} from 'react-native';
 import Geolocation from '@react-native-community/geolocation';
 import MapView, {PROVIDER_GOOGLE, Marker} from 'react-native-maps';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import PropTypes from 'prop-types';
 import globalStyles from '../styles/global_stylesheet';
 import FindLocations from '../components/find_locations';
@@ -58,11 +59,12 @@ const NearbyScreen = (props) => {
       <MapView
         style={{flex: 1, height: '100%', width: '100%', position: 'absolute'}}
         provider={PROVIDER_GOOGLE}
+        tintColor="green"
         region={{
           latitude: currentLocation.latitude,
           longitude: currentLocation.longitude,
-          latitudeDelta: 0.006,
-          longitudeDelta: 0.006,
+          latitudeDelta: 0.009,
+          longitudeDelta: 0.009,
         }}>
         <Marker
           coordinate={currentLocation}
@@ -72,7 +74,6 @@ const NearbyScreen = (props) => {
         {listData.map((marker) => (
           <Marker
             key={marker.location_id} // Need to be unique
-            title={marker.location_name}
             coordinate={{
               latitude: marker.latitude,
               longitude: marker.longitude,
@@ -82,8 +83,10 @@ const NearbyScreen = (props) => {
                 screen: 'Location Info',
                 params: {id: marker.location_id},
               });
-            }}
-          />
+            }}>
+            <Icon name="coffee" size={40} color="brown" />
+            <Text style={{color: 'brown'}}>{marker.location_name}</Text>
+          </Marker>
         ))}
       </MapView>
     </View>

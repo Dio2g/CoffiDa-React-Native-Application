@@ -18,7 +18,7 @@ const GetPhoto = async (locationId, reviewId) => {
   )
     .then((response) => {
       if (response.status === 200) {
-        return response.json();
+        return response;
       }
       if (response.status === 404) {
         throw new Error('Not Found');

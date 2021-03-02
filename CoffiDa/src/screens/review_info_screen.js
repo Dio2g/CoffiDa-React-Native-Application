@@ -1,12 +1,11 @@
 import React, {useEffect, useState, useCallback} from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, Image} from 'react-native';
 import {Button, ActivityIndicator} from 'react-native-paper';
-
 import PropTypes from 'prop-types';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-
 import LikeReview from '../components/like_review';
 import UserInfo from '../components/user_information';
+import GetPhoto from '../components/get_photo';
 import globalStyles from '../styles/global_stylesheet';
 
 const ReviewInfoScreen = (props) => {
@@ -15,7 +14,11 @@ const ReviewInfoScreen = (props) => {
   const {reviewData} = params;
   const {id} = params;
 
+  const [photo, setPhoto] = useState('');
+
   const [isLoading, setIsLoading] = useState(true);
+
+  const [isMine, setIsMine] = useState(false);
 
   const [liked, setLiked] = useState(false);
 
@@ -48,9 +51,34 @@ const ReviewInfoScreen = (props) => {
     setIsLoading(false);
   }, [id, reviewData]);
 
+  const isMyReview = useCallback(async () => {
+    const data = await UserInfo();
+
+    const arrLocationID = data.reviews.map((i) => i.location.location_id);
+
+    const arrReviewID = data.reviews.map((j) => j.review.review_id);
+
+    const reviewIndex = arrReviewID.indexOf(reviewData.review_id);
+
+    if (reviewIndex !== -1 && arrLocationID[reviewIndex] === id) {
+      setIsMine(true);
+    } else {
+      setIsMine(false);
+    }
+  }, [id, reviewData]);
+
+  // console.log(isMine);
+
   useEffect(() => {
+    async function getReviewPhoto() {
+      const data = await GetPhoto(id, reviewData.review_id);
+      setPhoto(data);
+    }
+
+    getReviewPhoto();
+    isMyReview();
     isFavourited();
-  }, [isFavourited]);
+  }, [isFavourited, id, reviewData, isMyReview]);
 
   if (isLoading === true) {
     return (
@@ -61,6 +89,10 @@ const ReviewInfoScreen = (props) => {
   }
   return (
     <View>
+      <Image
+        source={{uri: photo.url}}
+        style={{width: 75, height: 75, borderRadius: 37.5}}
+      />
       <Button mode="contained" style={styles.button} onPress={onLikedClick}>
         <Icon name={liked ? 'heart' : 'heart-outline'} size={40} color="red" />
       </Button>

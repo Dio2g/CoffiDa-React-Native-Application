@@ -12,8 +12,7 @@ const WelcomeScreen = (props) => (
         style={globalStyles.alternativeButton}
         mode="contained"
         onPress={() => props.navigation.navigate('Login')}>
-        {' '}
-        <Text>Login</Text>{' '}
+        <Text>Login</Text>
       </Button>
     </View>
     <View style={globalStyles.twoButtonViewTwo}>
@@ -22,8 +21,7 @@ const WelcomeScreen = (props) => (
         style={globalStyles.alternativeButton}
         mode="contained"
         onPress={() => props.navigation.navigate('Signup')}>
-        {' '}
-        <Text>Signup</Text>{' '}
+        <Text>Signup</Text>
       </Button>
     </View>
   </View>

@@ -1,17 +1,56 @@
 import React, {useState} from 'react';
-import {View, ScrollView, Dimensions} from 'react-native';
+import {View, ScrollView, Dimensions, ToastAndroid} from 'react-native';
 import {Button, Text, TextInput} from 'react-native-paper';
 import {useHeaderHeight} from '@react-navigation/stack';
 import Signup from '../components/signup';
 import globalStyles from '../styles/global_stylesheet';
 
 const SignupScreen = (props) => {
+  // calculate window height (applied to everything inside the scrollview) so the user is able to scroll content while keyboard is visible
   const windowHeight = Dimensions.get('window').height - useHeaderHeight();
 
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  const onSubmit = () => {
+    // regex for input validation
+    const nameRegex = /^[a-zA-Z '.-]*$/;
+    const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    const whitespaceRegex = /^\s+$/; // to stop user from entering only whitespace in the name fields
+    const passwordRegex = /^\S{5,}$/; // minimum 5 chars and no whitespace
+
+    // check input against regex and show toast if they do not match
+    if (
+      !(
+        firstName !== '' &&
+        lastName !== '' &&
+        nameRegex.test(`${firstName} ${lastName}`)
+      ) ||
+      whitespaceRegex.test(`${firstName}`) ||
+      whitespaceRegex.test(`${lastName}`)
+    ) {
+      ToastAndroid.show(
+        'Please enter a valid first and last name.',
+        ToastAndroid.SHORT,
+      );
+    } else if (!(email !== '' && emailRegex.test(email))) {
+      ToastAndroid.show('Please enter a valid email.', ToastAndroid.SHORT);
+    } else if (!(password !== '' && passwordRegex.test(password))) {
+      ToastAndroid.show('Please enter a valid password.', ToastAndroid.SHORT);
+    } else {
+      // if everything is valid build details parameter and make call to api
+      const details = {
+        firstName,
+        lastName,
+        email,
+        password,
+      };
+
+      Signup(props, details);
+    }
+  };
 
   return (
     <ScrollView
@@ -54,7 +93,7 @@ const SignupScreen = (props) => {
             style={globalStyles.button}
             contentStyle={globalStyles.buttonContent}
             mode="contained"
-            onPress={() => Signup(props, firstName, lastName, email, password)}>
+            onPress={() => onSubmit()}>
             <Text>Create Account</Text>
           </Button>
         </View>

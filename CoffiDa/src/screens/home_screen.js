@@ -9,7 +9,7 @@ import {
   ActivityIndicator,
   Avatar,
 } from 'react-native-paper';
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useCallback, useRef} from 'react';
 import {View, TouchableOpacity, Dimensions, StyleSheet} from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
 import {Rating, AirbnbRating} from 'react-native-ratings';
@@ -24,6 +24,15 @@ const HomeScreen = (props) => {
   // so paper theme colors can be used with with non paper components
   const {colors} = useTheme();
 
+  const {navigation} = props;
+
+  // set flatlist to top
+  const flatListRef = useRef();
+  const toTop = () => {
+    // use current
+    flatListRef.current.scrollToOffset({animated: true, offset: 0});
+  };
+
   const [isLoading, setIsLoading] = useState(true);
 
   // for locations list
@@ -36,19 +45,22 @@ const HomeScreen = (props) => {
   const [qualityRating, setQualityRating] = useState(0);
   const [clenlinessRating, setClenlinessRating] = useState(0);
   const [searchIn, setSearchIn] = useState('');
+  const [limit] = useState(5);
+  const [offset, setOffset] = useState(0);
+
+  // for pagination
+  const onBottomReached = async () => {
+    getLocations(offset + 5);
+  };
 
   // for search bar
   const onChangeSearch = async (query) => {
     setSearchQuery(query);
-    const data = await FindLocations(
-      query,
-      overallRating,
-      priceRating,
-      qualityRating,
-      clenlinessRating,
-      searchIn,
-    );
-    setListData(data);
+  };
+
+  const onPressSearch = async () => {
+    toTop();
+    getLocations(0);
   };
 
   // for the preference menu
@@ -64,18 +76,6 @@ const HomeScreen = (props) => {
     setVisible(true);
   };
   const closeMenu = () => setVisible(false);
-  const submitPreferences = async () => {
-    const data = await FindLocations(
-      searchQuery,
-      overallRating,
-      priceRating,
-      qualityRating,
-      clenlinessRating,
-      searchIn,
-    );
-    setListData(data);
-    closeMenu();
-  };
 
   // for fav check box
   const [favChecked, setFavChecked] = useState(false);
@@ -101,16 +101,46 @@ const HomeScreen = (props) => {
     setRevChecked(!revChecked);
   };
 
+  // for all api calls
+  const getLocations = useCallback(
+    async (offsetTemp) => {
+      setOffset(offsetTemp);
+      const data = await FindLocations(
+        searchQuery,
+        overallRating,
+        priceRating,
+        qualityRating,
+        clenlinessRating,
+        searchIn,
+        limit,
+        offsetTemp,
+      );
+      setListData(offsetTemp === 0 ? data : [...listData, ...data]);
+      setIsLoading(false);
+    },
+    [
+      searchQuery,
+      overallRating,
+      priceRating,
+      qualityRating,
+      clenlinessRating,
+      searchIn,
+      limit,
+      listData,
+    ],
+  );
+
   // on component load
   useEffect(() => {
-    async function getLocations() {
-      const data = await FindLocations('');
+    const unsubscribe = navigation.addListener('focus', () => {
+      // The screen is focused
+      setIsLoading(true);
+      getLocations(0);
+    });
 
-      setListData(data);
-      setIsLoading(false);
-    }
-    getLocations();
-  }, []);
+    // Return the function to unsubscribe from the event so it gets removed on unmount
+    return unsubscribe;
+  }, [getLocations, navigation]);
 
   if (isLoading === true) {
     return (
@@ -123,26 +153,19 @@ const HomeScreen = (props) => {
     <View style={{width: '100%', height: windowHeight}}>
       <View style={styles.searchView}>
         <View style={styles.searchBarView}>
-          <Searchbar
-            style={styles.searchBar}
-            placeholder="Search"
-            onChangeText={onChangeSearch}
-            value={searchQuery}
-          />
-        </View>
-        <View style={globalStyles.flexContainer}>
           <Menu
             style={styles.prefMenu}
             visible={visible}
             onDismiss={closeMenu}
             anchor={
-              <Button
-                mode="contained"
-                onPress={openMenu}
-                style={styles.prefMenuButton}
-                contentStyle={styles.prefMenuButtonContent}>
-                <Icon name="cog" size={24} color={colors.text} />
-              </Button>
+              <Searchbar
+                style={styles.searchBar}
+                placeholder="Search"
+                onChangeText={onChangeSearch}
+                value={searchQuery}
+                onIconPress={openMenu}
+                icon="cog"
+              />
             }>
             <Menu.Item onPress={() => {}} title="Overall Rating" />
             <AirbnbRating
@@ -206,23 +229,22 @@ const HomeScreen = (props) => {
               </View>
             </View>
             <Divider />
-            <Button
-              mode="contained"
-              onPress={submitPreferences}
-              style={{
-                backgroundColor: colors.background,
-                borderColor: colors.primary,
-                borderRightWidth: 7,
-                borderLeftWidth: 7,
-              }}>
-              <Text>Go</Text>
-            </Button>
           </Menu>
+        </View>
+        <View style={globalStyles.flexContainer}>
+          <Button
+            mode="contained"
+            onPress={onPressSearch}
+            style={styles.prefMenuButton}
+            contentStyle={styles.prefMenuButtonContent}>
+            <Icon name="search" size={24} color={colors.text} />
+          </Button>
         </View>
       </View>
 
       <View style={styles.flatListView}>
         <FlatList
+          ref={flatListRef}
           data={listData}
           renderItem={({item}) => (
             <View>
@@ -254,7 +276,7 @@ const HomeScreen = (props) => {
                   </View>
                   <Avatar.Image
                     style={[
-                      styles.imgView,
+                      globalStyles.imgView,
                       {
                         borderColor: colors.text,
                         backgroundColor: colors.accent,
@@ -268,6 +290,8 @@ const HomeScreen = (props) => {
             </View>
           )}
           keyExtractor={(item) => item.location_id.toString()}
+          onEndReachedThreshold={0.2}
+          onEndReached={onBottomReached}
         />
       </View>
     </View>
@@ -277,6 +301,7 @@ const HomeScreen = (props) => {
 HomeScreen.propTypes = {
   navigation: PropTypes.shape({
     navigate: PropTypes.func.isRequired,
+    addListener: PropTypes.func.isRequired,
   }).isRequired,
 };
 
@@ -362,11 +387,6 @@ const styles = StyleSheet.create({
   infoView: {
     flex: 1,
     alignItems: 'flex-start',
-  },
-
-  imgView: {
-    overflow: 'hidden',
-    borderWidth: 3,
   },
 });
 

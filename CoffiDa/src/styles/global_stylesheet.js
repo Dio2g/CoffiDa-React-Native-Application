@@ -52,4 +52,9 @@ export default StyleSheet.create({
     borderRadius: 20,
     height: '100%',
   },
+
+  imgView: {
+    overflow: 'hidden',
+    borderWidth: 3,
+  },
 });

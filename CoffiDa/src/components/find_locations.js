@@ -8,12 +8,14 @@ const FindLocations = async (
   qualityRating,
   clenlinessRating,
   searchIn,
+  limit,
+  offset,
 ) => {
   const token = await AsyncStorage.getItem('@session_token');
 
   // eslint-disable-next-line no-undef
   return fetch(
-    `http://10.0.2.2:3333/api/1.0.0/find?q=${query}&overall_rating=${overallRating}&price_rating=${priceRating}&quality_rating=${qualityRating}&clenliness_rating=${clenlinessRating}&search_in=${searchIn}`,
+    `http://10.0.2.2:3333/api/1.0.0/find?q=${query}&overall_rating=${overallRating}&price_rating=${priceRating}&quality_rating=${qualityRating}&clenliness_rating=${clenlinessRating}&search_in=${searchIn}&limit=${limit}&offset=${offset}`,
     {
       method: 'GET',
       headers: {

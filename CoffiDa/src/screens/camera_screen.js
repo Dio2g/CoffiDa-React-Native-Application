@@ -18,7 +18,7 @@ const CameraScreen = (props) => {
       await AddPhoto(id, reviewId, data);
       props.navigation.navigate('homeStackNavigator', {
         screen: 'Location Info',
-        params: {id},
+        params: {locationId: id},
       });
     }
   };

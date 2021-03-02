@@ -47,8 +47,8 @@ const DarkTheme = {
 
 export default function Main() {
   return (
-    <PaperProvider theme={DefaultTheme}>
-      <NavigationContainer theme={DefaultTheme}>
+    <PaperProvider theme={DarkTheme}>
+      <NavigationContainer theme={DarkTheme}>
         <Stack.Navigator>
           <Stack.Screen
             name="welcomeStackNavigator"

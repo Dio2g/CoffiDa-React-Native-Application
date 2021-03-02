@@ -92,25 +92,35 @@ const HomeScreen = (props) => {
   // for fav check box
   const [favChecked, setFavChecked] = useState(false);
   const onFavCheck = () => {
-    setRevChecked(false);
-    if (searchIn === '' || searchIn === 'reviewed') {
-      setSearchIn('favourite');
-    } else {
-      setSearchIn('');
+    try {
+      setRevChecked(false);
+      if (searchIn === '' || searchIn === 'reviewed') {
+        setSearchIn('favourite');
+      } else {
+        setSearchIn('');
+      }
+      setFavChecked(!favChecked);
+    } catch (e) {
+      // console.error(e);
+      ToastAndroid.show('Unexpected Error.', ToastAndroid.SHORT);
     }
-    setFavChecked(!favChecked);
   };
 
   // for rev check box
   const [revChecked, setRevChecked] = useState(false);
   const onRevCheck = () => {
-    setFavChecked(false);
-    if (searchIn === '' || searchIn === 'favourite') {
-      setSearchIn('reviewed');
-    } else {
-      setSearchIn('');
+    try {
+      setFavChecked(false);
+      if (searchIn === '' || searchIn === 'favourite') {
+        setSearchIn('reviewed');
+      } else {
+        setSearchIn('');
+      }
+      setRevChecked(!revChecked);
+    } catch (e) {
+      // console.error(e);
+      ToastAndroid.show('Unexpected Error.', ToastAndroid.SHORT);
     }
-    setRevChecked(!revChecked);
   };
 
   // for all api calls
@@ -294,7 +304,7 @@ const HomeScreen = (props) => {
                 onPress={() =>
                   props.navigation.navigate('homeStackNavigator', {
                     screen: 'Location Info',
-                    params: {id: item.location_id},
+                    params: {locationId: item.location_id},
                   })
                 }>
                 <View style={styles.rowView}>

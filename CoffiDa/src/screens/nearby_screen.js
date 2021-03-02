@@ -81,7 +81,7 @@ const NearbyScreen = (props) => {
             onPress={() => {
               props.navigation.navigate('homeStackNavigator', {
                 screen: 'Location Info',
-                params: {id: marker.location_id},
+                params: {locationId: marker.location_id},
               });
             }}>
             <Icon name="coffee" size={40} color="brown" />

@@ -43,7 +43,7 @@ const AddReviewScreen = (props) => {
     setDialogVisible(false);
     props.navigation.navigate('homeStackNavigator', {
       screen: 'Location Info',
-      params: {id},
+      params: {locationId: id},
     });
   };
 

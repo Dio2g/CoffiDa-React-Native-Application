@@ -1,46 +1,31 @@
 import {ToastAndroid} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const AddPhoto = async (locationId, reviewId, image, method) => {
+const GetPhoto = async (locationId, reviewId) => {
   const token = await AsyncStorage.getItem('@session_token');
-  let body = '';
-  if (method === 'POST') {
-    body = image;
-  }
   // TODO: Validation
 
   // eslint-disable-next-line no-undef
   return fetch(
     `http://10.0.2.2:3333/api/1.0.0/location/${locationId}/review/${reviewId}/photo`,
     {
-      method,
+      method: 'GET',
       headers: {
         'Content-Type': 'image/jpeg',
         'X-Authorization': token,
       },
-      body,
     },
   )
     .then((response) => {
       if (response.status === 200) {
-        if (method === 'POST') {
-          ToastAndroid.show('Added Photo', ToastAndroid.SHORT);
-        } else if (method === 'DELETE') {
-          ToastAndroid.show('Deleted Photo', ToastAndroid.SHORT);
-        }
-      }
-      if (response.status === 400) {
-        throw new Error('Failed Validation');
-      }
-      if (response.status === 401) {
-        throw new Error('Unauthorised');
+        return response.json();
       }
       if (response.status === 404) {
         throw new Error('Not Found');
       }
       if (response.status === 500) {
         throw new Error('Server Error');
-      } else if (response.status !== 200) {
+      } else {
         throw new Error('Something went wrong');
       }
     })
@@ -49,4 +34,4 @@ const AddPhoto = async (locationId, reviewId, image, method) => {
     });
 };
 
-export default AddPhoto;
+export default GetPhoto;

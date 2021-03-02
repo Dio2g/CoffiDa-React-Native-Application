@@ -57,4 +57,15 @@ export default StyleSheet.create({
     overflow: 'hidden',
     borderWidth: 3,
   },
+
+  reviewBody: {
+    textAlign: 'center',
+  },
+
+  reviewOpacity: {
+    padding: '10%',
+    borderWidth: 3,
+    borderRadius: 20,
+    margin: '5%',
+  },
 });

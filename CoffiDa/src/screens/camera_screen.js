@@ -15,7 +15,7 @@ const CameraScreen = (props) => {
     if (cameraRef) {
       const options = {quality: 0.5, base64: true};
       const data = await cameraRef.current.takePictureAsync(options);
-      await AddPhoto(id, reviewId, data);
+      await AddPhoto(id, reviewId, data, 'POST');
       props.navigation.navigate('homeStackNavigator', {
         screen: 'Location Info',
         params: {id},

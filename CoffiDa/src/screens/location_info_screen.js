@@ -205,7 +205,7 @@ const LocationInfoScreen = (props) => {
                         backgroundColor: colors.primary,
                         borderColor: colors.accent,
                       },
-                      styles.reviewOpacity,
+                      globalStyles.reviewOpacity,
                     ]}
                     onPress={() =>
                       props.navigation.navigate('homeStackNavigator', {
@@ -220,7 +220,9 @@ const LocationInfoScreen = (props) => {
                       tintColor={colors.primary}
                       imageSize={30}
                     />
-                    <Text style={styles.reviewBody}>{item.review_body}</Text>
+                    <Text style={globalStyles.reviewBody}>
+                      {item.review_body}
+                    </Text>
                   </TouchableOpacity>
                 </View>
               )}
@@ -286,10 +288,6 @@ const styles = StyleSheet.create({
     marginBottom: '5%',
   },
 
-  reviewBody: {
-    textAlign: 'center',
-  },
-
   accordion: {
     marginTop: '5%',
   },
@@ -298,13 +296,6 @@ const styles = StyleSheet.create({
 
   rating: {
     marginBottom: '10%',
-  },
-
-  reviewOpacity: {
-    padding: '10%',
-    borderWidth: 3,
-    borderRadius: 20,
-    margin: '5%',
   },
 });
 

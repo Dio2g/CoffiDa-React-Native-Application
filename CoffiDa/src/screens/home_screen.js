@@ -9,8 +9,14 @@ import {
   ActivityIndicator,
   Avatar,
 } from 'react-native-paper';
+import {
+  View,
+  TouchableOpacity,
+  Dimensions,
+  StyleSheet,
+  ToastAndroid,
+} from 'react-native';
 import React, {useState, useEffect, useCallback, useRef} from 'react';
-import {View, TouchableOpacity, Dimensions, StyleSheet} from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
 import {Rating, AirbnbRating} from 'react-native-ratings';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -19,19 +25,17 @@ import FindLocations from '../components/find_locations';
 import globalStyles from '../styles/global_stylesheet';
 
 const HomeScreen = (props) => {
+  // calculate window height (applied to everything inside the scrollview) so the user is able to scroll content while keyboard is visible
   const windowHeight = Dimensions.get('window').height;
 
   // so paper theme colors can be used with with non paper components
   const {colors} = useTheme();
 
-  const {navigation} = props;
+  // for airbnb rating in the pref menu
+  const ratingCount = 5;
+  const ratingSize = 32;
 
-  // set flatlist to top
-  const flatListRef = useRef();
-  const toTop = () => {
-    // use current
-    flatListRef.current.scrollToOffset({animated: true, offset: 0});
-  };
+  const {navigation} = props;
 
   const [isLoading, setIsLoading] = useState(true);
 
@@ -47,6 +51,12 @@ const HomeScreen = (props) => {
   const [searchIn, setSearchIn] = useState('');
   const [limit] = useState(4);
   const [offset, setOffset] = useState(0);
+
+  // set flatlist to top
+  const flatListRef = useRef();
+  const toTop = () => {
+    flatListRef.current.scrollToOffset({animated: true, offset: 0});
+  };
 
   // for pagination
   const onBottomReached = async () => {
@@ -106,19 +116,32 @@ const HomeScreen = (props) => {
   // for all api calls
   const getLocations = useCallback(
     async (offsetTemp) => {
-      setOffset(offsetTemp);
-      const data = await FindLocations(
-        searchQuery,
-        overallRating,
-        priceRating,
-        qualityRating,
-        clenlinessRating,
-        searchIn,
-        limit,
-        offsetTemp,
-      );
-      setListData(offsetTemp === 0 ? data : [...listData, ...data]);
-      setIsLoading(false);
+      try {
+        if (searchQuery.length < 50) {
+          setOffset(offsetTemp);
+          const parameters = {
+            query: searchQuery,
+            overallRating,
+            priceRating,
+            qualityRating,
+            clenlinessRating,
+            searchIn,
+            limit,
+            offset: offsetTemp,
+          };
+          const data = await FindLocations(props, parameters);
+          setListData(offsetTemp === 0 ? data : [...listData, ...data]);
+          setIsLoading(false);
+        } else {
+          ToastAndroid.show(
+            'Search string must be under 50 characters.',
+            ToastAndroid.SHORT,
+          );
+        }
+      } catch (e) {
+        // console.error(e);
+        ToastAndroid.show('Unexpected Error.', ToastAndroid.SHORT);
+      }
     },
     [
       searchQuery,
@@ -129,6 +152,7 @@ const HomeScreen = (props) => {
       searchIn,
       limit,
       listData,
+      props,
     ],
   );
 
@@ -153,7 +177,7 @@ const HomeScreen = (props) => {
   }
   return (
     <View style={{width: '100%', height: windowHeight}}>
-      <View style={styles.searchView}>
+      <View style={styles.rowView}>
         <View style={styles.searchBarView}>
           <Menu
             style={styles.prefMenu}
@@ -169,44 +193,44 @@ const HomeScreen = (props) => {
                 icon="cog"
               />
             }>
-            <Menu.Item onPress={() => {}} title="Overall Rating" />
+            <Menu.Item title="Overall Rating" />
             <AirbnbRating
               showRating={false}
-              count={5}
+              count={ratingCount}
               defaultRating={overallRating}
-              size={32}
+              size={ratingSize}
               onFinishRating={setOverallRating}
             />
             <Divider />
-            <Menu.Item onPress={() => {}} title="Price Rating" />
+            <Menu.Item title="Price Rating" />
             <AirbnbRating
               showRating={false}
-              count={5}
+              count={ratingCount}
               defaultRating={priceRating}
-              size={32}
+              size={ratingSize}
               onFinishRating={setPriceRating}
             />
             <Divider />
-            <Menu.Item onPress={() => {}} title="Quality Rating" />
+            <Menu.Item title="Quality Rating" />
             <AirbnbRating
               showRating={false}
-              count={5}
+              count={ratingCount}
               defaultRating={qualityRating}
-              size={32}
+              size={ratingSize}
               onFinishRating={setQualityRating}
             />
             <Divider />
-            <Menu.Item onPress={() => {}} title="Clenliness Rating" />
+            <Menu.Item title="Clenliness Rating" />
             <AirbnbRating
               showRating={false}
-              count={5}
+              count={ratingCount}
               defaultRating={clenlinessRating}
-              size={32}
+              size={ratingSize}
               onFinishRating={setClenlinessRating}
             />
             <Divider />
-            <View style={styles.checkBoxView}>
-              <Menu.Item onPress={() => {}} title="Favourites" />
+            <View style={styles.rowView}>
+              <Menu.Item title="Favourites" />
               <View style={styles.checkBox}>
                 <Checkbox
                   color={colors.background}
@@ -218,8 +242,8 @@ const HomeScreen = (props) => {
               </View>
             </View>
             <Divider />
-            <View style={styles.checkBoxView}>
-              <Menu.Item onPress={() => {}} title="Reviewed" />
+            <View style={styles.rowView}>
+              <Menu.Item title="Reviewed" />
               <View style={styles.checkBox}>
                 <Checkbox
                   color={colors.background}
@@ -234,12 +258,13 @@ const HomeScreen = (props) => {
             <Button
               mode="contained"
               onPress={resetPreferences}
-              style={{
-                backgroundColor: colors.background,
-                borderColor: colors.primary,
-                borderRightWidth: 7,
-                borderLeftWidth: 7,
-              }}>
+              style={[
+                {
+                  backgroundColor: colors.background,
+                  borderColor: colors.primary,
+                },
+                styles.resetPreferencesButton,
+              ]}>
               <Text>RESET</Text>
             </Button>
           </Menu>
@@ -272,20 +297,28 @@ const HomeScreen = (props) => {
                     params: {id: item.location_id},
                   })
                 }>
-                <View style={styles.flexContainer}>
+                <View style={styles.rowView}>
                   <View style={styles.infoView}>
                     <Text style={styles.nameText}>{item.location_name}</Text>
                     <Text style={styles.locationText}>
                       {item.location_town}
                     </Text>
-                    <Rating
-                      style={styles.rating}
-                      fractions={2}
-                      readonly
-                      startingValue={item.avg_overall_rating}
-                      tintColor={colors.primary}
-                      imageSize={30}
-                    />
+                    <View>
+                      {item.avg_overall_rating === 0 ? (
+                        <Text style={styles.notReviewedText}>
+                          Not yet reviewed.
+                        </Text>
+                      ) : (
+                        <Rating
+                          style={styles.rating}
+                          fractions={2}
+                          readonly
+                          startingValue={item.avg_overall_rating}
+                          tintColor={colors.primary}
+                          imageSize={30}
+                        />
+                      )}
+                    </View>
                   </View>
                   <Avatar.Image
                     style={[
@@ -319,7 +352,7 @@ HomeScreen.propTypes = {
 };
 
 const styles = StyleSheet.create({
-  searchView: {
+  rowView: {
     flex: 1,
     flexDirection: 'row',
   },
@@ -355,9 +388,9 @@ const styles = StyleSheet.create({
     height: '100%',
   },
 
-  checkBoxView: {
-    flex: 1,
-    flexDirection: 'row',
+  resetPreferencesButton: {
+    borderRightWidth: 7,
+    borderLeftWidth: 7,
   },
 
   checkBox: {
@@ -376,6 +409,12 @@ const styles = StyleSheet.create({
     paddingLeft: '1%',
   },
 
+  notReviewedText: {
+    fontSize: 15,
+    paddingTop: '3%',
+    paddingLeft: '1%',
+  },
+
   locationText: {
     fontSize: 18,
     paddingLeft: '1%',
@@ -390,11 +429,6 @@ const styles = StyleSheet.create({
   rating: {
     alignItems: 'flex-start',
     paddingTop: '2%',
-  },
-
-  flexContainer: {
-    flex: 1,
-    flexDirection: 'row',
   },
 
   infoView: {

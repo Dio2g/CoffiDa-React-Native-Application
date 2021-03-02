@@ -27,7 +27,7 @@ const Signup = (props, details) =>
         throw new Error('Failed Validation - Please enter valid information.');
       }
       if (response.status === 500) {
-        throw new Error('Internal Server Error.');
+        throw new Error('Server Error.');
       } else if (response.status !== 201) {
         throw new Error('Unexpected Error.');
       }

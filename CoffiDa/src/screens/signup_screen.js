@@ -15,40 +15,45 @@ const SignupScreen = (props) => {
   const [password, setPassword] = useState('');
 
   const onSubmit = () => {
-    // regex for input validation
-    const nameRegex = /^[a-zA-Z '.-]*$/;
-    const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    const whitespaceRegex = /^\s+$/; // to stop user from entering only whitespace in the name fields
-    const passwordRegex = /^\S{5,}$/; // minimum 5 chars and no whitespace
+    try {
+      // regex for input validation
+      const nameRegex = /^[a-zA-Z '.-]*$/;
+      const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      const whitespaceRegex = /^\s+$/; // to stop user from entering only whitespace in the name fields
+      const passwordRegex = /^\S{5,}$/; // minimum 5 chars and no whitespace
 
-    // check input against regex and show toast if they do not match
-    if (
-      !(
-        firstName !== '' &&
-        lastName !== '' &&
-        nameRegex.test(`${firstName} ${lastName}`)
-      ) ||
-      whitespaceRegex.test(`${firstName}`) ||
-      whitespaceRegex.test(`${lastName}`)
-    ) {
-      ToastAndroid.show(
-        'Please enter a valid first and last name.',
-        ToastAndroid.SHORT,
-      );
-    } else if (!(email !== '' && emailRegex.test(email))) {
-      ToastAndroid.show('Please enter a valid email.', ToastAndroid.SHORT);
-    } else if (!(password !== '' && passwordRegex.test(password))) {
-      ToastAndroid.show('Please enter a valid password.', ToastAndroid.SHORT);
-    } else {
-      // if everything is valid build details parameter and make call to api
-      const details = {
-        firstName,
-        lastName,
-        email,
-        password,
-      };
+      // check input against regex and show toast if they do not match
+      if (
+        !(
+          firstName !== '' &&
+          lastName !== '' &&
+          nameRegex.test(`${firstName} ${lastName}`)
+        ) ||
+        whitespaceRegex.test(`${firstName}`) ||
+        whitespaceRegex.test(`${lastName}`)
+      ) {
+        ToastAndroid.show(
+          'Please enter a valid first and last name.',
+          ToastAndroid.SHORT,
+        );
+      } else if (!(email !== '' && emailRegex.test(email))) {
+        ToastAndroid.show('Please enter a valid email.', ToastAndroid.SHORT);
+      } else if (!(password !== '' && passwordRegex.test(password))) {
+        ToastAndroid.show('Please enter a valid password.', ToastAndroid.SHORT);
+      } else {
+        // if everything is valid build details parameter and make call to api
+        const details = {
+          firstName,
+          lastName,
+          email,
+          password,
+        };
 
-      Signup(props, details);
+        Signup(props, details);
+      }
+    } catch (e) {
+      // console.error(e);
+      ToastAndroid.show('Unexpected Error.', ToastAndroid.SHORT);
     }
   };
 

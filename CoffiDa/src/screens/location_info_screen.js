@@ -1,5 +1,11 @@
 import React, {useEffect, useState, useCallback} from 'react';
-import {View, StyleSheet} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  ScrollView,
+  LogBox,
+  TouchableOpacity,
+} from 'react-native';
 import {
   Text,
   Button,
@@ -13,10 +19,15 @@ import {
 import {FlatList} from 'react-native-gesture-handler';
 import PropTypes from 'prop-types';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {Rating} from 'react-native-ratings';
 import LocationInfo from '../components/location_information';
 import FavouriteLocation from '../components/favourite_location';
 import FindLocations from '../components/find_locations';
 import globalStyles from '../styles/global_stylesheet';
+
+LogBox.ignoreLogs([
+  'VirtualizedLists should never be nested', // TODO: Remove when fixed
+]);
 
 const LocationInfoScreen = (props) => {
   // so paper theme colors can be used with with non paper components
@@ -56,13 +67,15 @@ const LocationInfoScreen = (props) => {
     setIsLoading(false);
   }, [id]);
 
+  // console.log(locationData.location_reviews);
+
   useEffect(() => {
-    async function getUserData() {
+    async function getLocationData() {
       const data = await LocationInfo(id);
       setLocationData(data);
     }
 
-    getUserData();
+    getLocationData();
     isFavourited();
   }, [id, isFavourited]);
 
@@ -76,59 +89,147 @@ const LocationInfoScreen = (props) => {
     );
   }
   return (
-    <View style={globalStyles.flexContainer}>
-      <View style={styles.infoView}>
-        <View style={styles.avatarView}>
-          <Avatar.Image
-            style={[
-              globalStyles.imgView,
-              {
-                borderColor: colors.text,
-                backgroundColor: colors.accent,
-              },
-            ]}
-            size={180}
-            source={{uri: locationData.photo_path}}
-          />
-        </View>
-        <View style={globalStyles.flexContainer}>
-          <View style={styles.infoTextView}>
-            <Title>{locationData.location_name}</Title>
-            <Subheading>{locationData.location_town}</Subheading>
-          </View>
-          <View style={styles.buttonView}>
-            <Button
-              mode="contained"
-              style={styles.button}
-              onPress={onFavouriteClick}>
-              <Icon
-                name={favourited ? 'heart' : 'heart-outline'}
-                size={40}
-                color="red"
+    <ScrollView
+      nestedScrollEnabled
+      style={globalStyles.flexContainer}
+      contentContainerStyle={globalStyles.scrollView}>
+      <View style={globalStyles.flexContainer}>
+        <View
+          style={[
+            styles.locationView,
+            {backgroundColor: colors.primary, borderColor: colors.background},
+          ]}>
+          <View style={styles.infoView}>
+            <View style={styles.avatarView}>
+              <Avatar.Image
+                style={[
+                  globalStyles.imgView,
+                  {
+                    borderColor: colors.text,
+                    backgroundColor: colors.accent,
+                  },
+                ]}
+                size={180}
+                source={{uri: locationData.photo_path}}
               />
-            </Button>
-            <Button
-              mode="contained"
-              style={styles.button}
-              onPress={() =>
-                navigation.navigate('homeStackNavigator', {
-                  screen: 'Add Review',
-                  params: {id},
-                })
-              }>
-              <Icon name="plus" size={40} color={colors.text} />
-            </Button>
+            </View>
+            <View style={globalStyles.flexContainer}>
+              <View style={styles.infoTextView}>
+                <Title>{locationData.location_name}</Title>
+                <Subheading>{locationData.location_town}</Subheading>
+              </View>
+              <View style={styles.buttonView}>
+                <Button
+                  mode="contained"
+                  style={styles.button}
+                  onPress={onFavouriteClick}>
+                  <Icon
+                    name={favourited ? 'heart' : 'heart-outline'}
+                    size={40}
+                    color="red"
+                  />
+                </Button>
+                <Button
+                  mode="contained"
+                  style={styles.button}
+                  onPress={() =>
+                    navigation.navigate('homeStackNavigator', {
+                      screen: 'Add Review',
+                      params: {id},
+                    })
+                  }>
+                  <Icon name="plus" size={40} color={colors.text} />
+                </Button>
+              </View>
+            </View>
           </View>
+
+          <View style={styles.ratingView}>
+            <View style={globalStyles.flexContainer}>
+              <Subheading style={styles.subHeading}>Overall Rating</Subheading>
+              <Rating
+                style={styles.rating}
+                fractions={2}
+                readonly
+                startingValue={locationData.avg_overall_rating}
+                tintColor={colors.primary}
+                imageSize={30}
+              />
+
+              <Subheading style={styles.subHeading}>Price Rating</Subheading>
+              <Rating
+                style={styles.rating}
+                fractions={2}
+                readonly
+                startingValue={locationData.avg_price_rating}
+                tintColor={colors.primary}
+                imageSize={30}
+              />
+            </View>
+            <View style={globalStyles.flexContainer}>
+              <Subheading style={styles.subHeading}>Quality Rating</Subheading>
+              <Rating
+                style={styles.rating}
+                fractions={2}
+                readonly
+                startingValue={locationData.avg_quality_rating}
+                tintColor={colors.primary}
+                imageSize={30}
+              />
+
+              <Subheading style={styles.subHeading}>
+                Clenliness Rating
+              </Subheading>
+              <Rating
+                style={styles.rating}
+                fractions={2}
+                readonly
+                startingValue={locationData.avg_clenliness_rating}
+                tintColor={colors.primary}
+                imageSize={30}
+              />
+            </View>
+          </View>
+          <List.Accordion
+            theme={{colors: {primary: colors.text}}}
+            title="Reviews"
+            style={[styles.accordion, {backgroundColor: colors.primary}]}>
+            <FlatList
+              scrollEnabled={false}
+              data={locationData.location_reviews}
+              renderItem={({item}) => (
+                <View>
+                  <TouchableOpacity
+                    style={[
+                      {
+                        backgroundColor: colors.primary,
+                        borderColor: colors.accent,
+                      },
+                      styles.reviewOpacity,
+                    ]}
+                    onPress={() =>
+                      props.navigation.navigate('homeStackNavigator', {
+                        screen: 'Review Info',
+                        params: {reviewData: item, id},
+                      })
+                    }>
+                    <Rating
+                      fractions={2}
+                      readonly
+                      startingValue={item.overall_rating}
+                      tintColor={colors.primary}
+                      imageSize={30}
+                    />
+                    <Text style={styles.reviewBody}>{item.review_body}</Text>
+                  </TouchableOpacity>
+                </View>
+              )}
+              keyExtractor={(item) => item.review_id.toString()}
+            />
+          </List.Accordion>
         </View>
       </View>
-      <List.Accordion title="Reviews">
-        <FlatList
-          data={locationData.location_reviews}
-          renderItem={({item}) => <Text>{item.review_body}</Text>}
-          keyExtractor={(item) => item.review_id.toString()}
-        />
-      </List.Accordion>
-    </View>
+    </ScrollView>
   );
 };
 
@@ -146,26 +247,64 @@ LocationInfoScreen.propTypes = {
 const styles = StyleSheet.create({
   avatarView: {
     flex: 1,
-    marginLeft: '3%',
+    marginLeft: '4%',
   },
+
   buttonView: {
     flexDirection: 'row',
     marginTop: '15%',
+    marginLeft: '1%',
   },
+
   button: {
     backgroundColor: 'transparent',
     borderRadius: 0,
     shadowRadius: 0,
     elevation: 0,
   },
+
   infoTextView: {
     flexDirection: 'column',
-    marginLeft: '9%',
+    marginLeft: '10%',
     marginTop: '5%',
   },
+
   infoView: {
     flexDirection: 'row',
+    marginBottom: '10%',
+    marginRight: '4%',
+  },
+
+  locationView: {
+    paddingTop: '5%',
+    borderWidth: 10,
+    paddingBottom: '23%',
+  },
+
+  subHeading: {
+    textAlign: 'center',
+    marginBottom: '5%',
+  },
+
+  reviewBody: {
+    textAlign: 'center',
+  },
+
+  accordion: {
     marginTop: '5%',
+  },
+
+  ratingView: {flexDirection: 'row', flex: 1},
+
+  rating: {
+    marginBottom: '10%',
+  },
+
+  reviewOpacity: {
+    padding: '10%',
+    borderWidth: 3,
+    borderRadius: 20,
+    margin: '5%',
   },
 });
 

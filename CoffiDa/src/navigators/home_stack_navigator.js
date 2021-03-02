@@ -4,6 +4,7 @@ import updateDetailsScreen from '../screens/update_details_screen';
 import locationInfoScreen from '../screens/location_info_screen';
 import addReviewScreen from '../screens/add_review_screen';
 import cameraScreen from '../screens/camera_screen';
+import reviewInfoScreen from '../screens/review_info_screen';
 
 const Stack = createStackNavigator();
 
@@ -13,6 +14,7 @@ const HomeStackNavigator = () => (
     <Stack.Screen name="Location Info" component={locationInfoScreen} />
     <Stack.Screen name="Add Review" component={addReviewScreen} />
     <Stack.Screen name="Camera" component={cameraScreen} />
+    <Stack.Screen name="Review Info" component={reviewInfoScreen} />
   </Stack.Navigator>
 );
 

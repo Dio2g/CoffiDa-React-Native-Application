@@ -45,12 +45,12 @@ const HomeScreen = (props) => {
   const [qualityRating, setQualityRating] = useState(0);
   const [clenlinessRating, setClenlinessRating] = useState(0);
   const [searchIn, setSearchIn] = useState('');
-  const [limit] = useState(5);
+  const [limit] = useState(4);
   const [offset, setOffset] = useState(0);
 
   // for pagination
   const onBottomReached = async () => {
-    getLocations(offset + 5);
+    getLocations(offset + 4);
   };
 
   // for search bar
@@ -303,7 +303,7 @@ const HomeScreen = (props) => {
             </View>
           )}
           keyExtractor={(item) => item.location_id.toString()}
-          onEndReachedThreshold={0.6}
+          onEndReachedThreshold={0.2}
           onEndReached={onBottomReached}
         />
       </View>

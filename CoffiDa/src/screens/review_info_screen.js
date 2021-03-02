@@ -33,17 +33,13 @@ const ReviewInfoScreen = (props) => {
   const isFavourited = useCallback(async () => {
     const data = await UserInfo();
 
-    // console.log(data.liked_reviews);
     const arrLocationID = data.liked_reviews.map((i) => i.location.location_id);
 
-    const locationIndex = arrLocationID.indexOf(id);
-    // console.log(locationIndex);
-
     const arrReviewID = data.liked_reviews.map((j) => j.review.review_id);
-    const reviewIndex = arrReviewID.indexOf(reviewData.review_id);
-    // console.log(reviewIndex);
 
-    if (reviewIndex !== -1 && locationIndex !== -1) {
+    const reviewIndex = arrReviewID.indexOf(reviewData.review_id);
+
+    if (reviewIndex !== -1 && arrLocationID[reviewIndex] === id) {
       setLiked(true);
     } else {
       setLiked(false);

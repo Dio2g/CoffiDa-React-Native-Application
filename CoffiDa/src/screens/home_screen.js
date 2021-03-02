@@ -66,6 +66,10 @@ const HomeScreen = (props) => {
   // for the preference menu
   const [visible, setVisible] = useState(false);
   const openMenu = () => {
+    setVisible(true);
+  };
+  const closeMenu = () => setVisible(false);
+  const resetPreferences = () => {
     setOverallRating(0);
     setPriceRating(0);
     setQualityRating(0);
@@ -73,9 +77,7 @@ const HomeScreen = (props) => {
     setSearchIn('');
     setFavChecked(false);
     setRevChecked(false);
-    setVisible(true);
   };
-  const closeMenu = () => setVisible(false);
 
   // for fav check box
   const [favChecked, setFavChecked] = useState(false);
@@ -229,6 +231,17 @@ const HomeScreen = (props) => {
               </View>
             </View>
             <Divider />
+            <Button
+              mode="contained"
+              onPress={resetPreferences}
+              style={{
+                backgroundColor: colors.background,
+                borderColor: colors.primary,
+                borderRightWidth: 7,
+                borderLeftWidth: 7,
+              }}>
+              <Text>RESET</Text>
+            </Button>
           </Menu>
         </View>
         <View style={globalStyles.flexContainer}>
@@ -290,7 +303,7 @@ const HomeScreen = (props) => {
             </View>
           )}
           keyExtractor={(item) => item.location_id.toString()}
-          onEndReachedThreshold={0.2}
+          onEndReachedThreshold={0.6}
           onEndReached={onBottomReached}
         />
       </View>

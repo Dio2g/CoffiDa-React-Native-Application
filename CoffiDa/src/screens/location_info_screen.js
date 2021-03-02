@@ -66,7 +66,7 @@ const LocationInfoScreen = (props) => {
     isFavourited();
   }, [id, isFavourited]);
 
-  console.log(locationData);
+  // console.log(locationData);
 
   if (isLoading === true) {
     return (

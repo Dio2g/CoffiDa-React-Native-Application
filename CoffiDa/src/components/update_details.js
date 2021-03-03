@@ -1,25 +1,25 @@
 import {ToastAndroid} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const UpdateDetails = async (props, firstName, lastName, email, password) => {
+const UpdateDetails = async (props, details) => {
   const token = await AsyncStorage.getItem('@session_token');
   const id = await AsyncStorage.getItem('@user_id');
   const address = `http://10.0.2.2:3333/api/1.0.0/user/${id}`;
 
   // different content for body depending on if they enter new password or not
   let bodyContent;
-  if (password === '' || password === null) {
+  if (details.password === '' || details.password === null) {
     bodyContent = JSON.stringify({
-      first_name: firstName,
-      last_name: lastName,
-      email,
+      first_name: details.firstName,
+      last_name: details.lastName,
+      email: details.email,
     });
   } else {
     bodyContent = JSON.stringify({
-      first_name: firstName,
-      last_name: lastName,
-      email,
-      password,
+      first_name: details.firstName,
+      last_name: details.lastName,
+      email: details.email,
+      password: details.password,
     });
   }
 

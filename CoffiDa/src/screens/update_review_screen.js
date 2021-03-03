@@ -73,15 +73,16 @@ const UpdateReviewScreen = (props) => {
     }
   };
 
-  const noPhoto = () => {
+  const deletePhoto = () => {
     setDialogVisible(false);
+    DeletePhoto(props, locationId, reviewID);
     props.navigation.navigate('homeStackNavigator', {
       screen: 'Location Info',
       params: {locationId},
     });
   };
 
-  const addPhoto = async () => {
+  const changePhoto = async () => {
     try {
       setDialogVisible(false);
 
@@ -186,15 +187,15 @@ const UpdateReviewScreen = (props) => {
             <Dialog.Title>Alert</Dialog.Title>
             <Dialog.Content>
               <Paragraph>
-                Would you like to add a photo to your review?
+                Would you like to delete or change your photo?
               </Paragraph>
             </Dialog.Content>
             <Dialog.Actions>
-              <Button onPress={() => noPhoto()}>
-                <Text>No</Text>
+              <Button onPress={() => deletePhoto()}>
+                <Text>Delete</Text>
               </Button>
-              <Button onPress={() => addPhoto()}>
-                <Text>Yes</Text>
+              <Button onPress={() => changePhoto()}>
+                <Text>Change</Text>
               </Button>
             </Dialog.Actions>
           </Dialog>

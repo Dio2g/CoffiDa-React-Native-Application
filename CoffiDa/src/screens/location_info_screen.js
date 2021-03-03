@@ -94,6 +94,7 @@ const LocationInfoScreen = (props) => {
 
     const unsubscribe = navigation.addListener('focus', async () => {
       // The screen is focused
+      setIsLoading(true);
       await getLocationData();
       await isFavourited();
       setIsLoading(false);

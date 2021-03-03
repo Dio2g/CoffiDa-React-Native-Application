@@ -20,13 +20,14 @@ const GetPhoto = async (locationId, reviewId) => {
         return response;
       }
       if (response.status === 404) {
-        throw new Error('Not Found');
+        return null;
       }
       if (response.status === 500) {
-        throw new Error('Server Error');
-      } else {
-        throw new Error('Something went wrong');
+        throw new Error('Server Error.');
+      } else if (response.status !== 404) {
+        throw new Error('Unexpected Error.');
       }
+      return null;
     })
     .catch((error) => {
       ToastAndroid.show(error.toString(), ToastAndroid.SHORT);

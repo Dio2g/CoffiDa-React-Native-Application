@@ -10,7 +10,6 @@ import {
 import PropTypes from 'prop-types';
 import {Rating} from 'react-native-ratings';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-
 import LikeReview from '../components/like_review';
 import UserInfo from '../components/user_information';
 import GetPhoto from '../components/get_photo';
@@ -46,7 +45,6 @@ const ReviewInfoScreen = (props) => {
   };
 
   const onLikedClick = async () => {
-    isFavourited();
     if (liked) {
       await LikeReview(locationId, reviewData.review_id, 'DELETE');
       setLiked(!liked);
@@ -58,51 +56,64 @@ const ReviewInfoScreen = (props) => {
     }
   };
 
-  const isFavourited = useCallback(async () => {
-    const data = await UserInfo();
+  const isFavourited = useCallback(
+    async (userInfo) => {
+      const arrLocationID = userInfo.liked_reviews.map(
+        (i) => i.location.location_id,
+      );
 
-    const arrLocationID = data.liked_reviews.map((i) => i.location.location_id);
+      const arrReviewID = userInfo.liked_reviews.map((j) => j.review.review_id);
 
-    const arrReviewID = data.liked_reviews.map((j) => j.review.review_id);
+      const reviewIndex = arrReviewID.indexOf(reviewData.review_id);
 
-    const reviewIndex = arrReviewID.indexOf(reviewData.review_id);
+      if (reviewIndex !== -1 && arrLocationID[reviewIndex] === locationId) {
+        setLiked(true);
+      } else {
+        setLiked(false);
+      }
 
-    if (reviewIndex !== -1 && arrLocationID[reviewIndex] === locationId) {
-      setLiked(true);
-    } else {
-      setLiked(false);
-    }
+      setIsLoading(false);
+    },
+    [locationId, reviewData],
+  );
 
-    setIsLoading(false);
-  }, [locationId, reviewData]);
+  const isMyReview = useCallback(
+    async (userInfo) => {
+      const arrLocationID = userInfo.reviews.map((i) => i.location.location_id);
 
-  const isMyReview = useCallback(async () => {
-    const data = await UserInfo();
+      const arrReviewID = userInfo.reviews.map((j) => j.review.review_id);
 
-    const arrLocationID = data.reviews.map((i) => i.location.location_id);
+      const reviewIndex = arrReviewID.indexOf(reviewData.review_id);
 
-    const arrReviewID = data.reviews.map((j) => j.review.review_id);
-
-    const reviewIndex = arrReviewID.indexOf(reviewData.review_id);
-
-    if (reviewIndex !== -1 && arrLocationID[reviewIndex] === locationId) {
-      setIsMine(true);
-    } else {
-      setIsMine(false);
-    }
-  }, [locationId, reviewData]);
+      if (reviewIndex !== -1 && arrLocationID[reviewIndex] === locationId) {
+        setIsMine(true);
+      } else {
+        setIsMine(false);
+      }
+    },
+    [locationId, reviewData],
+  );
 
   useEffect(() => {
-    async function getReviewPhoto() {
+    const getReviewPhoto = async () => {
       const data = await GetPhoto(locationId, reviewData.review_id);
       setPhoto(data);
-    }
+    };
 
-    setLikes(reviewData.likes);
-    getReviewPhoto();
-    isMyReview();
-    isFavourited();
-  }, [isFavourited, locationId, reviewData, isMyReview]);
+    const unsubscribe = navigation.addListener('focus', async () => {
+      // The screen is focused
+      setIsLoading(true);
+      setLikes(reviewData.likes);
+      await getReviewPhoto();
+      const data = await UserInfo();
+      await isMyReview(data);
+      await isFavourited(data);
+      setIsLoading(false);
+    });
+
+    // Return the function to unsubscribe from the event so it gets removed on unmount
+    return unsubscribe;
+  }, [isFavourited, locationId, reviewData, isMyReview, navigation]);
 
   if (isLoading === true) {
     return (

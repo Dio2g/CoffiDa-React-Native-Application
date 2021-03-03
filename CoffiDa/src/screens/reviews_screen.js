@@ -63,7 +63,7 @@ const ReviewsScreen = (props) => {
                   readonly
                   startingValue={item.overall_rating}
                   tintColor={colors.primary}
-                  imageSize={30}
+                  imageSize={32}
                 />
                 <Text style={globalStyles.reviewBody}>
                   {item.review.review_body}
@@ -104,7 +104,7 @@ const ReviewsScreen = (props) => {
                   readonly
                   startingValue={item.overall_rating}
                   tintColor={colors.primary}
-                  imageSize={30}
+                  imageSize={32}
                 />
                 <Text style={globalStyles.reviewBody}>
                   {item.review.review_body}

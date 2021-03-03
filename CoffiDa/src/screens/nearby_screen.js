@@ -55,7 +55,7 @@ const NearbyScreen = (props) => {
 
     findCoordinates();
     getLocations();
-  }, []);
+  }, [props]);
 
   if (isLoading === true) {
     return (

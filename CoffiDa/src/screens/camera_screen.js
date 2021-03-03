@@ -1,12 +1,7 @@
 import React, {useRef} from 'react';
-import {
-  View,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  ToastAndroid,
-} from 'react-native';
+import {View, StyleSheet, TouchableOpacity, ToastAndroid} from 'react-native';
 import {RNCamera} from 'react-native-camera';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import PropTypes from 'prop-types';
 import {useTheme} from 'react-native-paper';
 import AddPhoto from '../components/add_photo';
@@ -38,20 +33,12 @@ const CameraScreen = (props) => {
 
   return (
     <View style={styles.container}>
-      <RNCamera
-        ref={cameraRef}
-        style={styles.preview}
-        androidCameraPermissionOptions={{
-          title: 'Permission to use camera',
-          message: 'We need your permission to use your camera',
-          buttonPositive: 'Ok',
-          buttonNegative: 'Cancel',
-        }}
-        captureAudio={false}
-      />
+      <RNCamera ref={cameraRef} style={styles.preview} captureAudio={false} />
       <View style={[styles.opcaityView, {backgroundColor: colors.primary}]}>
-        <TouchableOpacity onPress={takePicture} style={styles.capture}>
-          <Text style={{fontSize: 14}}> SNAP </Text>
+        <TouchableOpacity
+          onPress={takePicture}
+          style={[styles.capture, {backgroundColor: colors.accent}]}>
+          <Icon name="camera" size={24} color={colors.text} />
         </TouchableOpacity>
       </View>
     </View>

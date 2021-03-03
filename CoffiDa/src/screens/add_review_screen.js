@@ -7,8 +7,8 @@ import {
   Paragraph,
   Dialog,
   Portal,
+  useTheme,
 } from 'react-native-paper';
-import {ScrollView} from 'react-native-gesture-handler';
 import {AirbnbRating} from 'react-native-ratings';
 import PropTypes from 'prop-types';
 import {useHeaderHeight} from '@react-navigation/stack';
@@ -19,6 +19,8 @@ import globalStyles from '../styles/global_stylesheet';
 const AddReviewScreen = (props) => {
   // calculate window height (applied to everything inside the scrollview) so the user is able to scroll content while keyboard is visible
   const windowHeight = Dimensions.get('window').height - useHeaderHeight();
+
+  const {colors} = useTheme();
 
   const {route} = props;
   const {navigation} = props;
@@ -104,13 +106,15 @@ const AddReviewScreen = (props) => {
   };
 
   return (
-    <ScrollView>
-      <View
-        style={[
-          globalStyles.flexContainer,
-          {width: '100%', height: windowHeight},
-        ]}>
-        <View style={globalStyles.viewOne}>
+    <View
+      style={globalStyles.flexContainer}
+      contentContainerStyle={globalStyles.scrollView}>
+      <View style={[{width: '100%', height: windowHeight}]}>
+        <View
+          style={[
+            styles.viewOne,
+            {borderColor: colors.text, backgroundColor: colors.primary},
+          ]}>
           <Text style={styles.text}>Overall Rating: </Text>
           <AirbnbRating
             showRating={false}
@@ -145,17 +149,25 @@ const AddReviewScreen = (props) => {
           />
           <Text style={styles.text}>Review Text: </Text>
           <TextInput
-            style={styles.reviewBodyInput}
+            mode="flat"
+            style={[
+              styles.reviewBodyInput,
+              {
+                backgroundColor: colors.primary,
+                borderTopColor: colors.text,
+              },
+            ]}
+            maxLength={200}
             multiline
-            numberOfLines={7}
-            type="outlined"
+            numberOfLines={5}
             label="Body"
             placeholder="Enter review Body..."
             onChangeText={(value) => setReviewBody(value)}
             value={reviewBody}
+            underlineColor="transparent"
           />
         </View>
-        <View style={globalStyles.viewTwo}>
+        <View style={globalStyles.flexContainer}>
           <Button
             style={globalStyles.button}
             contentStyle={globalStyles.buttonContent}
@@ -184,7 +196,7 @@ const AddReviewScreen = (props) => {
           </Dialog>
         </Portal>
       </View>
-    </ScrollView>
+    </View>
   );
 };
 
@@ -201,13 +213,20 @@ AddReviewScreen.propTypes = {
 
 const styles = StyleSheet.create({
   reviewBodyInput: {
-    marginTop: '6%',
+    borderTopWidth: 3,
+    marginTop: '3%',
   },
   text: {
     textAlign: 'center',
-    fontSize: 18,
-    marginTop: '15%',
-    marginBottom: '15%',
+    fontSize: 15,
+    paddingBottom: '1%',
+    paddingTop: '1%',
+  },
+  viewOne: {
+    flex: 3,
+    borderWidth: 3,
+    margin: '5%',
+    paddingTop: '2%',
   },
 });
 

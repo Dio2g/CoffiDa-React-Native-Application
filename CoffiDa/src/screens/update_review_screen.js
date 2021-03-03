@@ -49,9 +49,9 @@ const UpdateReviewScreen = (props) => {
           'Cannot rate any category 0 stars.',
           ToastAndroid.SHORT,
         );
-      } else if (reviewBody.length > 100 || reviewBody.length < 5) {
+      } else if (reviewBody.length > 200 || reviewBody.length < 5) {
         ToastAndroid.show(
-          'Review body must be between 5 and 100 characters.',
+          'Review body must be between 5 and 200 characters.',
           ToastAndroid.SHORT,
         );
       } else {
@@ -177,7 +177,7 @@ const UpdateReviewScreen = (props) => {
             contentStyle={globalStyles.buttonContent}
             mode="contained"
             onPress={() => updateReview()}>
-            <Text>Add Review</Text>
+            <Text>Update Review</Text>
           </Button>
         </View>
 
@@ -218,8 +218,10 @@ UpdateReviewScreen.propTypes = {
 
 const styles = StyleSheet.create({
   reviewBodyInput: {
-    borderTopWidth: 3,
+    borderWidth: 3,
     marginTop: '3%',
+    borderRadius: 30,
+    borderColor: 'transparent',
   },
   text: {
     textAlign: 'center',
@@ -232,6 +234,7 @@ const styles = StyleSheet.create({
     borderWidth: 3,
     margin: '5%',
     paddingTop: '2%',
+    borderRadius: 30,
   },
 });
 

@@ -10,6 +10,7 @@ import {
 import PropTypes from 'prop-types';
 import {Rating} from 'react-native-ratings';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+
 import LikeReview from '../components/like_review';
 import UserInfo from '../components/user_information';
 import GetPhoto from '../components/get_photo';
@@ -111,82 +112,94 @@ const ReviewInfoScreen = (props) => {
     );
   }
   return (
-    <ScrollView style={{flex: 1}}>
-      <View style={{flex: 1}}>
-        <Card>
+    <ScrollView
+      style={globalStyles.flexContainer}
+      contentContainerStyle={globalStyles.scrollView}>
+      <View style={styles.reviewContentView}>
+        <Card style={[styles.card, {borderColor: colors.text}]}>
           <Card.Title title={`Review Of ${locationName}`} />
           {photo ? <Card.Cover source={{uri: photo.url}} /> : null}
+          <View style={[styles.buttonView, {borderColor: colors.text}]}>
+            {isMine ? (
+              <View style={styles.isMineButtonView}>
+                <Button
+                  mode="contained"
+                  contentStyle={[
+                    styles.isMineButtonsContent,
+                    {borderColor: colors.accent},
+                  ]}
+                  onPress={() =>
+                    navigation.navigate('homeStackNavigator', {
+                      screen: 'Update Review',
+                      params: {locationId, reviewID: reviewData.review_id},
+                    })
+                  }>
+                  <Text>Update</Text>
+                </Button>
+                <Button
+                  contentStyle={[
+                    styles.isMineButtonsContent,
+                    {borderColor: colors.accent},
+                  ]}
+                  mode="contained"
+                  onPress={() => deleteReview()}>
+                  <Text>Delete</Text>
+                </Button>
+              </View>
+            ) : null}
+
+            <Button
+              mode="contained"
+              style={styles.button}
+              onPress={onLikedClick}>
+              <Icon
+                name={liked ? 'heart' : 'heart-outline'}
+                size={40}
+                color="red"
+              />
+              <Text>{likes}</Text>
+            </Button>
+          </View>
 
           <Card.Content>
-            <Text>Overall Rating</Text>
+            <Text style={styles.text}>Overall Rating</Text>
             <Rating
               fractions={fractions}
               readonly
               startingValue={reviewData.overall_rating}
-              tintColor={colors.accent}
+              tintColor={colors.primary}
               imageSize={imgSize}
             />
-            <Text>Overall Rating</Text>
+            <Text style={styles.text}>Price Rating</Text>
             <Rating
               fractions={fractions}
               readonly
               startingValue={reviewData.price_rating}
-              tintColor={colors.accent}
+              tintColor={colors.primary}
               imageSize={imgSize}
             />
-            <Text>Overall Rating</Text>
+            <Text style={styles.text}>Quality Rating</Text>
             <Rating
               fractions={fractions}
               readonly
               startingValue={reviewData.quality_rating}
-              tintColor={colors.accent}
+              tintColor={colors.primary}
               imageSize={imgSize}
             />
-            <Text>Overall Rating</Text>
+            <Text style={styles.text}>Clenliness Rating</Text>
             <Rating
               fractions={fractions}
               readonly
               startingValue={reviewData.clenliness_rating}
-              tintColor={colors.accent}
+              tintColor={colors.primary}
               imageSize={imgSize}
             />
-            <Text>{reviewData.review_body}</Text>
+            <Text style={styles.text}>Review Body</Text>
+            <Text style={[styles.reviewBodyText, {borderColor: colors.accent}]}>
+              {reviewData.review_body}
+            </Text>
           </Card.Content>
         </Card>
-
-        <Button mode="contained" style={styles.button} onPress={onLikedClick}>
-          <Icon
-            name={liked ? 'heart' : 'heart-outline'}
-            size={40}
-            color="red"
-          />
-          <Text>{likes}</Text>
-        </Button>
-      </View>
-      <View style={{flex: 1}}>
-        {isMine ? (
-          <Button
-            mode="contained"
-            style={globalStyles.alternativeButton}
-            onPress={() =>
-              navigation.navigate('homeStackNavigator', {
-                screen: 'Update Review',
-                params: {locationId, reviewID: reviewData.review_id},
-              })
-            }
-            contentStyle={globalStyles.buttonContent}>
-            <Text>Update</Text>
-          </Button>
-        ) : null}
-        {isMine ? (
-          <Button
-            mode="contained"
-            style={globalStyles.alternativeButton}
-            onPress={() => deleteReview()}
-            contentStyle={globalStyles.buttonContent}>
-            <Text>Delete</Text>
-          </Button>
-        ) : null}
       </View>
     </ScrollView>
   );
@@ -206,6 +219,42 @@ ReviewInfoScreen.propTypes = {
   }).isRequired,
 };
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  reviewContentView: {
+    flex: 1,
+    margin: '5%',
+  },
+  buttonView: {
+    flexDirection: 'row',
+    borderTopWidth: 3,
+    borderBottomWidth: 3,
+    flex: 2,
+    padding: '1%',
+  },
+  isMineButtonView: {
+    flexDirection: 'row',
+    flex: 3,
+  },
+  isMineButtonsContent: {
+    borderWidth: 3,
+    height: '100%',
+    marginRight: '2%',
+  },
+  card: {
+    borderWidth: 3,
+    borderRadius: 30,
+  },
+  text: {
+    textAlign: 'center',
+    fontSize: 14,
+    paddingBottom: '1%',
+    paddingTop: '2%',
+  },
+  reviewBodyText: {
+    borderWidth: 3,
+    padding: '5%',
+    marginTop: '1%',
+  },
+});
 
 export default ReviewInfoScreen;

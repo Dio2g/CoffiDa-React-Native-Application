@@ -1,5 +1,11 @@
 import React, {useState} from 'react';
-import {View, ScrollView, Dimensions, ToastAndroid} from 'react-native';
+import {
+  View,
+  ScrollView,
+  Dimensions,
+  ToastAndroid,
+  StatusBar,
+} from 'react-native';
 import {Button, Text, TextInput} from 'react-native-paper';
 import {useHeaderHeight} from '@react-navigation/stack';
 import Signup from '../components/signup';
@@ -7,7 +13,10 @@ import globalStyles from '../styles/global_stylesheet';
 
 const SignupScreen = (props) => {
   // calculate window height (applied to everything inside the scrollview) so the user is able to scroll content while keyboard is visible
-  const windowHeight = Dimensions.get('window').height - useHeaderHeight();
+  const windowHeight =
+    Dimensions.get('window').height -
+    useHeaderHeight() -
+    StatusBar.currentHeight;
 
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');

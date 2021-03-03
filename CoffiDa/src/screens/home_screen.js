@@ -123,7 +123,7 @@ const HomeScreen = (props) => {
     }
   };
 
-  // for all api calls
+  // for all FindLocation api calls
   const getLocations = useCallback(
     async (offsetTemp) => {
       try {
@@ -298,7 +298,7 @@ const HomeScreen = (props) => {
             <View>
               <TouchableOpacity
                 style={[
-                  {backgroundColor: colors.primary, borderColor: colors.accent},
+                  {backgroundColor: colors.primary, borderColor: colors.text},
                   styles.touchableOpacity,
                 ]}
                 onPress={() =>
@@ -412,6 +412,8 @@ const styles = StyleSheet.create({
     padding: '5%',
     marginVertical: 8,
     marginHorizontal: 16,
+    borderWidth: 3,
+    borderRadius: 30,
   },
 
   nameText: {

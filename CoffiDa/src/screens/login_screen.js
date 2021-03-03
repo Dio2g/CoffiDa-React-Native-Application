@@ -1,5 +1,11 @@
 import React, {useState} from 'react';
-import {View, Dimensions, StyleSheet, ToastAndroid} from 'react-native';
+import {
+  View,
+  Dimensions,
+  StyleSheet,
+  ToastAndroid,
+  StatusBar,
+} from 'react-native';
 import {Button, Text, TextInput} from 'react-native-paper';
 import {ScrollView} from 'react-native-gesture-handler';
 import {useHeaderHeight} from '@react-navigation/stack';
@@ -8,7 +14,10 @@ import globalStyles from '../styles/global_stylesheet';
 
 const LoginScreen = (props) => {
   // calculate window height (applied to everything inside the scrollview) so the user is able to scroll content while keyboard is visible
-  const windowHeight = Dimensions.get('window').height - useHeaderHeight();
+  const windowHeight =
+    Dimensions.get('window').height -
+    useHeaderHeight() -
+    StatusBar.currentHeight;
 
   // hard coded login details for quick testing
   const [email, setEmail] = useState('fake@mail.ac.uk');

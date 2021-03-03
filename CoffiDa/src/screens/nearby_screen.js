@@ -37,7 +37,17 @@ const NearbyScreen = (props) => {
     };
 
     const getLocations = async () => {
-      const data = await FindLocations('');
+      const parameters = {
+        query: '',
+        overallRating: 0,
+        priceRating: 0,
+        qualityRating: 0,
+        clenlinessRating: 0,
+        searchIn: '',
+        limit: 100,
+        offset: 0,
+      };
+      const data = await FindLocations(props, parameters);
 
       setListData(data);
       setIsLoading(false);

@@ -1,5 +1,4 @@
 import {ToastAndroid} from 'react-native';
-import PropTypes from 'prop-types';
 
 const Signup = (props, details) =>
   // eslint-disable-next-line no-undef
@@ -35,11 +34,5 @@ const Signup = (props, details) =>
     .catch((error) => {
       ToastAndroid.show(error.toString(), ToastAndroid.SHORT);
     });
-
-Signup.propTypes = {
-  navigation: PropTypes.shape({
-    navigate: PropTypes.func.isRequired,
-  }).isRequired,
-};
 
 export default Signup;

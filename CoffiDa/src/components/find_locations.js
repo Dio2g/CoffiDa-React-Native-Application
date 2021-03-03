@@ -1,6 +1,5 @@
 import {ToastAndroid} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import PropTypes from 'prop-types';
 
 const FindLocations = async (props, parameters) => {
   const token = await AsyncStorage.getItem('@session_token');
@@ -36,12 +35,6 @@ const FindLocations = async (props, parameters) => {
     .catch((error) => {
       ToastAndroid.show(error.toString(), ToastAndroid.SHORT);
     });
-};
-
-FindLocations.propTypes = {
-  navigation: PropTypes.shape({
-    navigate: PropTypes.func.isRequired,
-  }).isRequired,
 };
 
 export default FindLocations;

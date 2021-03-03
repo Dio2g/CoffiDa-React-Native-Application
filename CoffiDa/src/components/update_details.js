@@ -1,9 +1,7 @@
 import {ToastAndroid} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import PropTypes from 'prop-types';
 
 const UpdateDetails = async (props, firstName, lastName, email, password) => {
-  // TODO: Validation
   const token = await AsyncStorage.getItem('@session_token');
   const id = await AsyncStorage.getItem('@user_id');
   const address = `http://10.0.2.2:3333/api/1.0.0/user/${id}`;
@@ -60,12 +58,6 @@ const UpdateDetails = async (props, firstName, lastName, email, password) => {
     .catch((error) => {
       ToastAndroid.show(error.toString(), ToastAndroid.SHORT);
     });
-};
-
-UpdateDetails.propTypes = {
-  navigation: PropTypes.shape({
-    navigate: PropTypes.func.isRequired,
-  }).isRequired,
 };
 
 export default UpdateDetails;

@@ -12,16 +12,13 @@ const LocationInfo = async (id) =>
       if (response.status === 200) {
         return response.json();
       }
-      if (response.status === 401) {
-        throw new Error('Unauthorised');
-      }
       if (response.status === 404) {
-        throw new Error('Not Found');
+        throw new Error('Not Found.');
       }
       if (response.status === 500) {
-        throw new Error('Server Error');
+        throw new Error('Server Error.');
       } else {
-        throw new Error('Something went wrong');
+        throw new Error('Unexpected Error.');
       }
     })
     .catch((error) => {

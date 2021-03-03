@@ -1,9 +1,8 @@
 import {ToastAndroid} from 'react-native';
-import PropTypes from 'prop-types';
+
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Logout = async (props) => {
-  // TODO: Validation
   const token = await AsyncStorage.getItem('@session_token');
   // eslint-disable-next-line no-undef
   return fetch('http://10.0.2.2:3333/api/1.0.0/user/logout', {
@@ -30,12 +29,6 @@ const Logout = async (props) => {
     .catch((error) => {
       ToastAndroid.show(error.toString(), ToastAndroid.SHORT);
     });
-};
-
-Logout.propTypes = {
-  navigation: PropTypes.shape({
-    navigate: PropTypes.func.isRequired,
-  }).isRequired,
 };
 
 export default Logout;

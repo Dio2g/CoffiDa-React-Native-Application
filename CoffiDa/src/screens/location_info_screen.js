@@ -157,7 +157,7 @@ const LocationInfoScreen = (props) => {
                   onPress={() =>
                     navigation.navigate('homeStackNavigator', {
                       screen: 'Add Review',
-                      params: {id: locationId},
+                      params: {locationId},
                     })
                   }>
                   <Icon name="plus" size={40} color={colors.text} />

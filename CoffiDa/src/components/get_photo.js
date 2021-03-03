@@ -3,7 +3,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const GetPhoto = async (locationId, reviewId) => {
   const token = await AsyncStorage.getItem('@session_token');
-  // TODO: Validation
 
   // eslint-disable-next-line no-undef
   return fetch(

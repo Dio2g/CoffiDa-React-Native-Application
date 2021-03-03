@@ -12,6 +12,8 @@ const ReviewsScreen = (props) => {
   // so paper theme colors can be used with with non paper components
   const {colors} = useTheme();
 
+  const {navigation} = props;
+
   const [userData, setUserData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [dropSelection, setDropSelection] = useState('REVIEWED');
@@ -19,12 +21,19 @@ const ReviewsScreen = (props) => {
   useEffect(() => {
     async function getUserData() {
       const data = await UserInfo();
-
       setUserData(data);
-      setIsLoading(false);
     }
-    getUserData();
-  }, []);
+
+    const unsubscribe = navigation.addListener('focus', async () => {
+      // The screen is focused
+      setIsLoading(true);
+      await getUserData();
+      setIsLoading(false);
+    });
+
+    // Return the function to unsubscribe from the event so it gets removed on unmount
+    return unsubscribe;
+  }, [navigation]);
 
   if (isLoading === true) {
     return (
@@ -91,7 +100,7 @@ const ReviewsScreen = (props) => {
                   <Rating
                     fractions={2}
                     readonly
-                    startingValue={item.overall_rating}
+                    startingValue={item.review.overall_rating}
                     tintColor={colors.primary}
                     imageSize={32}
                   />
@@ -135,7 +144,7 @@ const ReviewsScreen = (props) => {
                   <Rating
                     fractions={2}
                     readonly
-                    startingValue={item.overall_rating}
+                    startingValue={item.review.overall_rating}
                     tintColor={colors.primary}
                     imageSize={32}
                   />
@@ -156,6 +165,7 @@ const ReviewsScreen = (props) => {
 ReviewsScreen.propTypes = {
   navigation: PropTypes.shape({
     navigate: PropTypes.func.isRequired,
+    addListener: PropTypes.func.isRequired,
   }).isRequired,
 };
 

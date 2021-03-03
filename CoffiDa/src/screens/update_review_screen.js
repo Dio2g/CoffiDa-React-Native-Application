@@ -13,7 +13,6 @@ import {AirbnbRating} from 'react-native-ratings';
 import PropTypes from 'prop-types';
 import {useHeaderHeight} from '@react-navigation/stack';
 import UpdateReview from '../components/update_review';
-import UserInfo from '../components/user_information';
 import DeletePhoto from '../components/delete_photo';
 import globalStyles from '../styles/global_stylesheet';
 
@@ -27,7 +26,7 @@ const UpdateReviewScreen = (props) => {
   const {navigation} = props;
   const {params} = route;
   const {locationId} = params;
-  const {reviewID} = params;
+  const {reviewId} = params;
 
   const [overallRating, setOverallRating] = useState(0);
   const [priceRating, setPriceRating] = useState(0);
@@ -57,7 +56,7 @@ const UpdateReviewScreen = (props) => {
       } else {
         const parameters = {
           locationId,
-          reviewId: reviewID,
+          reviewId,
           overallRating,
           priceRating,
           qualityRating,
@@ -75,7 +74,7 @@ const UpdateReviewScreen = (props) => {
 
   const deletePhoto = () => {
     setDialogVisible(false);
-    DeletePhoto(props, locationId, reviewID);
+    DeletePhoto(props, locationId, reviewId);
     props.navigation.navigate('homeStackNavigator', {
       screen: 'Location Info',
       params: {locationId},
@@ -86,19 +85,6 @@ const UpdateReviewScreen = (props) => {
     try {
       setDialogVisible(false);
 
-      const userData = await UserInfo();
-      const locationIDs = userData.reviews.map((i) => i.location.location_id);
-      const reviewIDs = userData.reviews.map((i) => i.review.review_id);
-      let i;
-      let index = -1;
-
-      for (i = 0; i < locationIDs.length; i += 1) {
-        if (locationIDs[i] === locationId) {
-          index = i;
-        }
-      }
-
-      const reviewId = reviewIDs[index];
       DeletePhoto(props, locationId, reviewId);
       navigation.navigate('homeStackNavigator', {
         screen: 'Camera',
@@ -209,7 +195,7 @@ UpdateReviewScreen.propTypes = {
   route: PropTypes.shape({
     params: PropTypes.shape({
       locationId: PropTypes.number,
-      reviewID: PropTypes.number,
+      reviewId: PropTypes.number,
     }).isRequired,
   }).isRequired,
   navigation: PropTypes.shape({

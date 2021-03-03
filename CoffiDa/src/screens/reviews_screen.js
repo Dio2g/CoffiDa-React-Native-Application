@@ -49,6 +49,7 @@ const ReviewsScreen = (props) => {
           ]}
           defaultValue={dropSelection}
           containerStyle={{height: 40}}
+          labelStyle={{color: colors.text}}
           style={{backgroundColor: colors.primary, borderColor: colors.primary}}
           dropDownStyle={{
             backgroundColor: colors.accent,

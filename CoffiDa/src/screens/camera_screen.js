@@ -1,27 +1,41 @@
 import React, {useRef} from 'react';
-import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  ToastAndroid,
+} from 'react-native';
 import {RNCamera} from 'react-native-camera';
 import PropTypes from 'prop-types';
+import {useTheme} from 'react-native-paper';
 import AddPhoto from '../components/add_photo';
 
 const CameraScreen = (props) => {
   const {route} = props;
   const {params} = route;
-  const {id} = params;
+  const {locationId} = params;
   const {reviewId} = params;
   const cameraRef = useRef(null);
+  const {colors} = useTheme();
 
   const takePicture = async () => {
-    if (cameraRef) {
-      const options = {quality: 0.5, base64: true};
-      const data = await cameraRef.current.takePictureAsync(options);
-      await AddPhoto(id, reviewId, data);
-      props.navigation.navigate('homeStackNavigator', {
-        screen: 'Location Info',
-        params: {locationId: id},
-      });
+    try {
+      if (cameraRef) {
+        const options = {quality: 0.5, base64: true};
+        const data = await cameraRef.current.takePictureAsync(options);
+        await AddPhoto(props, locationId, reviewId, data);
+        props.navigation.navigate('homeStackNavigator', {
+          screen: 'Location Info',
+          params: {locationId},
+        });
+      }
+    } catch (e) {
+      // console.error(e);
+      ToastAndroid.show('Unexpected Error.', ToastAndroid.SHORT);
     }
   };
+
   return (
     <View style={styles.container}>
       <RNCamera
@@ -33,8 +47,9 @@ const CameraScreen = (props) => {
           buttonPositive: 'Ok',
           buttonNegative: 'Cancel',
         }}
+        captureAudio={false}
       />
-      <View style={{flex: 0, flexDirection: 'row', justifyContent: 'center'}}>
+      <View style={[styles.opcaityView, {backgroundColor: colors.primary}]}>
         <TouchableOpacity onPress={takePicture} style={styles.capture}>
           <Text style={{fontSize: 14}}> SNAP </Text>
         </TouchableOpacity>
@@ -62,12 +77,17 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     margin: 20,
   },
+  opcaityView: {
+    flex: 0,
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
 });
 
 CameraScreen.propTypes = {
   route: PropTypes.shape({
     params: PropTypes.shape({
-      id: PropTypes.number,
+      locationId: PropTypes.number,
       reviewId: PropTypes.number,
     }).isRequired,
   }).isRequired,

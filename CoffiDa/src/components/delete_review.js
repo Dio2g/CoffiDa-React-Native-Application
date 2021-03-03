@@ -1,24 +1,27 @@
 import {ToastAndroid} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const AddPhoto = async (props, locationId, reviewId, image) => {
+const DeleteReview = async (props, locationId, reviewId) => {
   const token = await AsyncStorage.getItem('@session_token');
 
   // eslint-disable-next-line no-undef
   return fetch(
-    `http://10.0.2.2:3333/api/1.0.0/location/${locationId}/review/${reviewId}/photo`,
+    `http://10.0.2.2:3333/api/1.0.0/location/${locationId}/review/${reviewId}`,
     {
-      method: 'POST',
+      method: 'DELETE',
       headers: {
-        'Content-Type': 'image/jpeg',
+        'Content-Type': 'application/json',
         'X-Authorization': token,
       },
-      body: image,
     },
   )
     .then((response) => {
       if (response.status === 200) {
-        ToastAndroid.show('Photo Added!', ToastAndroid.SHORT);
+        ToastAndroid.show('Review Deleted!', ToastAndroid.SHORT);
+        props.navigation.navigate('homeStackNavigator', {
+          screen: 'Location Info',
+          params: {locationId},
+        });
       }
       if (response.status === 400) {
         throw new Error('Bad Request.');
@@ -26,6 +29,9 @@ const AddPhoto = async (props, locationId, reviewId, image) => {
       if (response.status === 401) {
         props.navigation.navigate('Welcome');
         throw new Error('You are not logged in - redirecting...');
+      }
+      if (response.status === 403) {
+        throw new Error('Forbidden.');
       }
       if (response.status === 404) {
         throw new Error('Not Found.');
@@ -41,4 +47,4 @@ const AddPhoto = async (props, locationId, reviewId, image) => {
     });
 };
 
-export default AddPhoto;
+export default DeleteReview;

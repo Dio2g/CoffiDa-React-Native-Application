@@ -54,7 +54,7 @@ const ReviewsScreen = (props) => {
                     screen: 'Review Info',
                     params: {
                       reviewData: item.review,
-                      id: item.location.location_id,
+                      locationId: item.location.location_id,
                     },
                   })
                 }>

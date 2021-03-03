@@ -239,7 +239,7 @@ const LocationInfoScreen = (props) => {
                     onPress={() =>
                       props.navigation.navigate('homeStackNavigator', {
                         screen: 'Review Info',
-                        params: {reviewData: item, id: locationId},
+                        params: {reviewData: item, locationId},
                       })
                     }>
                     <Rating

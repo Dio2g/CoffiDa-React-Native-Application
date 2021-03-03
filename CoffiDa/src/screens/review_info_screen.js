@@ -1,6 +1,13 @@
 import React, {useEffect, useState, useCallback} from 'react';
 import {View, StyleSheet, Image} from 'react-native';
-import {Button, ActivityIndicator, Text} from 'react-native-paper';
+import {
+  Button,
+  ActivityIndicator,
+  Text,
+  Card,
+  Paragraph,
+  Title,
+} from 'react-native-paper';
 import PropTypes from 'prop-types';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import LikeReview from '../components/like_review';
@@ -14,6 +21,7 @@ const ReviewInfoScreen = (props) => {
   const {params} = route;
   const {reviewData} = params;
   const {locationId} = params;
+  const {locationName} = params;
 
   const [photo, setPhoto] = useState('');
 
@@ -92,14 +100,16 @@ const ReviewInfoScreen = (props) => {
   }
   return (
     <View>
-      {photo ? (
-        <Image
-          source={{uri: photo.url}}
-          style={{width: 75, height: 75, borderRadius: 37.5}}
-        />
-      ) : (
-        <Text>No Image</Text>
-      )}
+      <Card>
+        <Card.Title title={`Review Of ${locationName}`} />
+        {photo ? <Card.Cover source={{uri: photo.url}} /> : null}
+
+        <Card.Content>
+          <Title>Card title</Title>
+          <Paragraph>Card content</Paragraph>
+        </Card.Content>
+      </Card>
+
       <Button mode="contained" style={styles.button} onPress={onLikedClick}>
         <Icon name={liked ? 'heart' : 'heart-outline'} size={40} color="red" />
       </Button>
@@ -110,9 +120,7 @@ const ReviewInfoScreen = (props) => {
           contentStyle={globalStyles.buttonContent}>
           <Text>Update</Text>
         </Button>
-      ) : (
-        <Text>Not yours</Text>
-      )}
+      ) : null}
       {isMine ? (
         <Button
           mode="contained"
@@ -121,9 +129,7 @@ const ReviewInfoScreen = (props) => {
           contentStyle={globalStyles.buttonContent}>
           <Text>Delete</Text>
         </Button>
-      ) : (
-        <Text>Not yours</Text>
-      )}
+      ) : null}
     </View>
   );
 };
@@ -133,6 +139,7 @@ ReviewInfoScreen.propTypes = {
     params: PropTypes.shape({
       reviewData: PropTypes.objectOf(PropTypes.any),
       locationId: PropTypes.number,
+      locationName: PropTypes.string,
     }).isRequired,
   }).isRequired,
 };

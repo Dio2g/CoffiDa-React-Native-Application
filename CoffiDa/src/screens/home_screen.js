@@ -141,7 +141,6 @@ const HomeScreen = (props) => {
           };
           const data = await FindLocations(props, parameters);
           setListData(offsetTemp === 0 ? data : [...listData, ...data]);
-          setIsLoading(false);
         } else {
           ToastAndroid.show(
             'Search string must be under 50 characters.',
@@ -168,10 +167,11 @@ const HomeScreen = (props) => {
 
   // on component load
   useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', () => {
+    const unsubscribe = navigation.addListener('focus', async () => {
       // The screen is focused
       setIsLoading(true);
-      getLocations(0);
+      await getLocations(0);
+      setIsLoading(false);
     });
 
     // Return the function to unsubscribe from the event so it gets removed on unmount
@@ -346,7 +346,7 @@ const HomeScreen = (props) => {
             </View>
           )}
           keyExtractor={(item) => item.location_id.toString()}
-          onEndReachedThreshold={0.2}
+          onEndReachedThreshold={0.1}
           onEndReached={onBottomReached}
         />
       </View>

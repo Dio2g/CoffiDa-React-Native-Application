@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useCallback} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   StyleSheet,
@@ -62,46 +62,46 @@ const LocationInfoScreen = (props) => {
     }
   };
 
-  const isFavourited = useCallback(async () => {
-    try {
-      const userData = await UserInfo();
-
-      const locationIdArr = userData.favourite_locations.map(
-        (i) => i.location_id,
-      ); // get ids of all fave locations and put in array
-
-      if (locationIdArr.includes(locationId)) {
-        setFavourited(true);
-      } else {
-        setFavourited(false);
-      }
-      setIsLoading(false);
-    } catch (e) {
-      // console.error(e);
-      ToastAndroid.show('Unexpected Error.', ToastAndroid.SHORT);
-    }
-  }, [locationId]);
-
-  const getLocationData = useCallback(async () => {
-    try {
-      const data = await LocationInfo(locationId);
-      setLocationData(data);
-    } catch (e) {
-      // console.error(e);
-      ToastAndroid.show('Unexpected Error.', ToastAndroid.SHORT);
-    }
-  }, [locationId]);
-
   useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', () => {
+    const isFavourited = async () => {
+      try {
+        const userData = await UserInfo();
+
+        const locationIdArr = userData.favourite_locations.map(
+          (i) => i.location_id,
+        ); // get ids of all fave locations and put in array
+
+        if (locationIdArr.includes(locationId)) {
+          setFavourited(true);
+        } else {
+          setFavourited(false);
+        }
+      } catch (e) {
+        // console.error(e);
+        ToastAndroid.show('Unexpected Error.', ToastAndroid.SHORT);
+      }
+    };
+
+    const getLocationData = async () => {
+      try {
+        const data = await LocationInfo(locationId);
+        setLocationData(data);
+      } catch (e) {
+        // console.error(e);
+        ToastAndroid.show('Unexpected Error.', ToastAndroid.SHORT);
+      }
+    };
+
+    const unsubscribe = navigation.addListener('focus', async () => {
       // The screen is focused
-      getLocationData();
-      isFavourited();
+      await getLocationData();
+      await isFavourited();
+      setIsLoading(false);
     });
 
     // Return the function to unsubscribe from the event so it gets removed on unmount
     return unsubscribe;
-  }, [isFavourited, getLocationData, navigation]);
+  }, [navigation, locationId]);
 
   if (isLoading === true) {
     return (
@@ -239,7 +239,11 @@ const LocationInfoScreen = (props) => {
                     onPress={() =>
                       props.navigation.navigate('homeStackNavigator', {
                         screen: 'Review Info',
-                        params: {reviewData: item, locationId},
+                        params: {
+                          reviewData: item,
+                          locationId,
+                          locationName: locationData.location_name,
+                        },
                       })
                     }>
                     <Rating

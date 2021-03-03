@@ -1,9 +1,10 @@
 import React, {useState, useEffect} from 'react';
 import {View, TouchableOpacity} from 'react-native';
-import {Text, List, ActivityIndicator, useTheme} from 'react-native-paper';
+import {Text, ActivityIndicator, useTheme} from 'react-native-paper';
 import {FlatList} from 'react-native-gesture-handler';
 import {Rating} from 'react-native-ratings';
 import PropTypes from 'prop-types';
+import DropDownPicker from 'react-native-dropdown-picker';
 import UserInfo from '../components/user_information';
 import globalStyles from '../styles/global_stylesheet';
 
@@ -13,7 +14,7 @@ const ReviewsScreen = (props) => {
 
   const [userData, setUserData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [expanded, setExpanded] = useState(true);
+  const [dropSelection, setDropSelection] = useState('REVIEWED');
 
   useEffect(() => {
     async function getUserData() {
@@ -25,8 +26,6 @@ const ReviewsScreen = (props) => {
     getUserData();
   }, []);
 
-  // console.log(userData);
-
   if (isLoading === true) {
     return (
       <View style={globalStyles.flexContainer}>
@@ -35,86 +34,120 @@ const ReviewsScreen = (props) => {
     );
   }
   return (
-    <View>
-      <List.Accordion title="Liked Reviews">
-        <FlatList
-          data={userData.liked_reviews}
-          renderItem={({item}) => (
-            <View>
-              <TouchableOpacity
-                style={[
-                  {
-                    backgroundColor: colors.primary,
-                    borderColor: colors.accent,
-                  },
-                  globalStyles.reviewOpacity,
-                ]}
-                onPress={() =>
-                  props.navigation.navigate('homeStackNavigator', {
-                    screen: 'Review Info',
-                    params: {
-                      reviewData: item.review,
-                      locationId: item.location.location_id,
-                    },
-                  })
-                }>
-                <Rating
-                  fractions={2}
-                  readonly
-                  startingValue={item.overall_rating}
-                  tintColor={colors.primary}
-                  imageSize={32}
-                />
-                <Text style={globalStyles.reviewBody}>
-                  {item.review.review_body}
-                </Text>
-              </TouchableOpacity>
-            </View>
-          )}
-          keyExtractor={(item) => item.review.review_id.toString()}
+    <View style={{flex: 1}}>
+      <View style={{flex: 0.22}}>
+        <DropDownPicker
+          items={[
+            {
+              label: 'My Reviews',
+              value: 'REVIEWED',
+            },
+            {
+              label: 'Liked Reviews',
+              value: 'LIKED',
+            },
+          ]}
+          defaultValue={dropSelection}
+          containerStyle={{height: 40}}
+          style={{backgroundColor: colors.primary, borderColor: colors.primary}}
+          dropDownStyle={{
+            backgroundColor: colors.accent,
+            borderColor: colors.primary,
+          }}
+          onChangeItem={(item) => setDropSelection(item.value)}
         />
-      </List.Accordion>
-      <List.Accordion
-        onPress={() => setExpanded(!expanded)}
-        expanded={expanded}
-        title="My Reviews">
-        <FlatList
-          data={userData.reviews}
-          renderItem={({item}) => (
-            <View>
-              <TouchableOpacity
-                style={[
-                  {
-                    backgroundColor: colors.primary,
-                    borderColor: colors.accent,
-                  },
-                  globalStyles.reviewOpacity,
-                ]}
-                onPress={() =>
-                  props.navigation.navigate('homeStackNavigator', {
-                    screen: 'Review Info',
-                    params: {
-                      reviewData: item.review,
-                      id: item.location.location_id,
+      </View>
+      <View style={{flex: 1}}>
+        {dropSelection === 'REVIEWED' ? (
+          <FlatList
+            data={userData.reviews}
+            renderItem={({item}) => (
+              <View>
+                <TouchableOpacity
+                  style={[
+                    {
+                      backgroundColor: colors.primary,
+                      borderColor: colors.accent,
                     },
-                  })
-                }>
-                <Rating
-                  fractions={2}
-                  readonly
-                  startingValue={item.overall_rating}
-                  tintColor={colors.primary}
-                  imageSize={32}
-                />
-                <Text style={globalStyles.reviewBody}>
-                  {item.review.review_body}
-                </Text>
-              </TouchableOpacity>
-            </View>
-          )}
-          keyExtractor={(item) => item.review.review_id.toString()}
-        />
-      </List.Accordion>
+                    globalStyles.reviewOpacity,
+                  ]}
+                  onPress={() =>
+                    props.navigation.navigate('homeStackNavigator', {
+                      screen: 'Review Info',
+                      params: {
+                        reviewData: item.review,
+                        locationId: item.location.location_id,
+                        locationName: item.location.location_name,
+                      },
+                    })
+                  }>
+                  <Text style={globalStyles.reviewBody}>
+                    {item.location.location_name}
+                  </Text>
+                  <Text style={globalStyles.reviewBody}>
+                    {item.location.location_town}
+                  </Text>
+                  <Rating
+                    fractions={2}
+                    readonly
+                    startingValue={item.overall_rating}
+                    tintColor={colors.primary}
+                    imageSize={32}
+                  />
+                  <Text style={globalStyles.reviewBody}>
+                    {item.review.review_body}
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            )}
+            keyExtractor={(item) => item.review.review_id.toString()}
+          />
+        ) : (
+          <FlatList
+            data={userData.liked_reviews}
+            renderItem={({item}) => (
+              <View>
+                <TouchableOpacity
+                  style={[
+                    {
+                      backgroundColor: colors.primary,
+                      borderColor: colors.accent,
+                    },
+                    globalStyles.reviewOpacity,
+                  ]}
+                  onPress={() =>
+                    props.navigation.navigate('homeStackNavigator', {
+                      screen: 'Review Info',
+                      params: {
+                        reviewData: item.review,
+                        locationId: item.location.location_id,
+                        locationName: item.location.location_name,
+                      },
+                    })
+                  }>
+                  <Text style={globalStyles.reviewBody}>
+                    {item.location.location_name}
+                  </Text>
+                  <Text style={globalStyles.reviewBody}>
+                    {item.location.location_town}
+                  </Text>
+                  <Rating
+                    fractions={2}
+                    readonly
+                    startingValue={item.overall_rating}
+                    tintColor={colors.primary}
+                    imageSize={32}
+                  />
+                  <Text style={globalStyles.reviewBody}>
+                    {item.review.review_body}
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            )}
+            keyExtractor={(item) => item.review.review_id.toString()}
+          />
+        )}
+      </View>
     </View>
   );
 };

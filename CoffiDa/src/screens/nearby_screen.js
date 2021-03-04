@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
-import {ActivityIndicator, Text} from 'react-native-paper';
-import {Alert, View} from 'react-native';
+import {ActivityIndicator, Text, useTheme} from 'react-native-paper';
+import {Alert, View, StyleSheet} from 'react-native';
 import Geolocation from '@react-native-community/geolocation';
 import MapView, {PROVIDER_GOOGLE, Marker} from 'react-native-maps';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -13,6 +13,9 @@ const NearbyScreen = (props) => {
     latitude: 0,
     longitude: 0,
   });
+
+  // so paper theme colors can be used with with non paper components
+  const {colors} = useTheme();
 
   const [listData, setListData] = useState([]);
 
@@ -65,9 +68,9 @@ const NearbyScreen = (props) => {
     );
   }
   return (
-    <View style={{flex: 1}}>
+    <View style={[styles.nearbyView, {borderColor: colors.primary}]}>
       <MapView
-        style={{flex: 1, height: '100%', width: '100%', position: 'absolute'}}
+        style={styles.map}
         provider={PROVIDER_GOOGLE}
         tintColor="green"
         region={{
@@ -94,8 +97,15 @@ const NearbyScreen = (props) => {
                 params: {locationId: marker.location_id},
               });
             }}>
-            <Icon name="coffee" size={40} color="brown" />
-            <Text style={{color: 'brown'}}>{marker.location_name}</Text>
+            <Icon
+              style={styles.markerIcon}
+              name="coffee"
+              size={40}
+              color={colors.background}
+            />
+            <Text style={{color: colors.background}}>
+              {marker.location_name}
+            </Text>
           </Marker>
         ))}
       </MapView>
@@ -108,5 +118,22 @@ NearbyScreen.propTypes = {
     navigate: PropTypes.func.isRequired,
   }).isRequired,
 };
+
+const styles = StyleSheet.create({
+  markerIcon: {
+    marginLeft: 31,
+  },
+  text: {},
+  map: {
+    flex: 1,
+    height: '100%',
+    width: '100%',
+    position: 'absolute',
+  },
+  nearbyView: {
+    flex: 1,
+    borderWidth: 6,
+  },
+});
 
 export default NearbyScreen;

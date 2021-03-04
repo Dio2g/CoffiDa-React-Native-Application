@@ -5,6 +5,7 @@ import {FlatList} from 'react-native-gesture-handler';
 import {Rating} from 'react-native-ratings';
 import PropTypes from 'prop-types';
 import DropDownPicker from 'react-native-dropdown-picker';
+import {Picker} from '@react-native-picker/picker';
 import UserInfo from '../components/user_information';
 import globalStyles from '../styles/global_stylesheet';
 
@@ -43,31 +44,27 @@ const ReviewsScreen = (props) => {
     );
   }
   return (
-    <View style={{flex: 1}}>
-      <View style={{flex: 0.22}}>
-        <DropDownPicker
-          items={[
-            {
-              label: 'My Reviews',
-              value: 'REVIEWED',
-            },
-            {
-              label: 'Liked Reviews',
-              value: 'LIKED',
-            },
-          ]}
-          defaultValue={dropSelection}
-          containerStyle={{height: 40}}
-          labelStyle={{color: colors.text}}
-          style={{backgroundColor: colors.primary, borderColor: colors.primary}}
-          dropDownStyle={{
-            backgroundColor: colors.accent,
-            borderColor: colors.primary,
-          }}
-          onChangeItem={(item) => setDropSelection(item.value)}
-        />
+    <View>
+      <View>
+        <Picker
+          selectedValue={dropSelection}
+          style={{backgroundColor: colors.primary}}
+          itemStyle={{backgroundColor: colors.primary}}
+          color={colors.primary}
+          onValueChange={(itemValue, itemIndex) => setDropSelection(itemValue)}>
+          <Picker.Item
+            label="My Reviews"
+            value="REVIEWED"
+            color={colors.accent}
+          />
+          <Picker.Item
+            color={colors.accent}
+            label="Liked Reviews"
+            value="LIKED"
+          />
+        </Picker>
       </View>
-      <View style={{flex: 1}}>
+      <View>
         {dropSelection === 'REVIEWED' ? (
           <FlatList
             data={userData.reviews}

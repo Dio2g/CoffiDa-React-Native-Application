@@ -7,11 +7,9 @@ import {
   Menu,
   Button,
 } from 'react-native-paper';
-
 import {FlatList} from 'react-native-gesture-handler';
 import {Rating} from 'react-native-ratings';
 import PropTypes from 'prop-types';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import UserInfo from '../components/user_information';
 import globalStyles from '../styles/global_stylesheet';
 

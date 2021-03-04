@@ -68,4 +68,26 @@ export default StyleSheet.create({
     borderRadius: 20,
     margin: '5%',
   },
+
+  reviewBodyInput: {
+    borderWidth: 3,
+    marginTop: '3%',
+    borderRadius: 30,
+    borderColor: 'transparent',
+  },
+
+  reviewText: {
+    textAlign: 'center',
+    fontSize: 15,
+    paddingBottom: '1%',
+    paddingTop: '1%',
+  },
+
+  reviewSubmitButton: {
+    borderRadius: 20,
+    height: '70%',
+    margin: '5%',
+    borderWidth: 3,
+    marginBottom: '10%',
+  },
 });

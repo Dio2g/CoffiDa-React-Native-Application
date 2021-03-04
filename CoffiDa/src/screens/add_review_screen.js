@@ -135,7 +135,7 @@ const AddReviewScreen = (props) => {
             styles.viewOne,
             {borderColor: colors.text, backgroundColor: colors.primary},
           ]}>
-          <Text style={styles.text}>Overall Rating: </Text>
+          <Text style={globalStyles.reviewText}>Overall Rating: </Text>
           <AirbnbRating
             showRating={false}
             count={5}
@@ -143,7 +143,7 @@ const AddReviewScreen = (props) => {
             size={32}
             onFinishRating={setOverallRating}
           />
-          <Text style={styles.text}>Price Rating: </Text>
+          <Text style={globalStyles.reviewText}>Price Rating: </Text>
           <AirbnbRating
             showRating={false}
             count={5}
@@ -151,7 +151,7 @@ const AddReviewScreen = (props) => {
             size={32}
             onFinishRating={setPriceRating}
           />
-          <Text style={styles.text}>Quality Rating: </Text>
+          <Text style={globalStyles.reviewText}>Quality Rating: </Text>
           <AirbnbRating
             showRating={false}
             count={5}
@@ -159,7 +159,7 @@ const AddReviewScreen = (props) => {
             size={32}
             onFinishRating={setQualityRating}
           />
-          <Text style={styles.text}>Clenliness Rating: </Text>
+          <Text style={globalStyles.reviewText}>Clenliness Rating: </Text>
           <AirbnbRating
             showRating={false}
             count={5}
@@ -167,11 +167,11 @@ const AddReviewScreen = (props) => {
             size={32}
             onFinishRating={setClenlinessRating}
           />
-          <Text style={styles.text}>Review Text: </Text>
+          <Text style={globalStyles.reviewText}>Review Text: </Text>
           <TextInput
             mode="flat"
             style={[
-              styles.reviewBodyInput,
+              globalStyles.reviewBodyInput,
               {
                 backgroundColor: colors.primary,
                 borderTopColor: colors.text,
@@ -189,7 +189,10 @@ const AddReviewScreen = (props) => {
         </View>
         <View style={globalStyles.flexContainer}>
           <Button
-            style={globalStyles.button}
+            style={[
+              globalStyles.reviewSubmitButton,
+              {borderColor: colors.text},
+            ]}
             contentStyle={globalStyles.buttonContent}
             mode="contained"
             onPress={() => addReview()}>
@@ -232,18 +235,6 @@ AddReviewScreen.propTypes = {
 };
 
 const styles = StyleSheet.create({
-  reviewBodyInput: {
-    borderWidth: 3,
-    marginTop: '3%',
-    borderRadius: 30,
-    borderColor: 'transparent',
-  },
-  text: {
-    textAlign: 'center',
-    fontSize: 15,
-    paddingBottom: '1%',
-    paddingTop: '1%',
-  },
   viewOne: {
     flex: 4.6,
     borderWidth: 3,

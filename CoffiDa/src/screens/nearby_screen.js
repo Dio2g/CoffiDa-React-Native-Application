@@ -133,7 +133,6 @@ const styles = StyleSheet.create({
   markerIcon: {
     marginLeft: 31,
   },
-  text: {},
   map: {
     flex: 1,
     height: '100%',

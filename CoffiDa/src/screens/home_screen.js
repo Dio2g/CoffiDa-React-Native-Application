@@ -243,6 +243,7 @@ const HomeScreen = (props) => {
               <Menu.Item title="Favourites" />
               <View style={styles.checkBox}>
                 <Checkbox
+                  role="checkbox"
                   color={colors.background}
                   status={favChecked ? 'checked' : 'unchecked'}
                   onPress={() => {
@@ -256,6 +257,7 @@ const HomeScreen = (props) => {
               <Menu.Item title="Reviewed" />
               <View style={styles.checkBox}>
                 <Checkbox
+                  role="checkbox"
                   color={colors.background}
                   status={revChecked ? 'checked' : 'unchecked'}
                   onPress={() => {

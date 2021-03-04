@@ -52,7 +52,7 @@ const UpdateDetails = async (props, details) => {
       if (response.status === 500) {
         throw new Error('Server Error');
       } else if (response.status !== 200) {
-        throw new Error('Something went wrong');
+        throw new Error('Something went wrong.');
       }
     })
     .catch((error) => {

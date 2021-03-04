@@ -10,7 +10,6 @@ const LikeReview = async (locationId, reviewId, method) => {
     {
       method,
       headers: {
-        'Content-Type': 'application/json',
         'X-Authorization': token,
       },
     },
@@ -35,7 +34,7 @@ const LikeReview = async (locationId, reviewId, method) => {
       if (response.status === 500) {
         throw new Error('Server Error');
       } else if (response.status !== 200) {
-        throw new Error('Something went wrong');
+        throw new Error('Something went wrong.');
       }
     })
     .catch((error) => {

@@ -28,7 +28,7 @@ const Signup = (props, details) =>
       if (response.status === 500) {
         throw new Error('Server Error.');
       } else if (response.status !== 201) {
-        throw new Error('Unexpected Error.');
+        throw new Error('Something went wrong.');
       }
     })
     .catch((error) => {

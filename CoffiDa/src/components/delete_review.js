@@ -10,7 +10,6 @@ const DeleteReview = async (props, locationId, reviewId) => {
     {
       method: 'DELETE',
       headers: {
-        'Content-Type': 'application/json',
         'X-Authorization': token,
       },
     },
@@ -39,7 +38,7 @@ const DeleteReview = async (props, locationId, reviewId) => {
       if (response.status === 500) {
         throw new Error('Server Error.');
       } else if (response.status !== 200) {
-        throw new Error('Unexpected Error.');
+        throw new Error('Something went wrong.');
       }
     })
     .catch((error) => {

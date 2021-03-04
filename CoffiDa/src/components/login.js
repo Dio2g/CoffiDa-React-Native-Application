@@ -23,7 +23,7 @@ const Login = (props, details) =>
       if (response.status === 500) {
         throw new Error('Server Error.');
       } else {
-        throw new Error('Unexpected Error.');
+        throw new Error('Something went wrong.');
       }
     })
     .then(async (responseJson) => {

@@ -8,7 +8,6 @@ const FavouriteLocation = async (id, method) => {
   return fetch(`http://10.0.2.2:3333/api/1.0.0/location/${id}/favourite`, {
     method,
     headers: {
-      'Content-Type': 'application/json',
       'X-Authorization': token,
     },
   })
@@ -32,7 +31,7 @@ const FavouriteLocation = async (id, method) => {
       if (response.status === 500) {
         throw new Error('Server Error');
       } else if (response.status !== 200) {
-        throw new Error('Something went wrong');
+        throw new Error('Something went wrong.');
       }
     })
     .catch((error) => {

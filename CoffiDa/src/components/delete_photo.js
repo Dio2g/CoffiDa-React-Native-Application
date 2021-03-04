@@ -10,7 +10,6 @@ const DeletePhoto = async (props, locationId, reviewId) => {
     {
       method: 'DELETE',
       headers: {
-        'Content-Type': 'image/jpeg',
         'X-Authorization': token,
       },
     },
@@ -19,8 +18,8 @@ const DeletePhoto = async (props, locationId, reviewId) => {
       if (response.status === 200) {
         ToastAndroid.show('Photo Deleted!', ToastAndroid.SHORT);
       }
-      if (response.status === 400) {
-        throw new Error('Bad Request.');
+      if (response.status === 403) {
+        throw new Error('Forbidden.');
       }
       if (response.status === 401) {
         props.navigation.navigate('Welcome');
@@ -32,7 +31,7 @@ const DeletePhoto = async (props, locationId, reviewId) => {
       if (response.status === 500) {
         throw new Error('Server Error.');
       } else if (response.status !== 200) {
-        throw new Error('Unexpected Error.');
+        throw new Error('Something went wrong.');
       }
     })
     .catch((error) => {

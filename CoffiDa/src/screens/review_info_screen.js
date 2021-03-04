@@ -1,5 +1,5 @@
 import React, {useEffect, useState, useCallback} from 'react';
-import {View, StyleSheet, ScrollView} from 'react-native';
+import {View, StyleSheet, ScrollView, ToastAndroid} from 'react-native';
 import {
   Button,
   ActivityIndicator,
@@ -45,50 +45,69 @@ const ReviewInfoScreen = (props) => {
   };
 
   const onLikedClick = async () => {
-    if (liked) {
-      await LikeReview(locationId, reviewData.review_id, 'DELETE');
-      setLiked(!liked);
-      setLikes(likes - 1);
-    } else if (!liked) {
-      await LikeReview(locationId, reviewData.review_id, 'POST');
-      setLiked(!liked);
-      setLikes(likes + 1);
+    try {
+      if (liked) {
+        await LikeReview(locationId, reviewData.review_id, 'DELETE');
+        setLiked(!liked);
+        setLikes(likes - 1);
+      } else if (!liked) {
+        await LikeReview(locationId, reviewData.review_id, 'POST');
+        setLiked(!liked);
+        setLikes(likes + 1);
+      }
+    } catch (e) {
+      // console.error(e);
+      ToastAndroid.show('Unexpected Error.', ToastAndroid.SHORT);
     }
   };
 
   const isFavourited = useCallback(
     async (userInfo) => {
-      const arrLocationID = userInfo.liked_reviews.map(
-        (i) => i.location.location_id,
-      );
+      try {
+        const arrLocationID = userInfo.liked_reviews.map(
+          (i) => i.location.location_id,
+        );
 
-      const arrReviewID = userInfo.liked_reviews.map((j) => j.review.review_id);
+        const arrReviewID = userInfo.liked_reviews.map(
+          (j) => j.review.review_id,
+        );
 
-      const reviewIndex = arrReviewID.indexOf(reviewData.review_id);
+        const reviewIndex = arrReviewID.indexOf(reviewData.review_id);
 
-      if (reviewIndex !== -1 && arrLocationID[reviewIndex] === locationId) {
-        setLiked(true);
-      } else {
-        setLiked(false);
+        if (reviewIndex !== -1 && arrLocationID[reviewIndex] === locationId) {
+          setLiked(true);
+        } else {
+          setLiked(false);
+        }
+
+        setIsLoading(false);
+      } catch (e) {
+        // console.error(e);
+        ToastAndroid.show('Unexpected Error.', ToastAndroid.SHORT);
       }
-
-      setIsLoading(false);
     },
     [locationId, reviewData],
   );
 
   const isMyReview = useCallback(
     async (userInfo) => {
-      const arrLocationID = userInfo.reviews.map((i) => i.location.location_id);
+      try {
+        const arrLocationID = userInfo.reviews.map(
+          (i) => i.location.location_id,
+        );
 
-      const arrReviewID = userInfo.reviews.map((j) => j.review.review_id);
+        const arrReviewID = userInfo.reviews.map((j) => j.review.review_id);
 
-      const reviewIndex = arrReviewID.indexOf(reviewData.review_id);
+        const reviewIndex = arrReviewID.indexOf(reviewData.review_id);
 
-      if (reviewIndex !== -1 && arrLocationID[reviewIndex] === locationId) {
-        setIsMine(true);
-      } else {
-        setIsMine(false);
+        if (reviewIndex !== -1 && arrLocationID[reviewIndex] === locationId) {
+          setIsMine(true);
+        } else {
+          setIsMine(false);
+        }
+      } catch (e) {
+        // console.error(e);
+        ToastAndroid.show('Unexpected Error.', ToastAndroid.SHORT);
       }
     },
     [locationId, reviewData],

@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, ToastAndroid} from 'react';
 import {ActivityIndicator, Text, useTheme} from 'react-native-paper';
 import {Alert, View, StyleSheet} from 'react-native';
 import Geolocation from '@react-native-community/geolocation';
@@ -24,36 +24,46 @@ const NearbyScreen = (props) => {
   // on component load
   useEffect(() => {
     const findCoordinates = () => {
-      Geolocation.getCurrentPosition(
-        (position) => {
-          const location = position;
-          setCurrentLocation({
-            latitude: location.coords.latitude,
-            longitude: location.coords.longitude,
-          });
-        },
-        (error) => {
-          Alert.alert(error.message);
-        },
-        {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
-      );
+      try {
+        Geolocation.getCurrentPosition(
+          (position) => {
+            const location = position;
+            setCurrentLocation({
+              latitude: location.coords.latitude,
+              longitude: location.coords.longitude,
+            });
+          },
+          (error) => {
+            Alert.alert(error.message);
+          },
+          {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
+        );
+      } catch (e) {
+        // console.error(e);
+        ToastAndroid.show('Unexpected Error.', ToastAndroid.SHORT);
+      }
     };
 
     const getLocations = async () => {
-      const parameters = {
-        query: '',
-        overallRating: 0,
-        priceRating: 0,
-        qualityRating: 0,
-        clenlinessRating: 0,
-        searchIn: '',
-        limit: 100,
-        offset: 0,
-      };
-      const data = await FindLocations(props, parameters);
+      try {
+        const parameters = {
+          query: '',
+          overallRating: 0,
+          priceRating: 0,
+          qualityRating: 0,
+          clenlinessRating: 0,
+          searchIn: '',
+          limit: 100,
+          offset: 0,
+        };
+        const data = await FindLocations(props, parameters);
 
-      setListData(data);
-      setIsLoading(false);
+        setListData(data);
+        setIsLoading(false);
+      } catch (e) {
+        // console.error(e);
+        ToastAndroid.show('Unexpected Error.', ToastAndroid.SHORT);
+      }
     };
 
     findCoordinates();

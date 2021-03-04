@@ -8,7 +8,6 @@ const Logout = async (props) => {
   return fetch('http://10.0.2.2:3333/api/1.0.0/user/logout', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json',
       'X-Authorization': token,
     },
   })
@@ -23,7 +22,7 @@ const Logout = async (props) => {
       } else if (response.status === 500) {
         throw new Error('Server error');
       } else if (response.status !== 200) {
-        throw new Error('Something went wrong');
+        throw new Error('Something went wrong.');
       }
     })
     .catch((error) => {

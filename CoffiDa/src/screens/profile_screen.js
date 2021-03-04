@@ -19,6 +19,7 @@ const ProfileScreen = (props) => {
   return (
     <View style={globalStyles.flexContainer}>
       <TouchableRipple
+        role="button"
         onPress={() => {
           toggleTheme();
         }}>
@@ -33,6 +34,7 @@ const ProfileScreen = (props) => {
       </TouchableRipple>
       <View style={globalStyles.twoButtonViewOne}>
         <Button
+          role="button"
           contentStyle={globalStyles.buttonContent}
           style={globalStyles.alternativeButton}
           mode="contained"
@@ -46,6 +48,7 @@ const ProfileScreen = (props) => {
       </View>
       <View style={globalStyles.twoButtonViewTwo}>
         <Button
+          role="button"
           contentStyle={globalStyles.buttonContent}
           style={globalStyles.alternativeButton}
           mode="contained"

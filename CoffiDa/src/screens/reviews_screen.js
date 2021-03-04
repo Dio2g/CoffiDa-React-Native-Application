@@ -60,7 +60,7 @@ const ReviewsScreen = (props) => {
           visible={visible}
           onDismiss={closeMenu}
           anchor={
-            <Button onPress={openMenu}>
+            <Button role="button" onPress={openMenu}>
               <Text>Select Category</Text>
             </Button>
           }>
@@ -81,6 +81,7 @@ const ReviewsScreen = (props) => {
             renderItem={({item}) => (
               <View>
                 <TouchableOpacity
+                  role="button"
                   style={[
                     {
                       backgroundColor: colors.primary,
@@ -125,6 +126,7 @@ const ReviewsScreen = (props) => {
             renderItem={({item}) => (
               <View>
                 <TouchableOpacity
+                  role="button"
                   style={[
                     {
                       backgroundColor: colors.primary,

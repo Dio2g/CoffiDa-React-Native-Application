@@ -8,6 +8,7 @@ const WelcomeScreen = (props) => (
   <View style={globalStyles.flexContainer}>
     <View style={globalStyles.twoButtonViewOne}>
       <Button
+        role="button"
         contentStyle={globalStyles.buttonContent}
         style={globalStyles.alternativeButton}
         mode="contained"
@@ -17,6 +18,7 @@ const WelcomeScreen = (props) => (
     </View>
     <View style={globalStyles.twoButtonViewTwo}>
       <Button
+        role="button"
         contentStyle={globalStyles.buttonContent}
         style={globalStyles.alternativeButton}
         mode="contained"

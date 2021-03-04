@@ -38,6 +38,7 @@ const CameraScreen = (props) => {
       <RNCamera ref={cameraRef} style={styles.preview} captureAudio={false} />
       <View style={[styles.opcaityView, {backgroundColor: colors.primary}]}>
         <TouchableOpacity
+          role="button"
           onPress={takePicture}
           style={[styles.capture, {backgroundColor: colors.accent}]}>
           <Icon name="camera" size={24} color={colors.text} />

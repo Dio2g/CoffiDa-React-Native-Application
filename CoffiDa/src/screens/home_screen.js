@@ -266,6 +266,7 @@ const HomeScreen = (props) => {
             </View>
             <Divider />
             <Button
+              role="button"
               mode="contained"
               onPress={resetPreferences}
               style={[
@@ -281,6 +282,7 @@ const HomeScreen = (props) => {
         </View>
         <View style={globalStyles.flexContainer}>
           <Button
+            role="button"
             mode="contained"
             onPress={onPressSearch}
             style={styles.prefMenuButton}
@@ -297,6 +299,7 @@ const HomeScreen = (props) => {
           renderItem={({item}) => (
             <View>
               <TouchableOpacity
+                role="button"
                 style={[
                   {backgroundColor: colors.primary, borderColor: colors.text},
                   styles.touchableOpacity,

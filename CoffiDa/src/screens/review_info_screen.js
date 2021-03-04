@@ -153,6 +153,7 @@ const ReviewInfoScreen = (props) => {
             {isMine ? (
               <View style={styles.isMineButtonView}>
                 <Button
+                  role="button"
                   mode="contained"
                   contentStyle={[
                     styles.isMineButtonsContent,
@@ -167,6 +168,7 @@ const ReviewInfoScreen = (props) => {
                   <Text>Update</Text>
                 </Button>
                 <Button
+                  role="button"
                   contentStyle={[
                     styles.isMineButtonsContent,
                     {borderColor: colors.accent},
@@ -179,6 +181,7 @@ const ReviewInfoScreen = (props) => {
             ) : null}
 
             <Button
+              role="button"
               mode="contained"
               style={styles.button}
               onPress={onLikedClick}>

@@ -72,6 +72,7 @@ const LoginScreen = (props) => {
         </View>
         <View style={styles.viewTwo}>
           <Button
+            role="button"
             mode="contained"
             onPress={() => onSubmit()}
             style={globalStyles.alternativeButton}

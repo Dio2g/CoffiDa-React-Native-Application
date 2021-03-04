@@ -193,6 +193,7 @@ const UpdateReviewScreen = (props) => {
               source={{uri: photo.url}}
             />
             <Button
+              role="button"
               style={[
                 globalStyles.button,
                 styles.button,
@@ -207,6 +208,7 @@ const UpdateReviewScreen = (props) => {
         ) : null}
         <View style={globalStyles.flexContainer}>
           <Button
+            role="button"
             style={[
               globalStyles.reviewSubmitButton,
               {borderColor: colors.text},

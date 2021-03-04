@@ -143,6 +143,7 @@ const LocationInfoScreen = (props) => {
               </View>
               <View style={styles.buttonView}>
                 <Button
+                  role="button"
                   mode="contained"
                   style={styles.button}
                   onPress={onFavouriteClick}>
@@ -153,6 +154,7 @@ const LocationInfoScreen = (props) => {
                   />
                 </Button>
                 <Button
+                  role="button"
                   mode="contained"
                   style={styles.button}
                   onPress={() =>

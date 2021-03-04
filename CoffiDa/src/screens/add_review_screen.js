@@ -189,6 +189,7 @@ const AddReviewScreen = (props) => {
         </View>
         <View style={globalStyles.flexContainer}>
           <Button
+            role="button"
             style={[
               globalStyles.reviewSubmitButton,
               {borderColor: colors.text},
@@ -209,10 +210,10 @@ const AddReviewScreen = (props) => {
               </Paragraph>
             </Dialog.Content>
             <Dialog.Actions>
-              <Button onPress={() => noPhoto()}>
+              <Button role="button" onPress={() => noPhoto()}>
                 <Text>No</Text>
               </Button>
-              <Button onPress={() => addPhoto()}>
+              <Button role="button" onPress={() => addPhoto()}>
                 <Text>Yes</Text>
               </Button>
             </Dialog.Actions>

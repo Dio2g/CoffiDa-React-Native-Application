@@ -103,6 +103,7 @@ const SignupScreen = (props) => {
         </View>
         <View style={globalStyles.viewTwo}>
           <Button
+            role="button"
             style={globalStyles.button}
             contentStyle={globalStyles.buttonContent}
             mode="contained"

@@ -8,4 +8,4 @@ Sometimes app needs to be reloaded if not working correctly.
 
 Any problems let me know, thanks! 
 
--Aubrey Monk
+-Aubrey Monk.

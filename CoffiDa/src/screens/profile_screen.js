@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {View} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import {
   Button,
   Text,
@@ -22,14 +22,8 @@ const ProfileScreen = (props) => {
         onPress={() => {
           toggleTheme();
         }}>
-        <View
-          style={{
-            flexDirection: 'row',
-            alignSelf: 'flex-end',
-            paddingVertical: '4%',
-            paddingHorizontal: '4%',
-          }}>
-          <View style={{marginTop: '0.7%'}}>
+        <View style={styles.themeToggleView}>
+          <View style={styles.textView}>
             <Text>Dark Theme</Text>
           </View>
           <View pointerEvents="none">
@@ -68,5 +62,17 @@ ProfileScreen.propTypes = {
     navigate: PropTypes.func.isRequired,
   }).isRequired,
 };
+
+const styles = StyleSheet.create({
+  themeToggleView: {
+    flexDirection: 'row',
+    alignSelf: 'flex-end',
+    paddingVertical: '4%',
+    paddingHorizontal: '4%',
+  },
+  textView: {
+    marginTop: '0.7%',
+  },
+});
 
 export default ProfileScreen;

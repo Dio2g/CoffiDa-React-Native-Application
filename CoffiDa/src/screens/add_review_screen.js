@@ -47,6 +47,10 @@ const AddReviewScreen = (props) => {
 
   const addReview = async () => {
     try {
+      const profanitys = ['tea', 'cake', 'pastries', 'pastry'];
+      const anyProfanitys = profanitys.some((word) =>
+        reviewBody.toLowerCase().includes(word),
+      );
       if (
         // validation
         overallRating === 0 ||
@@ -61,6 +65,11 @@ const AddReviewScreen = (props) => {
       } else if (reviewBody.length > 200 || reviewBody.length < 5) {
         ToastAndroid.show(
           'Review body must be between 5 and 200 characters.',
+          ToastAndroid.SHORT,
+        );
+      } else if (anyProfanitys) {
+        ToastAndroid.show(
+          'No profanity! Do NOT mention tea, cakes and pastries :c',
           ToastAndroid.SHORT,
         );
       } else {

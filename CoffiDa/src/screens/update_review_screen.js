@@ -38,19 +38,18 @@ const UpdateReviewScreen = (props) => {
 
   const updateReview = async () => {
     try {
-      if (
-        overallRating === 0 ||
-        priceRating === 0 ||
-        qualityRating === 0 ||
-        clenlinessRating === 0
-      ) {
-        ToastAndroid.show(
-          'Cannot rate any category 0 stars.',
-          ToastAndroid.SHORT,
-        );
-      } else if (reviewBody.length > 200 || reviewBody.length < 5) {
+      const profanitys = ['tea', 'cake', 'pastries', 'pastry'];
+      const anyProfanitys = profanitys.some((word) =>
+        reviewBody.toLowerCase().includes(word),
+      );
+      if (reviewBody.length > 200 || reviewBody.length < 5) {
         ToastAndroid.show(
           'Review body must be between 5 and 200 characters.',
+          ToastAndroid.SHORT,
+        );
+      } else if (anyProfanitys) {
+        ToastAndroid.show(
+          'No profanity! Do NOT mention tea, cakes and pastries :c',
           ToastAndroid.SHORT,
         );
       } else {

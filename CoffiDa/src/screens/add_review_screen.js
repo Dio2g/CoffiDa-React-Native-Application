@@ -1,5 +1,12 @@
 import React, {useState} from 'react';
-import {View, StyleSheet, Dimensions, ToastAndroid} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  Dimensions,
+  ToastAndroid,
+  ScrollView,
+  StatusBar,
+} from 'react-native';
 import {
   TextInput,
   Button,
@@ -18,7 +25,10 @@ import globalStyles from '../styles/global_stylesheet';
 
 const AddReviewScreen = (props) => {
   // calculate window height (applied to everything inside the scrollview) so the user is able to scroll content while keyboard is visible
-  const windowHeight = Dimensions.get('window').height - useHeaderHeight();
+  const windowHeight =
+    Dimensions.get('window').height -
+    useHeaderHeight() -
+    StatusBar.currentHeight;
 
   const {colors} = useTheme();
 
@@ -38,6 +48,7 @@ const AddReviewScreen = (props) => {
   const addReview = async () => {
     try {
       if (
+        // validation
         overallRating === 0 ||
         priceRating === 0 ||
         qualityRating === 0 ||
@@ -94,7 +105,7 @@ const AddReviewScreen = (props) => {
         }
       }
 
-      const reviewId = reviewIDs[index];
+      const reviewId = reviewIDs[index]; // retrieve review ID so that a photo can be added
       navigation.navigate('homeStackNavigator', {
         screen: 'Camera',
         params: {locationId, reviewId},
@@ -106,7 +117,7 @@ const AddReviewScreen = (props) => {
   };
 
   return (
-    <View
+    <ScrollView
       style={globalStyles.flexContainer}
       contentContainerStyle={globalStyles.scrollView}>
       <View style={[{width: '100%', height: windowHeight}]}>
@@ -196,7 +207,7 @@ const AddReviewScreen = (props) => {
           </Dialog>
         </Portal>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
@@ -225,7 +236,7 @@ const styles = StyleSheet.create({
     paddingTop: '1%',
   },
   viewOne: {
-    flex: 3,
+    flex: 4.6,
     borderWidth: 3,
     margin: '5%',
     paddingTop: '2%',

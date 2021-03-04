@@ -31,7 +31,6 @@ const SignupScreen = (props) => {
       const whitespaceRegex = /^\s+$/; // to stop user from entering only whitespace in the name fields
       const passwordRegex = /^\S{5,}$/; // minimum 5 chars and no whitespace
 
-      // check input against regex and show toast if they do not match
       if (
         !(
           firstName !== '' &&

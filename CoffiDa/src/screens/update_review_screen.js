@@ -1,40 +1,40 @@
-import React, {useState} from 'react';
-import {View, StyleSheet, Dimensions, ToastAndroid} from 'react-native';
+import React, {useState, useEffect, useCallback} from 'react';
+import {View, StyleSheet, ToastAndroid, ScrollView} from 'react-native';
 import {
   TextInput,
   Button,
   Text,
-  Paragraph,
-  Dialog,
-  Portal,
   useTheme,
+  Avatar,
+  ActivityIndicator,
 } from 'react-native-paper';
 import {AirbnbRating} from 'react-native-ratings';
 import PropTypes from 'prop-types';
-import {useHeaderHeight} from '@react-navigation/stack';
 import UpdateReview from '../components/update_review';
 import DeletePhoto from '../components/delete_photo';
 import globalStyles from '../styles/global_stylesheet';
+import GetPhoto from '../components/get_photo';
 
 const UpdateReviewScreen = (props) => {
-  // calculate window height (applied to everything inside the scrollview) so the user is able to scroll content while keyboard is visible
-  const windowHeight = Dimensions.get('window').height - useHeaderHeight();
-
   const {colors} = useTheme();
 
   const {route} = props;
   const {navigation} = props;
   const {params} = route;
   const {locationId} = params;
-  const {reviewId} = params;
+  const {reviewData} = params;
 
-  const [overallRating, setOverallRating] = useState(0);
-  const [priceRating, setPriceRating] = useState(0);
-  const [qualityRating, setQualityRating] = useState(0);
-  const [clenlinessRating, setClenlinessRating] = useState(0);
-  const [reviewBody, setReviewBody] = useState('');
+  const [photo, setPhoto] = useState('');
 
-  const [dialogVisible, setDialogVisible] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const [overallRating, setOverallRating] = useState(reviewData.overall_rating);
+  const [priceRating, setPriceRating] = useState(reviewData.price_rating);
+  const [qualityRating, setQualityRating] = useState(reviewData.quality_rating);
+  const [clenlinessRating, setClenlinessRating] = useState(
+    reviewData.clenliness_rating,
+  );
+  const [reviewBody, setReviewBody] = useState(reviewData.review_body);
 
   const updateReview = async () => {
     try {
@@ -56,7 +56,7 @@ const UpdateReviewScreen = (props) => {
       } else {
         const parameters = {
           locationId,
-          reviewId,
+          reviewId: reviewData.review_id,
           overallRating,
           priceRating,
           qualityRating,
@@ -64,7 +64,10 @@ const UpdateReviewScreen = (props) => {
           reviewBody,
         };
         await UpdateReview(props, parameters);
-        setDialogVisible(true);
+        props.navigation.navigate('homeStackNavigator', {
+          screen: 'Location Info',
+          params: {locationId},
+        });
       }
     } catch (e) {
       // console.error(e);
@@ -72,35 +75,50 @@ const UpdateReviewScreen = (props) => {
     }
   };
 
-  const deletePhoto = () => {
-    setDialogVisible(false);
-    DeletePhoto(props, locationId, reviewId);
-    props.navigation.navigate('homeStackNavigator', {
-      screen: 'Location Info',
-      params: {locationId},
-    });
-  };
-
-  const changePhoto = async () => {
-    try {
-      setDialogVisible(false);
-
-      DeletePhoto(props, locationId, reviewId);
-      navigation.navigate('homeStackNavigator', {
-        screen: 'Camera',
-        params: {locationId, reviewId},
-      });
-    } catch (e) {
-      // console.error(e);
-      ToastAndroid.show('Unexpected Error.', ToastAndroid.SHORT);
+  const deletePhoto = async () => {
+    const data = await GetPhoto(locationId, reviewData.review_id);
+    if (data) {
+      await DeletePhoto(props, locationId, reviewData.review_id);
     }
+    await getReviewPhoto();
   };
 
+  const getReviewPhoto = useCallback(async () => {
+    const data = await GetPhoto(locationId, reviewData.review_id);
+    setPhoto(data);
+  }, [locationId, reviewData.review_id]);
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', async () => {
+      // The screen is focused
+      setIsLoading(true);
+      await getReviewPhoto();
+      setReviewBody(reviewData.review_body);
+      setIsLoading(false);
+    });
+
+    // Return the function to unsubscribe from the event so it gets removed on unmount
+    return unsubscribe;
+  }, [
+    locationId,
+    reviewData.review_id,
+    navigation,
+    getReviewPhoto,
+    reviewData.review_body,
+  ]);
+
+  if (isLoading === true) {
+    return (
+      <View style={globalStyles.flexContainer}>
+        <ActivityIndicator style={globalStyles.activityIndicator} animating />
+      </View>
+    );
+  }
   return (
-    <View
+    <ScrollView
       style={globalStyles.flexContainer}
       contentContainerStyle={globalStyles.scrollView}>
-      <View style={[{width: '100%', height: windowHeight}]}>
+      <View>
         <View
           style={[
             styles.viewOne,
@@ -110,7 +128,7 @@ const UpdateReviewScreen = (props) => {
           <AirbnbRating
             showRating={false}
             count={5}
-            defaultRating={overallRating}
+            defaultRating={reviewData.overall_rating}
             size={32}
             onFinishRating={setOverallRating}
           />
@@ -118,7 +136,7 @@ const UpdateReviewScreen = (props) => {
           <AirbnbRating
             showRating={false}
             count={5}
-            defaultRating={priceRating}
+            defaultRating={reviewData.price_rating}
             size={32}
             onFinishRating={setPriceRating}
           />
@@ -126,7 +144,7 @@ const UpdateReviewScreen = (props) => {
           <AirbnbRating
             showRating={false}
             count={5}
-            defaultRating={qualityRating}
+            defaultRating={reviewData.quality_rating}
             size={32}
             onFinishRating={setQualityRating}
           />
@@ -134,7 +152,7 @@ const UpdateReviewScreen = (props) => {
           <AirbnbRating
             showRating={false}
             count={5}
-            defaultRating={clenlinessRating}
+            defaultRating={reviewData.clenliness_rating}
             size={32}
             onFinishRating={setClenlinessRating}
           />
@@ -158,6 +176,36 @@ const UpdateReviewScreen = (props) => {
             underlineColor="transparent"
           />
         </View>
+        {photo ? (
+          <View
+            style={[
+              styles.imgView,
+              {backgroundColor: colors.primary, borderColor: colors.text},
+            ]}>
+            <Avatar.Image
+              style={[
+                globalStyles.imgView,
+                {
+                  borderColor: colors.text,
+                  backgroundColor: colors.accent,
+                },
+              ]}
+              size={100}
+              source={{uri: photo.url}}
+            />
+            <Button
+              style={[
+                globalStyles.button,
+                styles.button,
+                {backgroundColor: colors.accent},
+              ]}
+              contentStyle={globalStyles.buttonContent}
+              mode="contained"
+              onPress={() => deletePhoto()}>
+              <Text>Delete Photo</Text>
+            </Button>
+          </View>
+        ) : null}
         <View style={globalStyles.flexContainer}>
           <Button
             style={globalStyles.button}
@@ -167,27 +215,8 @@ const UpdateReviewScreen = (props) => {
             <Text>Update Review</Text>
           </Button>
         </View>
-
-        <Portal>
-          <Dialog visible={dialogVisible} dismissable={false}>
-            <Dialog.Title>Alert</Dialog.Title>
-            <Dialog.Content>
-              <Paragraph>
-                Would you like to delete or change your photo?
-              </Paragraph>
-            </Dialog.Content>
-            <Dialog.Actions>
-              <Button onPress={() => deletePhoto()}>
-                <Text>Delete</Text>
-              </Button>
-              <Button onPress={() => changePhoto()}>
-                <Text>Change</Text>
-              </Button>
-            </Dialog.Actions>
-          </Dialog>
-        </Portal>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
@@ -195,11 +224,12 @@ UpdateReviewScreen.propTypes = {
   route: PropTypes.shape({
     params: PropTypes.shape({
       locationId: PropTypes.number,
-      reviewId: PropTypes.number,
+      reviewData: PropTypes.objectOf(PropTypes.any),
     }).isRequired,
   }).isRequired,
   navigation: PropTypes.shape({
     navigate: PropTypes.func.isRequired,
+    addListener: PropTypes.func.isRequired,
   }).isRequired,
 };
 
@@ -216,10 +246,26 @@ const styles = StyleSheet.create({
     paddingBottom: '1%',
     paddingTop: '1%',
   },
-  viewOne: {
-    flex: 3,
+  imgView: {
+    flex: 1,
     borderWidth: 3,
-    margin: '5%',
+    marginTop: '5%',
+    marginHorizontal: '5%',
+    padding: '2%',
+    borderRadius: 30,
+    flexDirection: 'row',
+  },
+
+  button: {
+    marginTop: '9%',
+    marginLeft: '15%',
+  },
+
+  viewOne: {
+    flex: 4.6,
+    borderWidth: 3,
+    marginHorizontal: '5%',
+    marginTop: '5%',
     paddingTop: '2%',
     borderRadius: 30,
   },

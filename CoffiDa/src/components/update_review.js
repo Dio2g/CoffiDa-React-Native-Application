@@ -22,7 +22,7 @@ const AddReview = async (props, parameters) => {
     },
   )
     .then((response) => {
-      if (response.status === 201) {
+      if (response.status === 200) {
         ToastAndroid.show('Review Updated!', ToastAndroid.SHORT);
       }
       if (response.status === 400) {
@@ -37,7 +37,7 @@ const AddReview = async (props, parameters) => {
       }
       if (response.status === 500) {
         throw new Error('Server Error.');
-      } else if (response.status !== 201) {
+      } else if (response.status !== 200) {
         throw new Error('Unexpected Error.');
       }
     })

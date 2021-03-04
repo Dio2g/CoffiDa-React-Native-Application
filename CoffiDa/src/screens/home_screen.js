@@ -325,7 +325,7 @@ const HomeScreen = (props) => {
                           readonly
                           startingValue={item.avg_overall_rating}
                           tintColor={colors.primary}
-                          imageSize={30}
+                          imageSize={32}
                         />
                       )}
                     </View>

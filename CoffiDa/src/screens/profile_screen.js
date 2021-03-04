@@ -17,7 +17,6 @@ const ProfileScreen = (props) => (
             screen: 'Update Details',
           })
         }>
-        {' '}
         <Text>Update Details</Text>{' '}
       </Button>
     </View>
@@ -27,7 +26,6 @@ const ProfileScreen = (props) => (
         style={globalStyles.alternativeButton}
         mode="contained"
         onPress={() => Logout(props)}>
-        {' '}
         <Text>Logout</Text>{' '}
       </Button>
     </View>

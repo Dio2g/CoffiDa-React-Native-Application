@@ -29,7 +29,6 @@ const LoginScreen = (props) => {
       const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       const passwordRegex = /^\S{5,}$/; // minimum 5 chars and no whitespace
 
-      // check input against regex and show toast if they do not match
       if (!(email !== '' && emailRegex.test(email))) {
         ToastAndroid.show('Please enter a valid email.', ToastAndroid.SHORT);
       } else if (!(password !== '' && passwordRegex.test(password))) {

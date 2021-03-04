@@ -142,7 +142,7 @@ const ReviewInfoScreen = (props) => {
                   onPress={() =>
                     navigation.navigate('homeStackNavigator', {
                       screen: 'Update Review',
-                      params: {locationId, reviewId: reviewData.review_id},
+                      params: {locationId, reviewData},
                     })
                   }>
                   <Text>Update</Text>

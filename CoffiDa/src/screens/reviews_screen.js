@@ -1,11 +1,17 @@
 import React, {useState, useEffect} from 'react';
 import {View, TouchableOpacity} from 'react-native';
-import {Text, ActivityIndicator, useTheme} from 'react-native-paper';
+import {
+  Text,
+  ActivityIndicator,
+  useTheme,
+  Menu,
+  Button,
+} from 'react-native-paper';
+
 import {FlatList} from 'react-native-gesture-handler';
 import {Rating} from 'react-native-ratings';
 import PropTypes from 'prop-types';
-import DropDownPicker from 'react-native-dropdown-picker';
-import {Picker} from '@react-native-picker/picker';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import UserInfo from '../components/user_information';
 import globalStyles from '../styles/global_stylesheet';
 
@@ -13,11 +19,17 @@ const ReviewsScreen = (props) => {
   // so paper theme colors can be used with with non paper components
   const {colors} = useTheme();
 
+  const [visible, setVisible] = React.useState(false);
+
+  const openMenu = () => setVisible(true);
+
+  const closeMenu = () => setVisible(false);
+
   const {navigation} = props;
 
   const [userData, setUserData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [dropSelection, setDropSelection] = useState('REVIEWED');
+  const [menuSelection, setMenuSelection] = useState('REVIEWED');
 
   useEffect(() => {
     async function getUserData() {
@@ -45,27 +57,27 @@ const ReviewsScreen = (props) => {
   }
   return (
     <View>
-      <View>
-        <Picker
-          selectedValue={dropSelection}
-          style={{backgroundColor: colors.primary}}
-          itemStyle={{backgroundColor: colors.primary}}
-          color={colors.primary}
-          onValueChange={(itemValue, itemIndex) => setDropSelection(itemValue)}>
-          <Picker.Item
-            label="My Reviews"
-            value="REVIEWED"
-            color={colors.accent}
+      <View style={{backgroundColor: colors.primary}}>
+        <Menu
+          visible={visible}
+          onDismiss={closeMenu}
+          anchor={
+            <Button onPress={openMenu}>
+              <Text>Select Category</Text>
+            </Button>
+          }>
+          <Menu.Item
+            onPress={() => setMenuSelection('REVIEWED')}
+            title="My Reviews"
           />
-          <Picker.Item
-            color={colors.accent}
-            label="Liked Reviews"
-            value="LIKED"
+          <Menu.Item
+            onPress={() => setMenuSelection('LIKED')}
+            title="Liked Reviews"
           />
-        </Picker>
+        </Menu>
       </View>
       <View>
-        {dropSelection === 'REVIEWED' ? (
+        {menuSelection === 'REVIEWED' ? (
           <FlatList
             data={userData.reviews}
             renderItem={({item}) => (

@@ -77,9 +77,10 @@ const ReviewsScreen = (props) => {
       <View>
         {menuSelection === 'REVIEWED' ? (
           <FlatList
+            role="list"
             data={userData.reviews}
             renderItem={({item}) => (
-              <View>
+              <View role="listitem">
                 <TouchableOpacity
                   role="button"
                   style={[
@@ -122,9 +123,10 @@ const ReviewsScreen = (props) => {
           />
         ) : (
           <FlatList
+            role="list"
             data={userData.liked_reviews}
             renderItem={({item}) => (
-              <View>
+              <View role="listitem">
                 <TouchableOpacity
                   role="button"
                   style={[

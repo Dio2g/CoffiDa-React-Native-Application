@@ -296,10 +296,11 @@ const HomeScreen = (props) => {
 
       <View style={styles.flatListView}>
         <FlatList
+          role="list"
           ref={flatListRef}
           data={listData}
           renderItem={({item}) => (
-            <View>
+            <View role="listitem">
               <TouchableOpacity
                 role="button"
                 style={[

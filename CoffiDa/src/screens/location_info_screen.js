@@ -228,10 +228,11 @@ const LocationInfoScreen = (props) => {
             ]}>
             <Title style={styles.reviewsTitle}>Reviews</Title>
             <FlatList
+              role="list"
               scrollEnabled={false}
               data={locationData.location_reviews}
               renderItem={({item}) => (
-                <View>
+                <View role="listitem">
                   <TouchableOpacity
                     style={[
                       {

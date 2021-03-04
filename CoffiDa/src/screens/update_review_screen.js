@@ -28,6 +28,7 @@ const UpdateReviewScreen = (props) => {
 
   const [isLoading, setIsLoading] = useState(true);
 
+  // populate with passed parameters
   const [overallRating, setOverallRating] = useState(reviewData.overall_rating);
   const [priceRating, setPriceRating] = useState(reviewData.price_rating);
   const [qualityRating, setQualityRating] = useState(reviewData.quality_rating);

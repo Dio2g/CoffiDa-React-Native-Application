@@ -68,6 +68,7 @@ const NearbyScreen = (props) => {
           offset: 0,
         });
 
+        // sort list data by distance to current pos
         setListData(
           data.sort((a, b) => {
             const aDist = getDistance(currentLocation, {

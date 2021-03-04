@@ -107,7 +107,7 @@ const AddReviewScreen = (props) => {
       const reviewIDs = userData.reviews.map((i) => i.review.review_id);
       let i;
       let index = -1;
-
+      // get index of location id so the review id can be retrieved as they will ahve the same index
       for (i = 0; i < locationIDs.length; i += 1) {
         if (locationIDs[i] === locationId) {
           index = i;

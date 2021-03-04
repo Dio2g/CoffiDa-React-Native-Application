@@ -30,10 +30,10 @@ const ReviewsScreen = (props) => {
   const [menuSelection, setMenuSelection] = useState('REVIEWED');
 
   useEffect(() => {
-    async function getUserData() {
+    const getUserData = async () => {
       const data = await UserInfo();
       setUserData(data);
-    }
+    };
 
     const unsubscribe = navigation.addListener('focus', async () => {
       // The screen is focused

@@ -89,6 +89,7 @@ const ReviewInfoScreen = (props) => {
     [locationId, reviewData],
   );
 
+  // check to see if user owns review or not
   const isMyReview = useCallback(
     async (userInfo) => {
       try {

@@ -58,13 +58,13 @@ const UpdateDetailsScreen = (props) => {
   };
 
   useEffect(() => {
-    async function getUserData() {
+    const getUserData = async () => {
       const userData = await UserInfo();
       setIsLoading(false);
       setFirstName(userData.first_name);
       setLastName(userData.last_name);
       setEmail(userData.email);
-    }
+    };
 
     getUserData();
   }, []);

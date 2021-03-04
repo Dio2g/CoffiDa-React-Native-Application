@@ -20,8 +20,11 @@ const LoginScreen = (props) => {
     StatusBar.currentHeight;
 
   // hard coded login details for quick testing
-  const [email, setEmail] = useState('fake@mail.ac.uk');
-  const [password, setPassword] = useState('hello123');
+  // const [email, setEmail] = useState('fake@mail.ac.uk');
+  // const [password, setPassword] = useState('hello123');
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   const onSubmit = () => {
     try {

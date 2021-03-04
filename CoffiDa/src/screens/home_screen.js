@@ -336,6 +336,7 @@ const HomeScreen = (props) => {
                     </View>
                   </View>
                   <Avatar.Image
+                    role="img"
                     style={[
                       globalStyles.imgView,
                       {

@@ -182,6 +182,7 @@ const UpdateReviewScreen = (props) => {
               {backgroundColor: colors.primary, borderColor: colors.text},
             ]}>
             <Avatar.Image
+              role="img"
               style={[
                 globalStyles.imgView,
                 {

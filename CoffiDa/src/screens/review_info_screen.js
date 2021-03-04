@@ -148,7 +148,7 @@ const ReviewInfoScreen = (props) => {
       <View style={styles.reviewContentView}>
         <Card style={[styles.card, {borderColor: colors.text}]}>
           <Card.Title title={`Review Of ${locationName}`} />
-          {photo ? <Card.Cover source={{uri: photo.url}} /> : null}
+          {photo ? <Card.Cover role="img" source={{uri: photo.url}} /> : null}
           <View style={[styles.buttonView, {borderColor: colors.text}]}>
             {isMine ? (
               <View style={styles.isMineButtonView}>

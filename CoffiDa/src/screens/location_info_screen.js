@@ -125,6 +125,7 @@ const LocationInfoScreen = (props) => {
             ]}>
             <View style={styles.avatarView}>
               <Avatar.Image
+                role="img"
                 style={[
                   globalStyles.imgView,
                   {

@@ -139,7 +139,7 @@ const LocationInfoScreen = (props) => {
             </View>
             <View style={globalStyles.flexContainer}>
               <View style={styles.infoTextView}>
-                <Title>{locationData.location_name}</Title>
+                <Title role="heading">{locationData.location_name}</Title>
                 <Subheading>{locationData.location_town}</Subheading>
               </View>
               <View style={styles.buttonView}>

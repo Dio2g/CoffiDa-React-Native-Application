@@ -83,6 +83,7 @@ const UpdateDetailsScreen = (props) => {
       <View style={{width: '100%', height: windowHeight}}>
         <View style={globalStyles.viewOne}>
           <TextInput
+            role="textbox"
             type="outlined"
             label="First Name"
             placeholder="Enter new first name..."
@@ -90,6 +91,7 @@ const UpdateDetailsScreen = (props) => {
             value={firstName}
           />
           <TextInput
+            role="textbox"
             type="outlined"
             label="Last Name"
             placeholder="Enter new last name..."
@@ -97,6 +99,7 @@ const UpdateDetailsScreen = (props) => {
             value={lastName}
           />
           <TextInput
+            role="textbox"
             type="outlined"
             label="Email"
             placeholder="Enter new email..."
@@ -104,6 +107,7 @@ const UpdateDetailsScreen = (props) => {
             value={email}
           />
           <TextInput
+            role="textbox"
             secureTextEntry
             type="outlined"
             label="Password"

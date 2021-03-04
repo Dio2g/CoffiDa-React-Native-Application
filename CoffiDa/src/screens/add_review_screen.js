@@ -169,6 +169,7 @@ const AddReviewScreen = (props) => {
           />
           <Text style={globalStyles.reviewText}>Review Text: </Text>
           <TextInput
+            role="textbox"
             mode="flat"
             style={[
               globalStyles.reviewBodyInput,

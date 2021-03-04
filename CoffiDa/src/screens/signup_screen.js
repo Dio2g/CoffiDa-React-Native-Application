@@ -72,6 +72,7 @@ const SignupScreen = (props) => {
       <View style={{width: '100%', height: windowHeight}}>
         <View style={globalStyles.viewOne}>
           <TextInput
+            role="textbox"
             type="outlined"
             label="First Name"
             placeholder="Enter your first name..."
@@ -79,6 +80,7 @@ const SignupScreen = (props) => {
             value={firstName}
           />
           <TextInput
+            role="textbox"
             type="outlined"
             label="Last Name"
             placeholder="Enter your last name..."
@@ -86,6 +88,7 @@ const SignupScreen = (props) => {
             value={lastName}
           />
           <TextInput
+            role="textbox"
             type="outlined"
             label="Email"
             placeholder="Enter your email..."
@@ -93,6 +96,7 @@ const SignupScreen = (props) => {
             value={email}
           />
           <TextInput
+            role="textbox"
             secureTextEntry
             type="outlined"
             label="Password"

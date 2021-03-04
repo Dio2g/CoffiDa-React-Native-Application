@@ -55,6 +55,7 @@ const LoginScreen = (props) => {
       <View style={{width: '100%', height: windowHeight}}>
         <View style={globalStyles.viewOne}>
           <TextInput
+            role="textbox"
             type="outlined"
             label="Email"
             placeholder="Enter your email..."
@@ -62,6 +63,7 @@ const LoginScreen = (props) => {
             value={email}
           />
           <TextInput
+            role="textbox"
             secureTextEntry
             type="outlined"
             label="Password"

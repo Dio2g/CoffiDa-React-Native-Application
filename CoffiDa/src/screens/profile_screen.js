@@ -28,7 +28,7 @@ const ProfileScreen = (props) => {
             <Text>Dark Theme</Text>
           </View>
           <View pointerEvents="none">
-            <Switch value={paperTheme.dark} />
+            <Switch role="switch" value={paperTheme.dark} />
           </View>
         </View>
       </TouchableRipple>

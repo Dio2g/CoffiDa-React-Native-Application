@@ -195,6 +195,7 @@ const HomeScreen = (props) => {
             onDismiss={closeMenu}
             anchor={
               <Searchbar
+                role="search"
                 style={styles.searchBar}
                 placeholder="Search"
                 onChangeText={onChangeSearch}

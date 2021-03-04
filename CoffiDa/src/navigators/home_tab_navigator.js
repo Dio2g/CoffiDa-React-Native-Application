@@ -34,6 +34,7 @@ const HomeNavigator = (props) => {
 
   return (
     <Tab.Navigator
+      role="navigation"
       initialRouteName="homeScreen"
       shifting
       sceneAnimationEnabled={false}

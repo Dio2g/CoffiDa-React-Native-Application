@@ -203,7 +203,7 @@ const AddReviewScreen = (props) => {
         </View>
 
         <Portal>
-          <Dialog visible={dialogVisible} dismissable={false}>
+          <Dialog role="dialog" visible={dialogVisible} dismissable={false}>
             <Dialog.Title>Alert</Dialog.Title>
             <Dialog.Content>
               <Paragraph>

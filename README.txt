@@ -1,4 +1,4 @@
-LINK TO GITHUB REPO (VERSION CONTROL): https://github.com/Aubrey-Monk/CoffiDa-React-Native-Application
+LINK TO GITHUB REPO: https://github.com/Aubrey-Monk/CoffiDa-React-Native-Application
 
 Please put your google map API key in android manifest file.
 

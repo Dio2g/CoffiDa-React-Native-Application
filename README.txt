@@ -9,3 +9,5 @@ Sometimes app needs to be reloaded if not working correctly.
 Any problems let me know, thanks! 
 
 -Aubrey Monk.
+
+*NOTE the provided server was the server given for the assignment by the tutor*
